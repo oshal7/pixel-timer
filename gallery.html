@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Focus Kitchen — Asset Gallery</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .gallery-wrap { max-width: 1200px; margin: 0 auto; padding: 24px; width: 100%; }
+  .gallery-section { margin-bottom: 42px; }
+  .gallery-section h2 { color: var(--accent); letter-spacing: 2px; margin-bottom: 4px; }
+  .gallery-section .section-note { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 14px; }
+  .gallery-tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; }
+  .gallery-card { background: var(--bg-panel); border: 2px solid var(--brown); border-radius: 8px; padding: 8px; text-align: center; }
+  .gallery-card img { width: 100%; height: 84px; object-fit: contain; image-rendering: pixelated; }
+  .gallery-card .gname { font-size: 0.72rem; margin-top: 6px; color: var(--text-light); }
+  .gallery-card .gbbox { font-size: 0.62rem; color: var(--text-muted); margin-top: 2px; }
+  .anim-row { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 6px; }
+  .anim-row img { height: 90px; width: auto; image-rendering: pixelated; border: 1px solid var(--brown); border-radius: 4px; background: var(--bg-panel); }
+  .anim-block { margin-bottom: 18px; }
+  .anim-block h3 { font-size: 0.95rem; color: var(--text-light); margin-bottom: 6px; text-transform: capitalize; }
+  .back-link { margin-bottom: 10px; }
+</style>
+</head>
+<body>
+<div id="app">
+  <header class="topbar">
+    <h1>FOCUS KITCHEN</h1>
+    <nav>
+      <a href="index.html" class="nav-btn" style="text-decoration:none; display:inline-block;">Kitchen App</a>
+      <button class="nav-btn active">Asset Gallery</button>
+    </nav>
+  </header>
+  <main id="stage" style="display:block;">
+    <div class="gallery-wrap">
+      <p class="section-note" style="margin-bottom:24px;">
+        Every sprite below was extracted from the original reference sheets by measuring real grid/cell
+        boundaries programmatically (background-difference row/column band detection, connected-component
+        blob isolation, and flood-fill background removal) — see <code>data/*.json</code> for exact
+        source coordinates and provenance notes on each sprite.
+      </p>
+
+      <section class="gallery-section" id="section-ingredients">
+        <h2>Ingredients</h2>
+        <div class="section-note" id="ingredients-note"></div>
+        <div class="gallery-tiles" id="ingredients-grid"></div>
+      </section>
+
+      <section class="gallery-section" id="section-tiles">
+        <h2>Kitchen Tileset</h2>
+        <div class="section-note" id="tiles-note"></div>
+        <div class="gallery-tiles" id="tiles-grid"></div>
+      </section>
+
+      <section class="gallery-section" id="section-chef">
+        <h2>Chef Animations</h2>
+        <div class="section-note">Each row is one animation section, in frame order, as played by the app.</div>
+        <div id="chef-anims"></div>
+      </section>
+
+      <section class="gallery-section" id="section-recipes">
+        <h2>Recipe Collection</h2>
+        <div class="section-note" id="recipes-note"></div>
+        <div class="gallery-tiles" id="recipes-grid"></div>
+      </section>
+    </div>
+  </main>
+</div>
+<script>
+async function loadJSON(path) { return fetch(path).then(r => r.json()); }
+
+function card(file, label, bbox) {
+  const div = document.createElement('div');
+  div.className = 'gallery-card';
+  const img = document.createElement('img');
+  img.src = file;
+  img.alt = label;
+  img.loading = 'lazy';
+  const name = document.createElement('div');
+  name.className = 'gname';
+  name.textContent = label;
+  div.appendChild(img);
+  div.appendChild(name);
+  if (bbox) {
+    const b = document.createElement('div');
+    b.className = 'gbbox';
+    b.textContent = `${bbox.w}×${bbox.h} @ (${bbox.x},${bbox.y})`;
+    div.appendChild(b);
+  }
+  return div;
+}
+
+async function main() {
+  const [ingredients, tiles, chef, recipes] = await Promise.all([
+    loadJSON('data/ingredients.json'),
+    loadJSON('data/tiles.json'),
+    loadJSON('data/chef_animations.json'),
+    loadJSON('data/recipes.json'),
+  ]);
+
+  document.getElementById('ingredients-note').textContent =
+    `${ingredients.sprites.length} sprites, measured ${ingredients.grid.rows}×${ingredients.grid.cols} grid — ${ingredients.grid.note}`;
+  const ingGrid = document.getElementById('ingredients-grid');
+  for (const s of ingredients.sprites) ingGrid.appendChild(card(s.file, s.label, s.source_bbox));
+
+  document.getElementById('tiles-note').textContent = tiles.note;
+  const tilesGrid = document.getElementById('tiles-grid');
+  for (const s of tiles.sprites) tilesGrid.appendChild(card(s.file, s.id, s.source_bbox));
+
+  const chefWrap = document.getElementById('chef-anims');
+  for (const [name, section] of Object.entries(chef.sections)) {
+    const block = document.createElement('div');
+    block.className = 'anim-block';
+    const h3 = document.createElement('h3');
+    h3.textContent = `${name} — ${section.frames.length} frames @ ${section.frame_ms}ms/frame${section.loop ? ' (loops)' : ' (plays once)'}`;
+    const row = document.createElement('div');
+    row.className = 'anim-row';
+    for (const f of section.frames) {
+      const img = document.createElement('img');
+      img.src = f.file;
+      img.alt = `${name} frame ${f.index}`;
+      row.appendChild(img);
+    }
+    block.appendChild(h3);
+    block.appendChild(row);
+    chefWrap.appendChild(block);
+  }
+
+  document.getElementById('recipes-note').textContent =
+    `${recipes.sprites.length} dish cards, measured ${recipes.grid.rows}×${recipes.grid.cols} grid — ${recipes.note}`;
+  const recGrid = document.getElementById('recipes-grid');
+  for (const s of recipes.sprites) {
+    const c = card(s.file, s.uncertain_label ? `${s.label} *` : s.label, s.source_bbox);
+    if (s.uncertain_label) c.title = 'Source label was illegible AI-generated text; placeholder name shown';
+    recGrid.appendChild(c);
+  }
+}
+main();
+</script>
+</body>
+</html>
