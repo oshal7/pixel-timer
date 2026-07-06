@@ -22,9 +22,7 @@
 
     <!-- HOME / IDLE KITCHEN SCENE -->
     <section id="view-home" class="view active">
-      <div class="border-frame" id="border-top"></div>
-      <div class="border-frame" id="border-left"></div>
-      <div class="border-frame" id="border-right"></div>
+      <div class="border-strip" id="border-top"></div>
 
       <div class="kitchen-scene" id="kitchen-scene">
         <!-- populated by scene composer -->
@@ -62,8 +60,8 @@
 
     <!-- COOKING IN PROGRESS -->
     <section id="view-cooking" class="view">
-      <div class="cooking-scene" id="cooking-scene">
-        <img id="chef-sprite" class="chef-sprite" alt="chef">
+      <div class="kitchen-scene" id="cooking-scene">
+        <!-- populated by scene composer -->
       </div>
       <div class="countdown-wrap">
         <div class="countdown" id="countdown-readout">25:00</div>
@@ -76,7 +74,7 @@
     <section id="view-complete" class="view">
       <h2>DISH COMPLETE!</h2>
       <div class="complete-scene">
-        <img id="chef-presenting" class="chef-sprite" alt="chef presenting">
+        <img id="chef-presenting" class="chef-standalone" alt="chef presenting">
         <div class="dish-plate">
           <img id="dish-image" alt="finished dish">
           <div id="dish-name" class="dish-name"></div>

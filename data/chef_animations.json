@@ -108,7 +108,7 @@
       ]
     },
     "walking": {
-      "frame_ms": 90,
+      "frame_ms": 130,
       "loop": true,
       "frames": [
         {
@@ -234,7 +234,7 @@
       ]
     },
     "chopping": {
-      "frame_ms": 260,
+      "frame_ms": 300,
       "loop": true,
       "frames": [
         {
@@ -300,7 +300,7 @@
       ]
     },
     "stirring": {
-      "frame_ms": 220,
+      "frame_ms": 260,
       "loop": true,
       "frames": [
         {

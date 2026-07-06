@@ -1,1438 +1,1425 @@
 {
   "grid": {
     "rows": 10,
-    "cols": 11
+    "cols": 12
   },
-  "note": "labels are best-effort transcriptions from the source sheet; a few source cells contained garbled/illegible AI-generated text and were given a generic placeholder name (flagged via uncertain_label) rather than invented text",
+  "note": "labels are best-effort transcriptions from the source sheet; a few source cells contained garbled/illegible AI-generated text and were given a generic placeholder name (flagged via uncertain_label) rather than invented text. Baked-in label text from the source sheet is cropped out; the app renders its own label.",
   "sprites": [
     {
       "id": "recipe_0_0",
       "label": "Tea",
       "uncertain_label": false,
-      "file": "assets/recipes/r0_c0.png",
+      "file": "assets/recipes/r0_c0_tea.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 51,
-        "y": 86,
-        "w": 76,
-        "h": 78
+        "x": 33,
+        "y": 65,
+        "w": 75,
+        "h": 80
       }
     },
     {
       "id": "recipe_0_1",
       "label": "Toast",
       "uncertain_label": false,
-      "file": "assets/recipes/r0_c1.png",
+      "file": "assets/recipes/r0_c1_toast.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 139,
-        "y": 86,
+        "x": 114,
+        "y": 65,
         "w": 76,
-        "h": 78
+        "h": 80
       }
     },
     {
       "id": "recipe_0_2",
       "label": "Hard-Boiled Egg",
       "uncertain_label": false,
-      "file": "assets/recipes/r0_c2.png",
+      "file": "assets/recipes/r0_c2_hard-boiled_egg.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 227,
-        "y": 86,
+        "x": 196,
+        "y": 65,
         "w": 76,
-        "h": 78
-      }
-    },
-    {
-      "id": "recipe_0_3",
-      "label": "Apple Slices",
-      "uncertain_label": false,
-      "file": "assets/recipes/r0_c3.png",
-      "source_sheet": "287aad4d-1000183341.jpg",
-      "source_bbox": {
-        "x": 315,
-        "y": 86,
-        "w": 76,
-        "h": 78
+        "h": 80
       }
     },
     {
       "id": "recipe_0_4",
-      "label": "Cereal Bowl",
+      "label": "Apple Slices",
       "uncertain_label": false,
-      "file": "assets/recipes/r0_c4.png",
+      "file": "assets/recipes/r0_c4_apple_slices.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 403,
-        "y": 86,
+        "x": 360,
+        "y": 65,
         "w": 76,
-        "h": 78
+        "h": 80
       }
     },
     {
       "id": "recipe_0_5",
-      "label": "Coffee",
+      "label": "Cereal Bowl",
       "uncertain_label": false,
-      "file": "assets/recipes/r0_c5.png",
+      "file": "assets/recipes/r0_c5_cereal_bowl.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 491,
-        "y": 86,
+        "x": 442,
+        "y": 65,
         "w": 76,
-        "h": 78
+        "h": 80
       }
     },
     {
       "id": "recipe_0_6",
-      "label": "Banana",
+      "label": "Coffee",
       "uncertain_label": false,
-      "file": "assets/recipes/r0_c6.png",
+      "file": "assets/recipes/r0_c6_coffee.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 579,
-        "y": 86,
-        "w": 76,
-        "h": 78
+        "x": 524,
+        "y": 65,
+        "w": 75,
+        "h": 80
       }
     },
     {
       "id": "recipe_0_7",
-      "label": "Instant Ramen",
+      "label": "Banana",
       "uncertain_label": false,
-      "file": "assets/recipes/r0_c7.png",
+      "file": "assets/recipes/r0_c7_banana.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 667,
-        "y": 86,
+        "x": 605,
+        "y": 65,
         "w": 76,
-        "h": 78
-      }
-    },
-    {
-      "id": "recipe_0_8",
-      "label": "Cheese Slices",
-      "uncertain_label": false,
-      "file": "assets/recipes/r0_c8.png",
-      "source_sheet": "287aad4d-1000183341.jpg",
-      "source_bbox": {
-        "x": 755,
-        "y": 86,
-        "w": 76,
-        "h": 78
+        "h": 80
       }
     },
     {
       "id": "recipe_0_9",
-      "label": "Orange Juice",
+      "label": "Instant Ramen",
       "uncertain_label": false,
-      "file": "assets/recipes/r0_c9.png",
+      "file": "assets/recipes/r0_c9_instant_ramen.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 843,
-        "y": 86,
+        "x": 769,
+        "y": 65,
         "w": 76,
-        "h": 78
+        "h": 80
       }
     },
     {
       "id": "recipe_0_10",
-      "label": "Chef's Surprise #1",
-      "uncertain_label": true,
-      "file": "assets/recipes/r0_c10.png",
+      "label": "Cheese Slices",
+      "uncertain_label": false,
+      "file": "assets/recipes/r0_c10_cheese_slices.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 931,
-        "y": 86,
+        "x": 851,
+        "y": 65,
         "w": 76,
-        "h": 78
+        "h": 80
+      }
+    },
+    {
+      "id": "recipe_0_11",
+      "label": "Orange Juice",
+      "uncertain_label": false,
+      "file": "assets/recipes/r0_c11_orange_juice.png",
+      "source_sheet": "287aad4d-1000183341.jpg",
+      "source_bbox": {
+        "x": 933,
+        "y": 65,
+        "w": 76,
+        "h": 80
       }
     },
     {
       "id": "recipe_1_0",
       "label": "Grilled Cheese",
       "uncertain_label": false,
-      "file": "assets/recipes/r1_c0.png",
+      "file": "assets/recipes/r1_c0_grilled_cheese.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 51,
-        "y": 176,
-        "w": 76,
-        "h": 78
+        "x": 33,
+        "y": 180,
+        "w": 75,
+        "h": 66
       }
     },
     {
       "id": "recipe_1_1",
       "label": "Yogurt Cup",
       "uncertain_label": false,
-      "file": "assets/recipes/r1_c1.png",
+      "file": "assets/recipes/r1_c1_yogurt_cup.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 139,
-        "y": 176,
+        "x": 114,
+        "y": 180,
         "w": 76,
-        "h": 78
+        "h": 66
       }
     },
     {
       "id": "recipe_1_2",
       "label": "Omelette",
       "uncertain_label": false,
-      "file": "assets/recipes/r1_c2.png",
+      "file": "assets/recipes/r1_c2_omelette.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 227,
-        "y": 176,
+        "x": 196,
+        "y": 180,
         "w": 76,
-        "h": 78
-      }
-    },
-    {
-      "id": "recipe_1_3",
-      "label": "Pretzel",
-      "uncertain_label": false,
-      "file": "assets/recipes/r1_c3.png",
-      "source_sheet": "287aad4d-1000183341.jpg",
-      "source_bbox": {
-        "x": 315,
-        "y": 176,
-        "w": 76,
-        "h": 78
+        "h": 66
       }
     },
     {
       "id": "recipe_1_4",
-      "label": "Bagel",
+      "label": "Pretzel",
       "uncertain_label": false,
-      "file": "assets/recipes/r1_c4.png",
+      "file": "assets/recipes/r1_c4_pretzel.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 403,
-        "y": 176,
+        "x": 360,
+        "y": 180,
         "w": 76,
-        "h": 78
+        "h": 66
       }
     },
     {
       "id": "recipe_1_5",
-      "label": "Miso Soup",
+      "label": "Bagel",
       "uncertain_label": false,
-      "file": "assets/recipes/r1_c5.png",
+      "file": "assets/recipes/r1_c5_bagel.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 491,
-        "y": 176,
+        "x": 442,
+        "y": 180,
         "w": 76,
-        "h": 78
+        "h": 66
       }
     },
     {
       "id": "recipe_1_6",
-      "label": "Taco",
+      "label": "Miso Soup",
       "uncertain_label": false,
-      "file": "assets/recipes/r1_c6.png",
+      "file": "assets/recipes/r1_c6_miso_soup.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 579,
-        "y": 176,
-        "w": 76,
-        "h": 78
+        "x": 524,
+        "y": 180,
+        "w": 75,
+        "h": 66
       }
     },
     {
       "id": "recipe_1_7",
-      "label": "Hot Dog",
+      "label": "Taco",
       "uncertain_label": false,
-      "file": "assets/recipes/r1_c7.png",
+      "file": "assets/recipes/r1_c7_taco.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 667,
-        "y": 176,
+        "x": 605,
+        "y": 180,
         "w": 76,
-        "h": 78
-      }
-    },
-    {
-      "id": "recipe_1_8",
-      "label": "French Fries",
-      "uncertain_label": false,
-      "file": "assets/recipes/r1_c8.png",
-      "source_sheet": "287aad4d-1000183341.jpg",
-      "source_bbox": {
-        "x": 755,
-        "y": 176,
-        "w": 76,
-        "h": 78
+        "h": 66
       }
     },
     {
       "id": "recipe_1_9",
-      "label": "Pita & Hummus",
+      "label": "Hot Dog",
       "uncertain_label": false,
-      "file": "assets/recipes/r1_c9.png",
+      "file": "assets/recipes/r1_c9_hot_dog.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 843,
-        "y": 176,
+        "x": 769,
+        "y": 180,
         "w": 76,
-        "h": 78
+        "h": 66
       }
     },
     {
       "id": "recipe_1_10",
-      "label": "Chef's Surprise #2",
-      "uncertain_label": true,
-      "file": "assets/recipes/r1_c10.png",
+      "label": "French Fries",
+      "uncertain_label": false,
+      "file": "assets/recipes/r1_c10_french_fries.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 931,
-        "y": 176,
+        "x": 851,
+        "y": 180,
         "w": 76,
-        "h": 78
+        "h": 66
+      }
+    },
+    {
+      "id": "recipe_1_11",
+      "label": "Pita & Hummus",
+      "uncertain_label": false,
+      "file": "assets/recipes/r1_c11_pita_and_hummus.png",
+      "source_sheet": "287aad4d-1000183341.jpg",
+      "source_bbox": {
+        "x": 933,
+        "y": 180,
+        "w": 76,
+        "h": 66
       }
     },
     {
       "id": "recipe_2_0",
       "label": "Dim Sum",
       "uncertain_label": false,
-      "file": "assets/recipes/r2_c0.png",
+      "file": "assets/recipes/r2_c0_dim_sum.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 51,
-        "y": 266,
-        "w": 76,
-        "h": 78
+        "x": 33,
+        "y": 281,
+        "w": 75,
+        "h": 68
       }
     },
     {
       "id": "recipe_2_1",
       "label": "Croissant",
       "uncertain_label": false,
-      "file": "assets/recipes/r2_c1.png",
+      "file": "assets/recipes/r2_c1_croissant.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 139,
-        "y": 266,
+        "x": 114,
+        "y": 281,
         "w": 76,
-        "h": 78
+        "h": 68
       }
     },
     {
       "id": "recipe_2_2",
       "label": "Mac & Cheese",
       "uncertain_label": false,
-      "file": "assets/recipes/r2_c2.png",
+      "file": "assets/recipes/r2_c2_mac_and_cheese.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 227,
-        "y": 266,
+        "x": 196,
+        "y": 281,
         "w": 76,
-        "h": 78
-      }
-    },
-    {
-      "id": "recipe_2_3",
-      "label": "Biryani",
-      "uncertain_label": false,
-      "file": "assets/recipes/r2_c3.png",
-      "source_sheet": "287aad4d-1000183341.jpg",
-      "source_bbox": {
-        "x": 315,
-        "y": 266,
-        "w": 76,
-        "h": 78
+        "h": 68
       }
     },
     {
       "id": "recipe_2_4",
-      "label": "Fish & Chips",
+      "label": "Biryani",
       "uncertain_label": false,
-      "file": "assets/recipes/r2_c4.png",
+      "file": "assets/recipes/r2_c4_biryani.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 403,
-        "y": 266,
+        "x": 360,
+        "y": 281,
         "w": 76,
-        "h": 78
+        "h": 68
       }
     },
     {
       "id": "recipe_2_5",
-      "label": "Chef's Surprise #3",
-      "uncertain_label": true,
-      "file": "assets/recipes/r2_c5.png",
+      "label": "Fish & Chips",
+      "uncertain_label": false,
+      "file": "assets/recipes/r2_c5_fish_and_chips.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 491,
-        "y": 266,
+        "x": 442,
+        "y": 281,
         "w": 76,
-        "h": 78
+        "h": 68
       }
     },
     {
       "id": "recipe_2_6",
-      "label": "Gyro",
-      "uncertain_label": false,
-      "file": "assets/recipes/r2_c6.png",
+      "label": "Chef's Surprise #1",
+      "uncertain_label": true,
+      "file": "assets/recipes/r2_c6_chefs_surprise.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 579,
-        "y": 266,
-        "w": 76,
-        "h": 78
+        "x": 524,
+        "y": 281,
+        "w": 75,
+        "h": 68
       }
     },
     {
       "id": "recipe_2_7",
-      "label": "Arepas",
+      "label": "Gyro",
       "uncertain_label": false,
-      "file": "assets/recipes/r2_c7.png",
+      "file": "assets/recipes/r2_c7_gyro.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 667,
-        "y": 266,
+        "x": 605,
+        "y": 281,
         "w": 76,
-        "h": 78
-      }
-    },
-    {
-      "id": "recipe_2_8",
-      "label": "Sauerkraut & Sausage",
-      "uncertain_label": false,
-      "file": "assets/recipes/r2_c8.png",
-      "source_sheet": "287aad4d-1000183341.jpg",
-      "source_bbox": {
-        "x": 755,
-        "y": 266,
-        "w": 76,
-        "h": 78
+        "h": 68
       }
     },
     {
       "id": "recipe_2_9",
-      "label": "Kung Pao Chicken",
+      "label": "Arepas",
       "uncertain_label": false,
-      "file": "assets/recipes/r2_c9.png",
+      "file": "assets/recipes/r2_c9_arepas.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 843,
-        "y": 266,
+        "x": 769,
+        "y": 281,
         "w": 76,
-        "h": 78
+        "h": 68
       }
     },
     {
       "id": "recipe_2_10",
-      "label": "Chef's Surprise #4",
-      "uncertain_label": true,
-      "file": "assets/recipes/r2_c10.png",
+      "label": "Sauerkraut & Sausage",
+      "uncertain_label": false,
+      "file": "assets/recipes/r2_c10_sauerkraut_and_sausage.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 931,
-        "y": 266,
+        "x": 851,
+        "y": 281,
         "w": 76,
-        "h": 78
+        "h": 68
+      }
+    },
+    {
+      "id": "recipe_2_11",
+      "label": "Kung Pao Chicken",
+      "uncertain_label": false,
+      "file": "assets/recipes/r2_c11_kung_pao_chicken.png",
+      "source_sheet": "287aad4d-1000183341.jpg",
+      "source_bbox": {
+        "x": 933,
+        "y": 281,
+        "w": 76,
+        "h": 68
       }
     },
     {
       "id": "recipe_3_0",
       "label": "Bao Buns",
       "uncertain_label": false,
-      "file": "assets/recipes/r3_c0.png",
+      "file": "assets/recipes/r3_c0_bao_buns.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 51,
-        "y": 356,
-        "w": 76,
-        "h": 78
+        "x": 33,
+        "y": 384,
+        "w": 75,
+        "h": 54
       }
     },
     {
       "id": "recipe_3_1",
       "label": "Enchiladas",
       "uncertain_label": false,
-      "file": "assets/recipes/r3_c1.png",
+      "file": "assets/recipes/r3_c1_enchiladas.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 139,
-        "y": 356,
+        "x": 114,
+        "y": 384,
         "w": 76,
-        "h": 78
+        "h": 54
       }
     },
     {
       "id": "recipe_3_2",
       "label": "Pelmeni",
       "uncertain_label": false,
-      "file": "assets/recipes/r3_c2.png",
+      "file": "assets/recipes/r3_c2_pelmeni.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 227,
-        "y": 356,
+        "x": 196,
+        "y": 384,
         "w": 76,
-        "h": 78
-      }
-    },
-    {
-      "id": "recipe_3_3",
-      "label": "Chef's Surprise #5",
-      "uncertain_label": true,
-      "file": "assets/recipes/r3_c3.png",
-      "source_sheet": "287aad4d-1000183341.jpg",
-      "source_bbox": {
-        "x": 315,
-        "y": 356,
-        "w": 76,
-        "h": 78
+        "h": 54
       }
     },
     {
       "id": "recipe_3_4",
-      "label": "Chef's Surprise #6",
+      "label": "Chef's Surprise #2",
       "uncertain_label": true,
-      "file": "assets/recipes/r3_c4.png",
+      "file": "assets/recipes/r3_c4_chefs_surprise.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 403,
-        "y": 356,
+        "x": 360,
+        "y": 384,
         "w": 76,
-        "h": 78
+        "h": 54
       }
     },
     {
       "id": "recipe_3_5",
-      "label": "Mochi",
-      "uncertain_label": false,
-      "file": "assets/recipes/r3_c5.png",
+      "label": "Chef's Surprise #3",
+      "uncertain_label": true,
+      "file": "assets/recipes/r3_c5_chefs_surprise.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 491,
-        "y": 356,
+        "x": 442,
+        "y": 384,
         "w": 76,
-        "h": 78
+        "h": 54
       }
     },
     {
       "id": "recipe_3_6",
-      "label": "Onigiri",
+      "label": "Mochi",
       "uncertain_label": false,
-      "file": "assets/recipes/r3_c6.png",
+      "file": "assets/recipes/r3_c6_mochi.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 579,
-        "y": 356,
-        "w": 76,
-        "h": 78
+        "x": 524,
+        "y": 384,
+        "w": 75,
+        "h": 54
       }
     },
     {
       "id": "recipe_3_7",
-      "label": "Dumplings",
+      "label": "Onigiri",
       "uncertain_label": false,
-      "file": "assets/recipes/r3_c7.png",
+      "file": "assets/recipes/r3_c7_onigiri.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 667,
-        "y": 356,
+        "x": 605,
+        "y": 384,
         "w": 76,
-        "h": 78
-      }
-    },
-    {
-      "id": "recipe_3_8",
-      "label": "Borscht",
-      "uncertain_label": false,
-      "file": "assets/recipes/r3_c8.png",
-      "source_sheet": "287aad4d-1000183341.jpg",
-      "source_bbox": {
-        "x": 755,
-        "y": 356,
-        "w": 76,
-        "h": 78
+        "h": 54
       }
     },
     {
       "id": "recipe_3_9",
-      "label": "Poutine",
+      "label": "Borscht",
       "uncertain_label": false,
-      "file": "assets/recipes/r3_c9.png",
+      "file": "assets/recipes/r3_c9_borscht.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 843,
-        "y": 356,
+        "x": 769,
+        "y": 384,
         "w": 76,
-        "h": 78
+        "h": 54
       }
     },
     {
       "id": "recipe_3_10",
-      "label": "Chef's Surprise #7",
-      "uncertain_label": true,
-      "file": "assets/recipes/r3_c10.png",
+      "label": "Poutine",
+      "uncertain_label": false,
+      "file": "assets/recipes/r3_c10_poutine.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 931,
-        "y": 356,
+        "x": 851,
+        "y": 384,
         "w": 76,
-        "h": 78
+        "h": 54
+      }
+    },
+    {
+      "id": "recipe_3_11",
+      "label": "Chef's Surprise #4",
+      "uncertain_label": true,
+      "file": "assets/recipes/r3_c11_chefs_surprise.png",
+      "source_sheet": "287aad4d-1000183341.jpg",
+      "source_bbox": {
+        "x": 933,
+        "y": 384,
+        "w": 76,
+        "h": 54
       }
     },
     {
       "id": "recipe_4_0",
-      "label": "Chef's Surprise #8",
+      "label": "Chef's Surprise #5",
       "uncertain_label": true,
-      "file": "assets/recipes/r4_c0.png",
+      "file": "assets/recipes/r4_c0_chefs_surprise.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 51,
-        "y": 446,
-        "w": 76,
-        "h": 78
+        "x": 33,
+        "y": 473,
+        "w": 75,
+        "h": 42
       }
     },
     {
       "id": "recipe_4_1",
       "label": "Pelmeni Bowl",
       "uncertain_label": false,
-      "file": "assets/recipes/r4_c1.png",
+      "file": "assets/recipes/r4_c1_pelmeni_bowl.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 139,
-        "y": 446,
+        "x": 114,
+        "y": 473,
         "w": 76,
-        "h": 78
+        "h": 42
       }
     },
     {
       "id": "recipe_4_2",
       "label": "Borscht Bowl",
       "uncertain_label": false,
-      "file": "assets/recipes/r4_c2.png",
+      "file": "assets/recipes/r4_c2_borscht_bowl.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 227,
-        "y": 446,
+        "x": 196,
+        "y": 473,
         "w": 76,
-        "h": 78
-      }
-    },
-    {
-      "id": "recipe_4_3",
-      "label": "Chef's Surprise #9",
-      "uncertain_label": true,
-      "file": "assets/recipes/r4_c3.png",
-      "source_sheet": "287aad4d-1000183341.jpg",
-      "source_bbox": {
-        "x": 315,
-        "y": 446,
-        "w": 76,
-        "h": 78
+        "h": 42
       }
     },
     {
       "id": "recipe_4_4",
-      "label": "Baklava",
-      "uncertain_label": false,
-      "file": "assets/recipes/r4_c4.png",
+      "label": "Chef's Surprise #6",
+      "uncertain_label": true,
+      "file": "assets/recipes/r4_c4_chefs_surprise.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 403,
-        "y": 446,
+        "x": 360,
+        "y": 473,
         "w": 76,
-        "h": 78
+        "h": 42
       }
     },
     {
       "id": "recipe_4_5",
-      "label": "Chef's Surprise #10",
+      "label": "Chef's Surprise #7",
       "uncertain_label": true,
-      "file": "assets/recipes/r4_c5.png",
+      "file": "assets/recipes/r4_c5_chefs_surprise.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 491,
-        "y": 446,
+        "x": 442,
+        "y": 473,
         "w": 76,
-        "h": 78
-      }
-    },
-    {
-      "id": "recipe_4_6",
-      "label": "Chef's Surprise #11",
-      "uncertain_label": true,
-      "file": "assets/recipes/r4_c6.png",
-      "source_sheet": "287aad4d-1000183341.jpg",
-      "source_bbox": {
-        "x": 579,
-        "y": 446,
-        "w": 76,
-        "h": 78
+        "h": 42
       }
     },
     {
       "id": "recipe_4_7",
-      "label": "Laksa",
-      "uncertain_label": false,
-      "file": "assets/recipes/r4_c7.png",
+      "label": "Chef's Surprise #8",
+      "uncertain_label": true,
+      "file": "assets/recipes/r4_c7_chefs_surprise.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 667,
-        "y": 446,
+        "x": 605,
+        "y": 473,
         "w": 76,
-        "h": 78
+        "h": 42
       }
     },
     {
       "id": "recipe_4_8",
-      "label": "Chef's Surprise #12",
-      "uncertain_label": true,
-      "file": "assets/recipes/r4_c8.png",
+      "label": "Laksa",
+      "uncertain_label": false,
+      "file": "assets/recipes/r4_c8_laksa.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 755,
-        "y": 446,
+        "x": 687,
+        "y": 473,
         "w": 76,
-        "h": 78
+        "h": 42
       }
     },
     {
       "id": "recipe_4_9",
-      "label": "Chef's Surprise #13",
+      "label": "Chef's Surprise #9",
       "uncertain_label": true,
-      "file": "assets/recipes/r4_c9.png",
+      "file": "assets/recipes/r4_c9_chefs_surprise.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 843,
-        "y": 446,
+        "x": 769,
+        "y": 473,
         "w": 76,
-        "h": 78
+        "h": 42
       }
     },
     {
       "id": "recipe_4_10",
-      "label": "Fattoush",
-      "uncertain_label": false,
-      "file": "assets/recipes/r4_c10.png",
+      "label": "Chef's Surprise #10",
+      "uncertain_label": true,
+      "file": "assets/recipes/r4_c10_chefs_surprise.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 931,
-        "y": 446,
+        "x": 851,
+        "y": 473,
         "w": 76,
-        "h": 78
+        "h": 42
       }
     },
     {
       "id": "recipe_5_0",
       "label": "Gelato",
       "uncertain_label": false,
-      "file": "assets/recipes/r5_c0.png",
+      "file": "assets/recipes/r5_c0_gelato.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 51,
-        "y": 536,
-        "w": 76,
-        "h": 78
+        "x": 33,
+        "y": 550,
+        "w": 75,
+        "h": 55
       }
     },
     {
       "id": "recipe_5_1",
-      "label": "Onigiri Plate",
+      "label": "Onigiri Bowl",
       "uncertain_label": false,
-      "file": "assets/recipes/r5_c1.png",
+      "file": "assets/recipes/r5_c1_onigiri_bowl.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 139,
-        "y": 536,
+        "x": 114,
+        "y": 550,
         "w": 76,
-        "h": 78
+        "h": 55
       }
     },
     {
       "id": "recipe_5_2",
-      "label": "Baklava Roll",
+      "label": "Baklava",
       "uncertain_label": false,
-      "file": "assets/recipes/r5_c2.png",
+      "file": "assets/recipes/r5_c2_baklava.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 227,
-        "y": 536,
+        "x": 196,
+        "y": 550,
         "w": 76,
-        "h": 78
+        "h": 55
       }
     },
     {
       "id": "recipe_5_3",
       "label": "Churros",
       "uncertain_label": false,
-      "file": "assets/recipes/r5_c3.png",
+      "file": "assets/recipes/r5_c3_churros.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 315,
-        "y": 536,
+        "x": 278,
+        "y": 550,
         "w": 76,
-        "h": 78
+        "h": 55
       }
     },
     {
       "id": "recipe_5_4",
       "label": "Gelato Cup",
       "uncertain_label": false,
-      "file": "assets/recipes/r5_c4.png",
+      "file": "assets/recipes/r5_c4_gelato_cup.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 403,
-        "y": 536,
+        "x": 360,
+        "y": 550,
         "w": 76,
-        "h": 78
+        "h": 55
       }
     },
     {
       "id": "recipe_5_5",
       "label": "Bubble Tea",
       "uncertain_label": false,
-      "file": "assets/recipes/r5_c5.png",
+      "file": "assets/recipes/r5_c5_bubble_tea.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 491,
-        "y": 536,
+        "x": 442,
+        "y": 550,
         "w": 76,
-        "h": 78
+        "h": 55
       }
     },
     {
       "id": "recipe_5_6",
       "label": "Fruit Salad",
       "uncertain_label": false,
-      "file": "assets/recipes/r5_c6.png",
+      "file": "assets/recipes/r5_c6_fruit_salad.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 579,
-        "y": 536,
-        "w": 76,
-        "h": 78
+        "x": 524,
+        "y": 550,
+        "w": 75,
+        "h": 55
       }
     },
     {
       "id": "recipe_5_7",
       "label": "Fruit Bowl",
       "uncertain_label": false,
-      "file": "assets/recipes/r5_c7.png",
+      "file": "assets/recipes/r5_c7_fruit_bowl.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 667,
-        "y": 536,
+        "x": 605,
+        "y": 550,
         "w": 76,
-        "h": 78
+        "h": 55
       }
     },
     {
       "id": "recipe_5_8",
-      "label": "Iced Tea",
+      "label": "Tom Yum",
       "uncertain_label": false,
-      "file": "assets/recipes/r5_c8.png",
+      "file": "assets/recipes/r5_c8_tom_yum.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 755,
-        "y": 536,
+        "x": 687,
+        "y": 550,
         "w": 76,
-        "h": 78
+        "h": 55
       }
     },
     {
       "id": "recipe_5_9",
       "label": "Kebab Plate",
       "uncertain_label": false,
-      "file": "assets/recipes/r5_c9.png",
+      "file": "assets/recipes/r5_c9_kebab_plate.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 843,
-        "y": 536,
+        "x": 769,
+        "y": 550,
         "w": 76,
-        "h": 78
+        "h": 55
       }
     },
     {
       "id": "recipe_5_10",
       "label": "Falafel Wrap",
       "uncertain_label": false,
-      "file": "assets/recipes/r5_c10.png",
+      "file": "assets/recipes/r5_c10_falafel_wrap.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 931,
-        "y": 536,
+        "x": 851,
+        "y": 550,
         "w": 76,
-        "h": 78
+        "h": 55
+      }
+    },
+    {
+      "id": "recipe_5_11",
+      "label": "Caprese Salad",
+      "uncertain_label": false,
+      "file": "assets/recipes/r5_c11_caprese_salad.png",
+      "source_sheet": "287aad4d-1000183341.jpg",
+      "source_bbox": {
+        "x": 933,
+        "y": 550,
+        "w": 76,
+        "h": 55
       }
     },
     {
       "id": "recipe_6_0",
-      "label": "Caprese Salad",
+      "label": "Grilled Cheese Plate",
       "uncertain_label": false,
-      "file": "assets/recipes/r6_c0.png",
+      "file": "assets/recipes/r6_c0_grilled_cheese_plate.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 51,
-        "y": 626,
-        "w": 76,
-        "h": 78
+        "x": 33,
+        "y": 640,
+        "w": 75,
+        "h": 56
       }
     },
     {
       "id": "recipe_6_1",
-      "label": "Grilled Cheese Plate",
+      "label": "Dim Sum Plate",
       "uncertain_label": false,
-      "file": "assets/recipes/r6_c1.png",
+      "file": "assets/recipes/r6_c1_dim_sum_plate.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 139,
-        "y": 626,
+        "x": 114,
+        "y": 640,
         "w": 76,
-        "h": 78
+        "h": 56
       }
     },
     {
       "id": "recipe_6_2",
-      "label": "Dim Sum Plate",
+      "label": "Pad Thai",
       "uncertain_label": false,
-      "file": "assets/recipes/r6_c2.png",
+      "file": "assets/recipes/r6_c2_pad_thai.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 227,
-        "y": 626,
+        "x": 196,
+        "y": 640,
         "w": 76,
-        "h": 78
+        "h": 56
       }
     },
     {
       "id": "recipe_6_3",
-      "label": "Pad Thai",
+      "label": "Arepas Plate",
       "uncertain_label": false,
-      "file": "assets/recipes/r6_c3.png",
+      "file": "assets/recipes/r6_c3_arepas_plate.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 315,
-        "y": 626,
+        "x": 278,
+        "y": 640,
         "w": 76,
-        "h": 78
+        "h": 56
       }
     },
     {
       "id": "recipe_6_4",
-      "label": "Arepas Plate",
+      "label": "Falafel Plate",
       "uncertain_label": false,
-      "file": "assets/recipes/r6_c4.png",
+      "file": "assets/recipes/r6_c4_falafel_plate.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 403,
-        "y": 626,
+        "x": 360,
+        "y": 640,
         "w": 76,
-        "h": 78
+        "h": 56
       }
     },
     {
       "id": "recipe_6_5",
-      "label": "Falafel Plate",
+      "label": "Satay Skewers",
       "uncertain_label": false,
-      "file": "assets/recipes/r6_c5.png",
+      "file": "assets/recipes/r6_c5_satay_skewers.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 491,
-        "y": 626,
+        "x": 442,
+        "y": 640,
         "w": 76,
-        "h": 78
+        "h": 56
       }
     },
     {
       "id": "recipe_6_6",
       "label": "Satay Skewers",
       "uncertain_label": false,
-      "file": "assets/recipes/r6_c6.png",
+      "file": "assets/recipes/r6_c6_satay_skewers.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 579,
-        "y": 626,
-        "w": 76,
-        "h": 78
+        "x": 524,
+        "y": 640,
+        "w": 75,
+        "h": 56
       }
     },
     {
       "id": "recipe_6_7",
       "label": "Adobo",
       "uncertain_label": false,
-      "file": "assets/recipes/r6_c7.png",
+      "file": "assets/recipes/r6_c7_adobo.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 667,
-        "y": 626,
+        "x": 605,
+        "y": 640,
         "w": 76,
-        "h": 78
+        "h": 56
       }
     },
     {
       "id": "recipe_6_8",
       "label": "Pho Bo",
       "uncertain_label": false,
-      "file": "assets/recipes/r6_c8.png",
+      "file": "assets/recipes/r6_c8_pho_bo.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 755,
-        "y": 626,
+        "x": 687,
+        "y": 640,
         "w": 76,
-        "h": 78
+        "h": 56
       }
     },
     {
       "id": "recipe_6_9",
       "label": "Bulgogi",
       "uncertain_label": false,
-      "file": "assets/recipes/r6_c9.png",
+      "file": "assets/recipes/r6_c9_bulgogi.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 843,
-        "y": 626,
+        "x": 769,
+        "y": 640,
         "w": 76,
-        "h": 78
+        "h": 56
       }
     },
     {
       "id": "recipe_6_10",
-      "label": "Bibimbap",
-      "uncertain_label": false,
-      "file": "assets/recipes/r6_c10.png",
+      "label": "Chef's Surprise #11",
+      "uncertain_label": true,
+      "file": "assets/recipes/r6_c10_chefs_surprise.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 931,
-        "y": 626,
+        "x": 851,
+        "y": 640,
         "w": 76,
-        "h": 78
+        "h": 56
+      }
+    },
+    {
+      "id": "recipe_6_11",
+      "label": "Bulgogi Bowl",
+      "uncertain_label": false,
+      "file": "assets/recipes/r6_c11_bulgogi_bowl.png",
+      "source_sheet": "287aad4d-1000183341.jpg",
+      "source_bbox": {
+        "x": 933,
+        "y": 640,
+        "w": 76,
+        "h": 56
       }
     },
     {
       "id": "recipe_7_0",
       "label": "Peking Duck",
       "uncertain_label": false,
-      "file": "assets/recipes/r7_c0.png",
+      "file": "assets/recipes/r7_c0_peking_duck.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 51,
-        "y": 716,
-        "w": 76,
-        "h": 78
+        "x": 33,
+        "y": 731,
+        "w": 75,
+        "h": 56
       }
     },
     {
       "id": "recipe_7_1",
       "label": "Mussel Plate",
       "uncertain_label": false,
-      "file": "assets/recipes/r7_c1.png",
+      "file": "assets/recipes/r7_c1_mussel_plate.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 139,
-        "y": 716,
+        "x": 114,
+        "y": 731,
         "w": 76,
-        "h": 78
+        "h": 56
       }
     },
     {
       "id": "recipe_7_2",
-      "label": "Chicken Plate",
+      "label": "Chicken Bowl",
       "uncertain_label": false,
-      "file": "assets/recipes/r7_c2.png",
+      "file": "assets/recipes/r7_c2_chicken_bowl.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 227,
-        "y": 716,
+        "x": 196,
+        "y": 731,
         "w": 76,
-        "h": 78
+        "h": 56
       }
     },
     {
       "id": "recipe_7_3",
-      "label": "Pho Bowl",
+      "label": "Pho Bo Bowl",
       "uncertain_label": false,
-      "file": "assets/recipes/r7_c3.png",
+      "file": "assets/recipes/r7_c3_pho_bo_bowl.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 315,
-        "y": 716,
+        "x": 278,
+        "y": 731,
         "w": 76,
-        "h": 78
+        "h": 56
       }
     },
     {
       "id": "recipe_7_4",
-      "label": "Bulgogi Bowl",
+      "label": "Bulgogi Plate",
       "uncertain_label": false,
-      "file": "assets/recipes/r7_c4.png",
+      "file": "assets/recipes/r7_c4_bulgogi_plate.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 403,
-        "y": 716,
+        "x": 360,
+        "y": 731,
         "w": 76,
-        "h": 78
+        "h": 56
       }
     },
     {
       "id": "recipe_7_5",
       "label": "Laksa Bowl",
       "uncertain_label": false,
-      "file": "assets/recipes/r7_c5.png",
+      "file": "assets/recipes/r7_c5_laksa_bowl.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 491,
-        "y": 716,
+        "x": 442,
+        "y": 731,
         "w": 76,
-        "h": 78
+        "h": 56
       }
     },
     {
       "id": "recipe_7_6",
       "label": "Paella Valenciana",
       "uncertain_label": false,
-      "file": "assets/recipes/r7_c6.png",
+      "file": "assets/recipes/r7_c6_paella_valenciana.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 579,
-        "y": 716,
-        "w": 76,
-        "h": 78
+        "x": 524,
+        "y": 731,
+        "w": 75,
+        "h": 56
       }
     },
     {
       "id": "recipe_7_7",
       "label": "Cassoulet",
       "uncertain_label": false,
-      "file": "assets/recipes/r7_c7.png",
+      "file": "assets/recipes/r7_c7_cassoulet.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 667,
-        "y": 716,
+        "x": 605,
+        "y": 731,
         "w": 76,
-        "h": 78
+        "h": 56
       }
     },
     {
       "id": "recipe_7_8",
       "label": "Ratatouille",
       "uncertain_label": false,
-      "file": "assets/recipes/r7_c8.png",
+      "file": "assets/recipes/r7_c8_ratatouille.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 755,
-        "y": 716,
+        "x": 687,
+        "y": 731,
         "w": 76,
-        "h": 78
+        "h": 56
       }
     },
     {
       "id": "recipe_7_9",
-      "label": "Jumbalaya",
+      "label": "Ratatouille Bowl",
       "uncertain_label": false,
-      "file": "assets/recipes/r7_c9.png",
+      "file": "assets/recipes/r7_c9_ratatouille_bowl.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 843,
-        "y": 716,
+        "x": 769,
+        "y": 731,
         "w": 76,
-        "h": 78
+        "h": 56
       }
     },
     {
       "id": "recipe_7_10",
-      "label": "Pesto Pasta",
+      "label": "Jumbalaya",
       "uncertain_label": false,
-      "file": "assets/recipes/r7_c10.png",
+      "file": "assets/recipes/r7_c10_jumbalaya.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 931,
-        "y": 716,
+        "x": 851,
+        "y": 731,
         "w": 76,
-        "h": 78
+        "h": 56
+      }
+    },
+    {
+      "id": "recipe_7_11",
+      "label": "Pesto Pasta",
+      "uncertain_label": false,
+      "file": "assets/recipes/r7_c11_pesto_pasta.png",
+      "source_sheet": "287aad4d-1000183341.jpg",
+      "source_bbox": {
+        "x": 933,
+        "y": 731,
+        "w": 76,
+        "h": 56
       }
     },
     {
       "id": "recipe_8_0",
       "label": "Pesto Pasta Bowl",
       "uncertain_label": false,
-      "file": "assets/recipes/r8_c0.png",
+      "file": "assets/recipes/r8_c0_pesto_pasta_bowl.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 51,
-        "y": 806,
-        "w": 76,
-        "h": 78
+        "x": 33,
+        "y": 822,
+        "w": 75,
+        "h": 56
       }
     },
     {
       "id": "recipe_8_1",
       "label": "Takoyaki",
       "uncertain_label": false,
-      "file": "assets/recipes/r8_c1.png",
+      "file": "assets/recipes/r8_c1_takoyaki.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 139,
-        "y": 806,
+        "x": 114,
+        "y": 822,
         "w": 76,
-        "h": 78
+        "h": 56
       }
     },
     {
       "id": "recipe_8_2",
-      "label": "Hot & Sour Soup",
-      "uncertain_label": false,
-      "file": "assets/recipes/r8_c2.png",
+      "label": "Chef's Surprise #12",
+      "uncertain_label": true,
+      "file": "assets/recipes/r8_c2_chefs_surprise.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 227,
-        "y": 806,
+        "x": 196,
+        "y": 822,
         "w": 76,
-        "h": 78
+        "h": 56
       }
     },
     {
       "id": "recipe_8_3",
       "label": "Jumbalaya Bowl",
       "uncertain_label": false,
-      "file": "assets/recipes/r8_c3.png",
+      "file": "assets/recipes/r8_c3_jumbalaya_bowl.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 315,
-        "y": 806,
+        "x": 278,
+        "y": 822,
         "w": 76,
-        "h": 78
+        "h": 56
       }
     },
     {
       "id": "recipe_8_4",
       "label": "Pesto Pasta Plate",
       "uncertain_label": false,
-      "file": "assets/recipes/r8_c4.png",
+      "file": "assets/recipes/r8_c4_pesto_pasta_plate.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 403,
-        "y": 806,
+        "x": 360,
+        "y": 822,
         "w": 76,
-        "h": 78
+        "h": 56
       }
     },
     {
       "id": "recipe_8_5",
       "label": "Korma Curry",
       "uncertain_label": false,
-      "file": "assets/recipes/r8_c5.png",
+      "file": "assets/recipes/r8_c5_korma_curry.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 491,
-        "y": 806,
+        "x": 442,
+        "y": 822,
         "w": 76,
-        "h": 78
+        "h": 56
       }
     },
     {
       "id": "recipe_8_6",
       "label": "Korma Curry Bowl",
       "uncertain_label": false,
-      "file": "assets/recipes/r8_c6.png",
+      "file": "assets/recipes/r8_c6_korma_curry_bowl.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 579,
-        "y": 806,
-        "w": 76,
-        "h": 78
+        "x": 524,
+        "y": 822,
+        "w": 75,
+        "h": 56
       }
     },
     {
       "id": "recipe_8_7",
       "label": "Mulligatawny",
       "uncertain_label": false,
-      "file": "assets/recipes/r8_c7.png",
+      "file": "assets/recipes/r8_c7_mulligatawny.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 667,
-        "y": 806,
+        "x": 605,
+        "y": 822,
         "w": 76,
-        "h": 78
+        "h": 56
       }
     },
     {
       "id": "recipe_8_8",
       "label": "Pad Thai Plate",
       "uncertain_label": false,
-      "file": "assets/recipes/r8_c8.png",
+      "file": "assets/recipes/r8_c8_pad_thai_plate.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 755,
-        "y": 806,
+        "x": 687,
+        "y": 822,
         "w": 76,
-        "h": 78
+        "h": 56
       }
     },
     {
       "id": "recipe_8_9",
       "label": "Greek Salad",
       "uncertain_label": false,
-      "file": "assets/recipes/r8_c9.png",
+      "file": "assets/recipes/r8_c9_greek_salad.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 843,
-        "y": 806,
+        "x": 769,
+        "y": 822,
         "w": 76,
-        "h": 78
+        "h": 56
       }
     },
     {
       "id": "recipe_8_10",
-      "label": "Hummus Plate",
+      "label": "Caprese Salad Bowl",
       "uncertain_label": false,
-      "file": "assets/recipes/r8_c10.png",
+      "file": "assets/recipes/r8_c10_caprese_salad_bowl.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 931,
-        "y": 806,
+        "x": 851,
+        "y": 822,
         "w": 76,
-        "h": 78
+        "h": 56
+      }
+    },
+    {
+      "id": "recipe_8_11",
+      "label": "Hummus Plate",
+      "uncertain_label": false,
+      "file": "assets/recipes/r8_c11_hummus_plate.png",
+      "source_sheet": "287aad4d-1000183341.jpg",
+      "source_bbox": {
+        "x": 933,
+        "y": 822,
+        "w": 76,
+        "h": 56
       }
     },
     {
       "id": "recipe_9_0",
       "label": "Sushi Platter",
       "uncertain_label": false,
-      "file": "assets/recipes/r9_c0.png",
+      "file": "assets/recipes/r9_c0_sushi_platter.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 51,
-        "y": 896,
-        "w": 76,
-        "h": 78
+        "x": 33,
+        "y": 913,
+        "w": 75,
+        "h": 37
       }
     },
     {
       "id": "recipe_9_1",
       "label": "Ramen Bowl",
       "uncertain_label": false,
-      "file": "assets/recipes/r9_c1.png",
+      "file": "assets/recipes/r9_c1_ramen_bowl.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 139,
-        "y": 896,
+        "x": 114,
+        "y": 913,
         "w": 76,
-        "h": 78
+        "h": 37
       }
     },
     {
       "id": "recipe_9_2",
       "label": "Butter Chicken Curry",
       "uncertain_label": false,
-      "file": "assets/recipes/r9_c2.png",
+      "file": "assets/recipes/r9_c2_butter_chicken_curry.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 227,
-        "y": 896,
+        "x": 196,
+        "y": 913,
         "w": 76,
-        "h": 78
+        "h": 37
       }
     },
     {
       "id": "recipe_9_3",
       "label": "Pho Bowl",
       "uncertain_label": false,
-      "file": "assets/recipes/r9_c3.png",
+      "file": "assets/recipes/r9_c3_pho_bowl.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 315,
-        "y": 896,
+        "x": 278,
+        "y": 913,
         "w": 76,
-        "h": 78
+        "h": 37
       }
     },
     {
       "id": "recipe_9_4",
       "label": "Lasagna",
       "uncertain_label": false,
-      "file": "assets/recipes/r9_c4.png",
+      "file": "assets/recipes/r9_c4_lasagna.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 403,
-        "y": 896,
+        "x": 360,
+        "y": 913,
         "w": 76,
-        "h": 78
+        "h": 37
       }
     },
     {
       "id": "recipe_9_5",
-      "label": "Bibimbap Bowl",
+      "label": "Kebab Skewers",
       "uncertain_label": false,
-      "file": "assets/recipes/r9_c5.png",
+      "file": "assets/recipes/r9_c5_kebab_skewers.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 491,
-        "y": 896,
+        "x": 442,
+        "y": 913,
         "w": 76,
-        "h": 78
+        "h": 37
       }
     },
     {
       "id": "recipe_9_6",
-      "label": "Gumbo",
+      "label": "Spaghetti Bolognese",
       "uncertain_label": false,
-      "file": "assets/recipes/r9_c6.png",
+      "file": "assets/recipes/r9_c6_spaghetti_bolognese.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 579,
-        "y": 896,
-        "w": 76,
-        "h": 78
+        "x": 524,
+        "y": 913,
+        "w": 75,
+        "h": 37
       }
     },
     {
       "id": "recipe_9_7",
-      "label": "Spaghetti Bolognese",
+      "label": "Roast Chicken",
       "uncertain_label": false,
-      "file": "assets/recipes/r9_c7.png",
+      "file": "assets/recipes/r9_c7_roast_chicken.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 667,
-        "y": 896,
+        "x": 605,
+        "y": 913,
         "w": 76,
-        "h": 78
+        "h": 37
       }
     },
     {
       "id": "recipe_9_8",
-      "label": "Tikka Masala",
+      "label": "Gumbo",
       "uncertain_label": false,
-      "file": "assets/recipes/r9_c8.png",
+      "file": "assets/recipes/r9_c8_gumbo.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 755,
-        "y": 896,
+        "x": 687,
+        "y": 913,
         "w": 76,
-        "h": 78
+        "h": 37
       }
     },
     {
       "id": "recipe_9_9",
       "label": "Pizza Slice",
       "uncertain_label": false,
-      "file": "assets/recipes/r9_c9.png",
+      "file": "assets/recipes/r9_c9_pizza_slice.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 843,
-        "y": 896,
+        "x": 769,
+        "y": 913,
         "w": 76,
-        "h": 78
+        "h": 37
       }
     },
     {
       "id": "recipe_9_10",
       "label": "Seafood Paella",
       "uncertain_label": false,
-      "file": "assets/recipes/r9_c10.png",
+      "file": "assets/recipes/r9_c10_seafood_paella.png",
       "source_sheet": "287aad4d-1000183341.jpg",
       "source_bbox": {
-        "x": 931,
-        "y": 896,
+        "x": 851,
+        "y": 913,
         "w": 76,
-        "h": 78
+        "h": 37
+      }
+    },
+    {
+      "id": "recipe_9_11",
+      "label": "Shakshuka",
+      "uncertain_label": false,
+      "file": "assets/recipes/r9_c11_shakshuka.png",
+      "source_sheet": "287aad4d-1000183341.jpg",
+      "source_bbox": {
+        "x": 933,
+        "y": 913,
+        "w": 76,
+        "h": 37
       }
     }
   ]

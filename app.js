@@ -58,11 +58,22 @@ class Animator {
     this.stop();
     const section = this.sections[name];
     if (!section) return;
+    const isSwitch = this.current !== null && this.current !== name;
     this.current = name;
     this.frameIndex = 0;
     this.onComplete = onComplete || null;
-    this._render(section);
-    this.handle = setInterval(() => this._advance(section), section.frame_ms);
+
+    const start = () => {
+      this._render(section);
+      this.img.style.opacity = '1';
+      this.handle = setInterval(() => this._advance(section), section.frame_ms);
+    };
+    if (isSwitch) {
+      this.img.style.opacity = '0';
+      setTimeout(start, 180);
+    } else {
+      start();
+    }
   }
   _advance(section) {
     this.frameIndex++;
@@ -89,35 +100,37 @@ class Animator {
 
 // ---------------------------------------------------------------------------
 // Scene composition — layers floor / wall / counters / appliances / chef
+//
+// The scene is built in three clean horizontal bands so nothing overlaps:
+//   wall band (0–38%)     : upper cabinets, hood, fridge top
+//   counter band (38–64%) : counter run, stove, fridge body
+//   floor band (64–100%)  : open tile floor where the chef stands
 // ---------------------------------------------------------------------------
 
-function composeKitchenScene(container) {
+function composeKitchenScene(container, mode) {
   container.innerHTML = '';
   const t = id => tileById(id).file;
 
   container.style.backgroundImage = `url(${t('floor_tile_stone')})`;
-  container.style.backgroundSize = '128px 128px';
+  container.style.backgroundSize = '96px 96px';
   container.style.backgroundRepeat = 'repeat';
   container.style.backgroundPosition = 'top';
 
   const floor = document.createElement('div');
   floor.className = 'scene-layer';
   Object.assign(floor.style, {
-    left: 0, right: 0, bottom: 0, height: '58%',
+    left: 0, right: 0, bottom: 0, height: '38%', zIndex: '0',
     backgroundImage: `url(${t('floor_tile_tan')})`,
-    backgroundSize: '110px 122px', backgroundRepeat: 'repeat',
+    backgroundSize: '96px 106px', backgroundRepeat: 'repeat',
   });
   container.appendChild(floor);
 
   const layers = [
-    { id: 'wood_floor_panel_a', style: { left: '4%', bottom: '4%', width: '150px', zIndex: 1 } },
-    { id: 'cabinet_upper_run',  style: { left: '6%', top: '2%', width: '46%', zIndex: 2 } },
-    { id: 'shelf_wood',         style: { right: '4%', top: '4%', width: '17%', zIndex: 2 } },
-    { id: 'cabinet_lower_run',  style: { left: '4%', bottom: '20%', width: '58%', zIndex: 2 } },
-    { id: 'fridge',             style: { right: '4%', bottom: '10%', width: '17%', zIndex: 2 } },
-    { id: 'extractor_hood',     style: { left: '10%', top: '20%', width: '20%', zIndex: 3 } },
-    { id: 'stove_range',        style: { left: '9%', bottom: '24%', width: '38%', zIndex: 3 } },
-    { id: 'utensil_rack',       style: { left: '48%', top: '18%', width: '15%', zIndex: 3 } },
+    { id: 'cabinet_upper_run', style: { left: '4%', top: '3%', width: '52%', zIndex: 2 } },
+    { id: 'extractor_hood',    style: { left: '20%', top: '16%', width: '17%', zIndex: 3 } },
+    { id: 'fridge',            style: { right: '5%', top: '4%', width: '15%', zIndex: 2 } },
+    { id: 'cabinet_lower_run', style: { left: '4%', top: '37%', width: '62%', zIndex: 2 } },
+    { id: 'stove_range',       style: { left: '9%', top: '35%', width: '34%', zIndex: 3 } },
   ];
   for (const layer of layers) {
     const img = document.createElement('img');
@@ -127,7 +140,11 @@ function composeKitchenScene(container) {
     container.appendChild(img);
   }
 
-  return { chefAnchor: { left: '16%', bottom: '22%', width: '110px', zIndex: 4 } };
+  const chefAnchor = mode === 'cooking'
+    ? { left: '15%', top: '46%', width: '92px', zIndex: 4 }   // standing at the stove
+    : { left: '30%', top: '72%', width: '96px', zIndex: 4 };  // idle, open floor
+
+  return { chefAnchor };
 }
 
 function placeChef(container, anchor, imgId) {
@@ -139,35 +156,21 @@ function placeChef(container, anchor, imgId) {
   return img;
 }
 
+// A calm, single strip of distinct ingredient icons — no repeats, no
+// left/right walls of icons that made the home screen feel cluttered.
 function decorateBorders() {
-  const ingredientFiles = state.data.ingredients.sprites.map(s => s.file);
-  const pick = n => {
-    const out = [];
-    for (let i = 0; i < n; i++) out.push(ingredientFiles[(i * 7) % ingredientFiles.length]);
-    return out;
-  };
+  const sprites = state.data.ingredients.sprites;
+  const count = 9;
+  const stride = Math.floor(sprites.length / count);
+  const chosen = [];
+  for (let i = 0; i < count; i++) chosen.push(sprites[i * stride % sprites.length]);
 
-  const topFiles = pick(10);
-  const sideFiles = pick(8);
-
-  paintBorder(document.getElementById('border-top'), topFiles, 'row');
-  paintBorder(document.getElementById('border-left'), sideFiles, 'col');
-  paintBorder(document.getElementById('border-right'), sideFiles.slice().reverse(), 'col');
-}
-
-function paintBorder(el, files, direction) {
+  const el = document.getElementById('border-top');
   el.innerHTML = '';
-  el.style.display = 'flex';
-  el.style.flexDirection = direction === 'row' ? 'row' : 'column';
-  el.style.justifyContent = 'space-around';
-  el.style.alignItems = 'center';
-  el.style.background = 'var(--bg-panel)';
-  for (const f of files) {
+  for (const s of chosen) {
     const img = document.createElement('img');
-    img.src = f;
-    img.style.width = '32px';
-    img.style.height = '32px';
-    img.style.objectFit = 'contain';
+    img.src = s.file;
+    img.alt = s.label;
     el.appendChild(img);
   }
 }
@@ -192,8 +195,8 @@ let cookAnimator = null;
 
 function initHomeScene() {
   const scene = document.getElementById('kitchen-scene');
-  const anchor = composeKitchenScene(scene);
-  const chefImg = placeChef(scene, anchor, 'chef-idle');
+  const { chefAnchor } = composeKitchenScene(scene, 'idle');
+  const chefImg = placeChef(scene, chefAnchor, 'chef-idle');
   homeAnimator = new Animator(chefImg, state.data.chef.sections);
   homeAnimator.play('idle');
 }
@@ -210,29 +213,27 @@ function startCookingSession(minutes) {
   state.timer.remainingMs = state.timer.totalMs;
 
   const scene = document.getElementById('cooking-scene');
-  scene.querySelectorAll('.scene-layer').forEach(el => el.remove());
-  const t = id => tileById(id).file;
-  scene.style.backgroundImage = `linear-gradient(180deg, rgba(74,55,40,0.0) 0%, rgba(58,42,29,0.0) 100%), url(${t('stove_range')})`;
-  scene.style.backgroundSize = 'auto 60%';
-  scene.style.backgroundRepeat = 'no-repeat';
-  scene.style.backgroundPosition = 'center 90%';
-
-  const chefImg = document.getElementById('chef-sprite');
+  const { chefAnchor } = composeKitchenScene(scene, 'cooking');
+  const chefImg = placeChef(scene, chefAnchor, 'chef-sprite');
   cookAnimator = new Animator(chefImg, state.data.chef.sections);
 
   const stageLabel = document.getElementById('countdown-stage');
+  const setStage = text => {
+    stageLabel.style.opacity = '0';
+    setTimeout(() => { stageLabel.textContent = text; stageLabel.style.opacity = '1'; }, 200);
+  };
 
-  cookAnimator.play('walking', {
-    onComplete: () => {
-      stageLabel.textContent = 'Chopping ingredients…';
-      cookAnimator.play('chopping');
-      setTimeout(() => {
-        stageLabel.textContent = 'Cooking in progress…';
-        cookAnimator.play('stirring');
-      }, 3000);
-    },
-  });
+  // Walking and chopping are both looping animations, so we drive the stage
+  // sequence on a fixed timeline rather than an animation "onComplete" (which
+  // only ever fires for non-looping sections).
+  cookAnimator.play('walking');
   stageLabel.textContent = 'The chef arrives & gathers ingredients…';
+
+  const introTimers = [
+    setTimeout(() => { setStage('Chopping ingredients…'); cookAnimator.play('chopping'); }, 2200),
+    setTimeout(() => { setStage('Cooking in progress…'); cookAnimator.play('stirring'); }, 5200),
+  ];
+  state.timer.introTimers = introTimers;
 
   document.getElementById('countdown-readout').textContent = formatMs(state.timer.remainingMs);
 
@@ -242,6 +243,7 @@ function startCookingSession(minutes) {
     document.getElementById('countdown-readout').textContent = formatMs(state.timer.remainingMs);
     if (state.timer.remainingMs <= 0) {
       clearInterval(state.timer.tickHandle);
+      introTimers.forEach(clearTimeout);
       cookAnimator.stop();
       finishCooking();
     }
@@ -252,6 +254,7 @@ function startCookingSession(minutes) {
 
 function cancelCooking() {
   if (state.timer.tickHandle) clearInterval(state.timer.tickHandle);
+  if (state.timer.introTimers) state.timer.introTimers.forEach(clearTimeout);
   if (cookAnimator) cookAnimator.stop();
   showView('home');
 }
