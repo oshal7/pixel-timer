@@ -1,0 +1,609 @@
+{
+  "grid": {
+    "rows": 5,
+    "cols": 10,
+    "note": "measured via background-color-difference column/row band detection on the original sheet"
+  },
+  "sprites": [
+    {
+      "id": "tomato",
+      "label": "Tomato",
+      "file": "assets/ingredients/tomato.png",
+      "source_sheet": "c98e3108-1000183342.jpg",
+      "source_bbox": {
+        "x": 43,
+        "y": 52,
+        "w": 94,
+        "h": 95
+      }
+    },
+    {
+      "id": "basil",
+      "label": "Basil",
+      "file": "assets/ingredients/basil.png",
+      "source_sheet": "c98e3108-1000183342.jpg",
+      "source_bbox": {
+        "x": 137,
+        "y": 52,
+        "w": 97,
+        "h": 95
+      }
+    },
+    {
+      "id": "onion",
+      "label": "Onion",
+      "file": "assets/ingredients/onion.png",
+      "source_sheet": "c98e3108-1000183342.jpg",
+      "source_bbox": {
+        "x": 235,
+        "y": 52,
+        "w": 97,
+        "h": 95
+      }
+    },
+    {
+      "id": "bell_pepper",
+      "label": "Bell Pepper",
+      "file": "assets/ingredients/bell_pepper.png",
+      "source_sheet": "c98e3108-1000183342.jpg",
+      "source_bbox": {
+        "x": 333,
+        "y": 52,
+        "w": 98,
+        "h": 95
+      }
+    },
+    {
+      "id": "garlic",
+      "label": "Garlic",
+      "file": "assets/ingredients/garlic.png",
+      "source_sheet": "c98e3108-1000183342.jpg",
+      "source_bbox": {
+        "x": 431,
+        "y": 52,
+        "w": 98,
+        "h": 95
+      }
+    },
+    {
+      "id": "oregano",
+      "label": "Oregano",
+      "file": "assets/ingredients/oregano.png",
+      "source_sheet": "c98e3108-1000183342.jpg",
+      "source_bbox": {
+        "x": 529,
+        "y": 52,
+        "w": 97,
+        "h": 95
+      }
+    },
+    {
+      "id": "carrot",
+      "label": "Carrot",
+      "file": "assets/ingredients/carrot.png",
+      "source_sheet": "c98e3108-1000183342.jpg",
+      "source_bbox": {
+        "x": 627,
+        "y": 52,
+        "w": 98,
+        "h": 95
+      }
+    },
+    {
+      "id": "potato",
+      "label": "Potato",
+      "file": "assets/ingredients/potato.png",
+      "source_sheet": "c98e3108-1000183342.jpg",
+      "source_bbox": {
+        "x": 724,
+        "y": 52,
+        "w": 99,
+        "h": 95
+      }
+    },
+    {
+      "id": "ginger",
+      "label": "Ginger",
+      "file": "assets/ingredients/ginger.png",
+      "source_sheet": "c98e3108-1000183342.jpg",
+      "source_bbox": {
+        "x": 823,
+        "y": 52,
+        "w": 97,
+        "h": 95
+      }
+    },
+    {
+      "id": "chili",
+      "label": "Chili",
+      "file": "assets/ingredients/chili.png",
+      "source_sheet": "c98e3108-1000183342.jpg",
+      "source_bbox": {
+        "x": 920,
+        "y": 52,
+        "w": 90,
+        "h": 95
+      }
+    },
+    {
+      "id": "ground_beef",
+      "label": "Ground Beef",
+      "file": "assets/ingredients/ground_beef.png",
+      "source_sheet": "c98e3108-1000183342.jpg",
+      "source_bbox": {
+        "x": 43,
+        "y": 248,
+        "w": 94,
+        "h": 97
+      }
+    },
+    {
+      "id": "chicken",
+      "label": "Chicken",
+      "file": "assets/ingredients/chicken.png",
+      "source_sheet": "c98e3108-1000183342.jpg",
+      "source_bbox": {
+        "x": 137,
+        "y": 248,
+        "w": 97,
+        "h": 97
+      }
+    },
+    {
+      "id": "pork_chop",
+      "label": "Pork Chop",
+      "file": "assets/ingredients/pork_chop.png",
+      "source_sheet": "c98e3108-1000183342.jpg",
+      "source_bbox": {
+        "x": 235,
+        "y": 248,
+        "w": 97,
+        "h": 97
+      }
+    },
+    {
+      "id": "fish",
+      "label": "Fish",
+      "file": "assets/ingredients/fish.png",
+      "source_sheet": "c98e3108-1000183342.jpg",
+      "source_bbox": {
+        "x": 333,
+        "y": 248,
+        "w": 98,
+        "h": 97
+      }
+    },
+    {
+      "id": "eggs",
+      "label": "Eggs",
+      "file": "assets/ingredients/eggs.png",
+      "source_sheet": "c98e3108-1000183342.jpg",
+      "source_bbox": {
+        "x": 431,
+        "y": 248,
+        "w": 98,
+        "h": 97
+      }
+    },
+    {
+      "id": "sausage",
+      "label": "Sausage",
+      "file": "assets/ingredients/sausage.png",
+      "source_sheet": "c98e3108-1000183342.jpg",
+      "source_bbox": {
+        "x": 529,
+        "y": 248,
+        "w": 97,
+        "h": 97
+      }
+    },
+    {
+      "id": "milk",
+      "label": "Milk",
+      "file": "assets/ingredients/milk.png",
+      "source_sheet": "c98e3108-1000183342.jpg",
+      "source_bbox": {
+        "x": 627,
+        "y": 248,
+        "w": 98,
+        "h": 97
+      }
+    },
+    {
+      "id": "butter",
+      "label": "Butter",
+      "file": "assets/ingredients/butter.png",
+      "source_sheet": "c98e3108-1000183342.jpg",
+      "source_bbox": {
+        "x": 724,
+        "y": 248,
+        "w": 99,
+        "h": 97
+      }
+    },
+    {
+      "id": "cheese",
+      "label": "Cheese",
+      "file": "assets/ingredients/cheese.png",
+      "source_sheet": "c98e3108-1000183342.jpg",
+      "source_bbox": {
+        "x": 823,
+        "y": 248,
+        "w": 97,
+        "h": 97
+      }
+    },
+    {
+      "id": "bacon",
+      "label": "Bacon",
+      "file": "assets/ingredients/bacon.png",
+      "source_sheet": "c98e3108-1000183342.jpg",
+      "source_bbox": {
+        "x": 920,
+        "y": 248,
+        "w": 90,
+        "h": 97
+      }
+    },
+    {
+      "id": "flour",
+      "label": "Flour",
+      "file": "assets/ingredients/flour.png",
+      "source_sheet": "c98e3108-1000183342.jpg",
+      "source_bbox": {
+        "x": 43,
+        "y": 466,
+        "w": 94,
+        "h": 125
+      }
+    },
+    {
+      "id": "pasta",
+      "label": "Pasta",
+      "file": "assets/ingredients/pasta.png",
+      "source_sheet": "c98e3108-1000183342.jpg",
+      "source_bbox": {
+        "x": 137,
+        "y": 466,
+        "w": 97,
+        "h": 125
+      }
+    },
+    {
+      "id": "rice",
+      "label": "Rice",
+      "file": "assets/ingredients/rice.png",
+      "source_sheet": "c98e3108-1000183342.jpg",
+      "source_bbox": {
+        "x": 235,
+        "y": 466,
+        "w": 97,
+        "h": 125
+      }
+    },
+    {
+      "id": "sugar",
+      "label": "Sugar",
+      "file": "assets/ingredients/sugar.png",
+      "source_sheet": "c98e3108-1000183342.jpg",
+      "source_bbox": {
+        "x": 333,
+        "y": 466,
+        "w": 98,
+        "h": 125
+      }
+    },
+    {
+      "id": "salt",
+      "label": "Salt",
+      "file": "assets/ingredients/salt.png",
+      "source_sheet": "c98e3108-1000183342.jpg",
+      "source_bbox": {
+        "x": 431,
+        "y": 466,
+        "w": 98,
+        "h": 125
+      }
+    },
+    {
+      "id": "pepper",
+      "label": "Pepper",
+      "file": "assets/ingredients/pepper.png",
+      "source_sheet": "c98e3108-1000183342.jpg",
+      "source_bbox": {
+        "x": 529,
+        "y": 466,
+        "w": 97,
+        "h": 125
+      }
+    },
+    {
+      "id": "bread",
+      "label": "Bread",
+      "file": "assets/ingredients/bread.png",
+      "source_sheet": "c98e3108-1000183342.jpg",
+      "source_bbox": {
+        "x": 627,
+        "y": 466,
+        "w": 98,
+        "h": 125
+      }
+    },
+    {
+      "id": "dough",
+      "label": "Dough",
+      "file": "assets/ingredients/dough.png",
+      "source_sheet": "c98e3108-1000183342.jpg",
+      "source_bbox": {
+        "x": 724,
+        "y": 466,
+        "w": 99,
+        "h": 125
+      }
+    },
+    {
+      "id": "olive_oil",
+      "label": "Olive Oil",
+      "file": "assets/ingredients/olive_oil.png",
+      "source_sheet": "c98e3108-1000183342.jpg",
+      "source_bbox": {
+        "x": 823,
+        "y": 466,
+        "w": 97,
+        "h": 125
+      }
+    },
+    {
+      "id": "yeast",
+      "label": "Yeast",
+      "file": "assets/ingredients/yeast.png",
+      "source_sheet": "c98e3108-1000183342.jpg",
+      "source_bbox": {
+        "x": 920,
+        "y": 466,
+        "w": 90,
+        "h": 125
+      }
+    },
+    {
+      "id": "rosemary",
+      "label": "Rosemary",
+      "file": "assets/ingredients/rosemary.png",
+      "source_sheet": "c98e3108-1000183342.jpg",
+      "source_bbox": {
+        "x": 43,
+        "y": 704,
+        "w": 94,
+        "h": 101
+      }
+    },
+    {
+      "id": "thyme",
+      "label": "Thyme",
+      "file": "assets/ingredients/thyme.png",
+      "source_sheet": "c98e3108-1000183342.jpg",
+      "source_bbox": {
+        "x": 137,
+        "y": 704,
+        "w": 97,
+        "h": 101
+      }
+    },
+    {
+      "id": "parsley",
+      "label": "Parsley",
+      "file": "assets/ingredients/parsley.png",
+      "source_sheet": "c98e3108-1000183342.jpg",
+      "source_bbox": {
+        "x": 235,
+        "y": 704,
+        "w": 97,
+        "h": 101
+      }
+    },
+    {
+      "id": "cinnamon",
+      "label": "Cinnamon",
+      "file": "assets/ingredients/cinnamon.png",
+      "source_sheet": "c98e3108-1000183342.jpg",
+      "source_bbox": {
+        "x": 333,
+        "y": 704,
+        "w": 98,
+        "h": 101
+      }
+    },
+    {
+      "id": "soy_sauce",
+      "label": "Soy Sauce",
+      "file": "assets/ingredients/soy_sauce.png",
+      "source_sheet": "c98e3108-1000183342.jpg",
+      "source_bbox": {
+        "x": 431,
+        "y": 704,
+        "w": 98,
+        "h": 101
+      }
+    },
+    {
+      "id": "bay_leaf",
+      "label": "Bay Leaf",
+      "file": "assets/ingredients/bay_leaf.png",
+      "source_sheet": "c98e3108-1000183342.jpg",
+      "source_bbox": {
+        "x": 529,
+        "y": 704,
+        "w": 97,
+        "h": 101
+      }
+    },
+    {
+      "id": "saffron",
+      "label": "Saffron",
+      "file": "assets/ingredients/saffron.png",
+      "source_sheet": "c98e3108-1000183342.jpg",
+      "source_bbox": {
+        "x": 627,
+        "y": 704,
+        "w": 98,
+        "h": 101
+      }
+    },
+    {
+      "id": "star_anise",
+      "label": "Star Anise",
+      "file": "assets/ingredients/star_anise.png",
+      "source_sheet": "c98e3108-1000183342.jpg",
+      "source_bbox": {
+        "x": 724,
+        "y": 704,
+        "w": 99,
+        "h": 101
+      }
+    },
+    {
+      "id": "peppercorns",
+      "label": "Peppercorns",
+      "file": "assets/ingredients/peppercorns.png",
+      "source_sheet": "c98e3108-1000183342.jpg",
+      "source_bbox": {
+        "x": 823,
+        "y": 704,
+        "w": 97,
+        "h": 101
+      }
+    },
+    {
+      "id": "vanilla",
+      "label": "Vanilla",
+      "file": "assets/ingredients/vanilla.png",
+      "source_sheet": "c98e3108-1000183342.jpg",
+      "source_bbox": {
+        "x": 920,
+        "y": 704,
+        "w": 90,
+        "h": 101
+      }
+    },
+    {
+      "id": "apple",
+      "label": "Apple",
+      "file": "assets/ingredients/apple.png",
+      "source_sheet": "c98e3108-1000183342.jpg",
+      "source_bbox": {
+        "x": 43,
+        "y": 863,
+        "w": 94,
+        "h": 96
+      }
+    },
+    {
+      "id": "orange",
+      "label": "Orange",
+      "file": "assets/ingredients/orange.png",
+      "source_sheet": "c98e3108-1000183342.jpg",
+      "source_bbox": {
+        "x": 137,
+        "y": 863,
+        "w": 97,
+        "h": 96
+      }
+    },
+    {
+      "id": "banana",
+      "label": "Banana",
+      "file": "assets/ingredients/banana.png",
+      "source_sheet": "c98e3108-1000183342.jpg",
+      "source_bbox": {
+        "x": 235,
+        "y": 863,
+        "w": 97,
+        "h": 96
+      }
+    },
+    {
+      "id": "lemon",
+      "label": "Lemon",
+      "file": "assets/ingredients/lemon.png",
+      "source_sheet": "c98e3108-1000183342.jpg",
+      "source_bbox": {
+        "x": 333,
+        "y": 863,
+        "w": 98,
+        "h": 96
+      }
+    },
+    {
+      "id": "lime",
+      "label": "Lime",
+      "file": "assets/ingredients/lime.png",
+      "source_sheet": "c98e3108-1000183342.jpg",
+      "source_bbox": {
+        "x": 431,
+        "y": 863,
+        "w": 98,
+        "h": 96
+      }
+    },
+    {
+      "id": "grapes",
+      "label": "Grapes",
+      "file": "assets/ingredients/grapes.png",
+      "source_sheet": "c98e3108-1000183342.jpg",
+      "source_bbox": {
+        "x": 529,
+        "y": 863,
+        "w": 97,
+        "h": 96
+      }
+    },
+    {
+      "id": "strawberry",
+      "label": "Strawberry",
+      "file": "assets/ingredients/strawberry.png",
+      "source_sheet": "c98e3108-1000183342.jpg",
+      "source_bbox": {
+        "x": 627,
+        "y": 863,
+        "w": 98,
+        "h": 96
+      }
+    },
+    {
+      "id": "blueberry",
+      "label": "Blueberry",
+      "file": "assets/ingredients/blueberry.png",
+      "source_sheet": "c98e3108-1000183342.jpg",
+      "source_bbox": {
+        "x": 724,
+        "y": 863,
+        "w": 99,
+        "h": 96
+      }
+    },
+    {
+      "id": "mushroom",
+      "label": "Mushroom",
+      "file": "assets/ingredients/mushroom.png",
+      "source_sheet": "c98e3108-1000183342.jpg",
+      "source_bbox": {
+        "x": 823,
+        "y": 863,
+        "w": 97,
+        "h": 96
+      }
+    },
+    {
+      "id": "corn",
+      "label": "Corn",
+      "file": "assets/ingredients/corn.png",
+      "source_sheet": "c98e3108-1000183342.jpg",
+      "source_bbox": {
+        "x": 920,
+        "y": 863,
+        "w": 90,
+        "h": 96
+      }
+    }
+  ]
+}

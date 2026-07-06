@@ -1,0 +1,287 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg-dark: #241811;
+  --bg-panel: #3a2a1d;
+  --tan: #e8c9a0;
+  --tan-dark: #c9a878;
+  --brown: #6b4a30;
+  --brown-dark: #4a3220;
+  --accent: #d97b3f;
+  --accent-dark: #a85a26;
+  --text-light: #f5e6d3;
+  --text-muted: #c4a687;
+}
+
+html, body {
+  height: 100%;
+  background: var(--bg-dark);
+  color: var(--text-light);
+  font-family: 'Trebuchet MS', 'Segoe UI', sans-serif;
+  overflow-x: hidden;
+}
+
+img { image-rendering: pixelated; image-rendering: crisp-edges; }
+
+#app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 24px;
+  background: var(--bg-panel);
+  border-bottom: 4px solid var(--brown-dark);
+}
+
+.topbar h1 {
+  font-size: 1.4rem;
+  letter-spacing: 3px;
+  color: var(--accent);
+  text-shadow: 2px 2px 0 #000;
+}
+
+.nav-btn {
+  background: var(--brown);
+  color: var(--text-light);
+  border: 2px solid var(--brown-dark);
+  padding: 8px 14px;
+  margin-left: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 4px;
+}
+.nav-btn.active { background: var(--accent); border-color: var(--accent-dark); }
+
+.badge {
+  background: var(--bg-dark);
+  border-radius: 10px;
+  padding: 1px 7px;
+  font-size: 0.75rem;
+  margin-left: 4px;
+}
+
+#stage {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.view {
+  display: none;
+  width: 100%;
+  max-width: 900px;
+  padding: 20px;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.view.active { display: flex; }
+
+/* ---------- Home / kitchen scene ---------- */
+
+#view-home { position: relative; }
+
+.border-frame {
+  position: absolute;
+  background-repeat: repeat;
+  background-size: 44px 44px;
+  opacity: 0.9;
+  z-index: 0;
+}
+#border-top   { top: 0; left: 0; right: 0; height: 44px; }
+#border-left  { top: 0; bottom: 0; left: 0; width: 44px; }
+#border-right { top: 0; bottom: 0; right: 0; width: 44px; }
+
+.kitchen-scene {
+  position: relative;
+  width: 100%;
+  max-width: 760px;
+  height: 420px;
+  margin: 44px auto 0;
+  border: 4px solid var(--brown-dark);
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+  z-index: 1;
+}
+
+.scene-layer {
+  position: absolute;
+  image-rendering: pixelated;
+}
+
+.home-copy {
+  text-align: center;
+  z-index: 1;
+}
+.tagline { color: var(--text-muted); font-style: italic; margin-bottom: 10px; }
+
+.primary-btn {
+  background: var(--accent);
+  border: 3px solid var(--accent-dark);
+  color: #fff;
+  font-weight: bold;
+  padding: 12px 28px;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 0 var(--accent-dark);
+}
+.primary-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--accent-dark); }
+
+.ghost-btn {
+  background: transparent;
+  border: 2px solid var(--brown);
+  color: var(--text-muted);
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* ---------- Setup / duration picker ---------- */
+
+#view-setup h2 { color: var(--accent); letter-spacing: 2px; }
+
+.dial-wrap { margin: 10px 0; }
+.dial {
+  width: 220px; height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #f2ddb8, var(--tan-dark) 70%, var(--brown-dark));
+  border: 6px solid var(--brown-dark);
+  position: relative;
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.4), 0 6px 14px rgba(0,0,0,0.5);
+}
+.dial-face { position: absolute; inset: 10px; border-radius: 50%; border: 2px dashed var(--brown); }
+.dial-hand {
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 4px; height: 40%;
+  background: var(--accent-dark);
+  transform-origin: top center;
+  transform: translateX(-50%) rotate(0deg);
+  border-radius: 2px;
+}
+.dial-center {
+  position: absolute; left: 50%; top: 50%;
+  width: 14px; height: 14px; background: var(--brown-dark);
+  border-radius: 50%; transform: translate(-50%,-50%);
+}
+.dial-readout {
+  position: absolute; left: 50%; bottom: 26%;
+  transform: translateX(-50%);
+  font-size: 1.4rem; font-weight: bold; color: var(--brown-dark);
+}
+
+.duration-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(140px, 1fr));
+  gap: 10px;
+  width: 100%;
+  max-width: 460px;
+}
+.duration-btn {
+  padding: 14px 8px;
+  border-radius: 8px;
+  border: 3px solid var(--brown-dark);
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  background: var(--brown);
+}
+.duration-btn small { font-weight: normal; opacity: 0.85; }
+.duration-btn.very-short { background: #b0432c; border-color: #7a2c1c; }
+.duration-btn.short      { background: #c07a2c; border-color: #85511c; }
+.duration-btn.medium     { background: #4c7a4a; border-color: #325432; }
+.duration-btn.other      { background: #3a5f8a; border-color: #274060; }
+.duration-btn.selected   { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+#custom-range { width: 100%; max-width: 460px; }
+.hidden { display: none !important; }
+
+.setup-actions { display: flex; gap: 12px; margin-top: 6px; }
+
+/* ---------- Cooking in progress ---------- */
+
+.cooking-scene {
+  width: 100%;
+  max-width: 640px;
+  height: 300px;
+  position: relative;
+  background: linear-gradient(180deg, #4a3728 0%, #6b4a30 60%, #3a2a1d 100%);
+  border: 4px solid var(--brown-dark);
+  border-radius: 8px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+}
+.chef-sprite {
+  width: 160px;
+  height: auto;
+  image-rendering: pixelated;
+  margin-bottom: 12px;
+}
+
+.countdown-wrap { text-align: center; }
+.countdown { font-size: 2.6rem; font-weight: bold; color: var(--accent); text-shadow: 2px 2px 0 #000; }
+.countdown-label { color: var(--text-muted); margin: 6px 0 14px; min-height: 1.2em; }
+
+/* ---------- Dish complete ---------- */
+
+#view-complete h2 { color: var(--accent); letter-spacing: 2px; }
+.complete-scene {
+  display: flex; align-items: center; justify-content: center; gap: 28px;
+  flex-wrap: wrap;
+}
+.dish-plate {
+  background: radial-gradient(circle, #fff 55%, #ddd 60%, transparent 62%);
+  padding: 20px;
+  border-radius: 50%;
+  text-align: center;
+}
+.dish-plate img { width: 110px; height: 110px; object-fit: contain; }
+.dish-name { color: var(--brown-dark); font-weight: bold; margin-top: 4px; }
+
+.unlock-banner {
+  background: var(--bg-panel);
+  border: 3px solid var(--accent);
+  border-radius: 8px;
+  padding: 14px 24px;
+  text-align: center;
+}
+.unlock-title { color: var(--accent); font-weight: bold; letter-spacing: 1px; }
+.unlock-sub { color: var(--text-muted); font-size: 0.9rem; margin-top: 4px; }
+
+/* ---------- Recipe book ---------- */
+
+#view-book h2 { color: var(--accent); letter-spacing: 2px; }
+.recipe-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 12px;
+  width: 100%;
+}
+.recipe-card {
+  background: var(--bg-panel);
+  border: 2px solid var(--brown);
+  border-radius: 8px;
+  padding: 8px;
+  text-align: center;
+}
+.recipe-card img { width: 100%; height: 80px; object-fit: cover; border-radius: 4px; }
+.recipe-card .rname { font-size: 0.75rem; margin-top: 6px; color: var(--text-light); }
+.recipe-card.locked { opacity: 0.35; }
+.recipe-card.locked img { filter: grayscale(1) brightness(0.4); }
+
+@media (max-width: 640px) {
+  .kitchen-scene { height: 300px; }
+  .dial { width: 170px; height: 170px; }
+}

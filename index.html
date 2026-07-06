@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Focus Kitchen</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+
+  <header class="topbar">
+    <h1>FOCUS KITCHEN</h1>
+    <nav>
+      <button id="nav-home" class="nav-btn active">Kitchen</button>
+      <button id="nav-book" class="nav-btn">Recipe Book <span id="book-count" class="badge">0</span></button>
+    </nav>
+  </header>
+
+  <main id="stage">
+
+    <!-- HOME / IDLE KITCHEN SCENE -->
+    <section id="view-home" class="view active">
+      <div class="border-frame" id="border-top"></div>
+      <div class="border-frame" id="border-left"></div>
+      <div class="border-frame" id="border-right"></div>
+
+      <div class="kitchen-scene" id="kitchen-scene">
+        <!-- populated by scene composer -->
+      </div>
+
+      <div class="home-copy">
+        <p class="tagline">Heating a cookbook for cooling focus.</p>
+        <button id="start-cooking-btn" class="primary-btn">Start Cooking</button>
+      </div>
+    </section>
+
+    <!-- DURATION PICKER -->
+    <section id="view-setup" class="view">
+      <h2>Set Focus Timer</h2>
+      <div class="dial-wrap">
+        <div class="dial" id="dial">
+          <div class="dial-face"></div>
+          <div class="dial-hand" id="dial-hand"></div>
+          <div class="dial-center"></div>
+          <div class="dial-readout" id="dial-readout">25:00</div>
+        </div>
+      </div>
+      <div class="duration-grid">
+        <button class="duration-btn very-short" data-min="8">VERY SHORT<br><small>5-10m</small></button>
+        <button class="duration-btn short" data-min="25">SHORT<br><small>15-30m</small></button>
+        <button class="duration-btn medium" data-min="60">MEDIUM<br><small>45-80m</small></button>
+        <button class="duration-btn other" data-min="custom">OTHER<br><small>1-30m</small></button>
+      </div>
+      <input type="range" id="custom-range" min="1" max="120" value="25" class="hidden">
+      <div class="setup-actions">
+        <button id="back-to-home" class="ghost-btn">Back</button>
+        <button id="begin-timer-btn" class="primary-btn">Start Cooking</button>
+      </div>
+    </section>
+
+    <!-- COOKING IN PROGRESS -->
+    <section id="view-cooking" class="view">
+      <div class="cooking-scene" id="cooking-scene">
+        <img id="chef-sprite" class="chef-sprite" alt="chef">
+      </div>
+      <div class="countdown-wrap">
+        <div class="countdown" id="countdown-readout">25:00</div>
+        <div class="countdown-label" id="countdown-stage">The chef arrives &amp; gathers ingredients&hellip;</div>
+        <button id="cancel-cook-btn" class="ghost-btn">Cancel</button>
+      </div>
+    </section>
+
+    <!-- DISH COMPLETE -->
+    <section id="view-complete" class="view">
+      <h2>DISH COMPLETE!</h2>
+      <div class="complete-scene">
+        <img id="chef-presenting" class="chef-sprite" alt="chef presenting">
+        <div class="dish-plate">
+          <img id="dish-image" alt="finished dish">
+          <div id="dish-name" class="dish-name"></div>
+        </div>
+      </div>
+      <div id="unlock-banner" class="unlock-banner hidden">
+        <div class="unlock-title">SURPRISE RECIPE UNLOCKED!</div>
+        <div class="unlock-sub">New recipe added to collection</div>
+      </div>
+      <button id="done-btn" class="primary-btn">Back to Kitchen</button>
+    </section>
+
+    <!-- RECIPE BOOK -->
+    <section id="view-book" class="view">
+      <h2>RECIPE COLLECTION</h2>
+      <div class="recipe-grid" id="recipe-grid"></div>
+    </section>
+
+  </main>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
