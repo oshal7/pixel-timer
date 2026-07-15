@@ -6,11 +6,12 @@
 // ---------------------------------------------------------------------------
 
 const STORAGE_KEY = 'focus-kitchen-unlocked-recipes';
+const SESSION_KEY = 'focus-kitchen-session';
 
 const state = {
   data: { ingredients: null, tiles: null, chef: null, recipes: null },
   unlocked: loadUnlocked(),
-  timer: { totalMs: 0, remainingMs: 0, tickHandle: null, stage: null },
+  timer: { totalMs: 0, endAt: 0, tickHandle: null, introTimers: [], introDone: false, paused: false, remainingAtPauseMs: 0 },
   animators: [],
 };
 
@@ -21,6 +22,23 @@ function loadUnlocked() {
 }
 function saveUnlocked() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify([...state.unlocked]));
+}
+
+function saveSession() {
+  const t = state.timer;
+  if (!t.totalMs) { localStorage.removeItem(SESSION_KEY); return; }
+  localStorage.setItem(SESSION_KEY, JSON.stringify({
+    totalMs: t.totalMs,
+    endAt: t.paused ? null : t.endAt,
+    paused: t.paused,
+    remainingAtPauseMs: t.remainingAtPauseMs,
+  }));
+}
+function clearSession() {
+  localStorage.removeItem(SESSION_KEY);
+}
+function loadSession() {
+  try { return JSON.parse(localStorage.getItem(SESSION_KEY)); } catch { return null; }
 }
 
 // ---------------------------------------------------------------------------
@@ -176,6 +194,45 @@ function decorateBorders() {
 }
 
 // ---------------------------------------------------------------------------
+// Completion sound + tab-title flash — no external audio asset needed
+// ---------------------------------------------------------------------------
+
+let audioCtx = null;
+function playDingSound() {
+  try {
+    audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+    const now = audioCtx.currentTime;
+    [880, 1174.66].forEach((freq, i) => {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0, now + i * 0.15);
+      gain.gain.linearRampToValueAtTime(0.2, now + i * 0.15 + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.15 + 0.5);
+      osc.connect(gain).connect(audioCtx.destination);
+      osc.start(now + i * 0.15);
+      osc.stop(now + i * 0.15 + 0.5);
+    });
+  } catch { /* audio not available; fail silently */ }
+}
+
+let titleFlashHandle = null;
+const originalTitle = document.title;
+function startTitleFlash() {
+  stopTitleFlash();
+  let on = false;
+  titleFlashHandle = setInterval(() => {
+    document.title = on ? originalTitle : '🍽️ Dish ready!';
+    on = !on;
+  }, 1000);
+}
+function stopTitleFlash() {
+  if (titleFlashHandle) { clearInterval(titleFlashHandle); titleFlashHandle = null; }
+  document.title = originalTitle;
+}
+
+// ---------------------------------------------------------------------------
 // View management
 // ---------------------------------------------------------------------------
 
@@ -208,54 +265,152 @@ function formatMs(ms) {
   return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
 }
 
-function startCookingSession(minutes) {
-  state.timer.totalMs = minutes * 60 * 1000;
-  state.timer.remainingMs = state.timer.totalMs;
+const RING_CIRCUMFERENCE = 2 * Math.PI * 54;
+function updateProgressRing(remainingFraction) {
+  const bar = document.getElementById('progress-ring-bar');
+  const arc = Math.max(0, Math.min(1, remainingFraction)) * RING_CIRCUMFERENCE;
+  bar.style.strokeDasharray = `${arc} ${RING_CIRCUMFERENCE}`;
+}
 
+function setStage(text) {
+  const stageLabel = document.getElementById('countdown-stage');
+  stageLabel.style.opacity = '0';
+  setTimeout(() => { stageLabel.textContent = text; stageLabel.style.opacity = '1'; }, 200);
+}
+
+// Builds the scene + chef animator for a cooking session. Shared by a fresh
+// start and by restoring a session after a page reload.
+function setupCookingScene() {
   const scene = document.getElementById('cooking-scene');
   const { chefAnchor } = composeKitchenScene(scene, 'cooking');
   const chefImg = placeChef(scene, chefAnchor, 'chef-sprite');
   cookAnimator = new Animator(chefImg, state.data.chef.sections);
+}
 
-  const stageLabel = document.getElementById('countdown-stage');
-  const setStage = text => {
-    stageLabel.style.opacity = '0';
-    setTimeout(() => { stageLabel.textContent = text; stageLabel.style.opacity = '1'; }, 200);
-  };
-
-  // Walking and chopping are both looping animations, so we drive the stage
-  // sequence on a fixed timeline rather than an animation "onComplete" (which
-  // only ever fires for non-looping sections).
+// Walking, the ingredient-gathering vignette, and chopping are all either
+// looping or a single non-repeating pass, so the stage sequence is driven on
+// a fixed timeline rather than an animation "onComplete" (which never fires
+// for a looping section, and the previous version relied on this for
+// "walking" — the chef used to walk forever and never start cooking).
+function runIntroSequence() {
+  document.getElementById('countdown-stage').textContent = 'The chef arrives & gathers ingredients…';
   cookAnimator.play('walking');
-  stageLabel.textContent = 'The chef arrives & gathers ingredients…';
-
-  const introTimers = [
-    setTimeout(() => { setStage('Chopping ingredients…'); cookAnimator.play('chopping'); }, 2200),
-    setTimeout(() => { setStage('Cooking in progress…'); cookAnimator.play('stirring'); }, 5200),
+  state.timer.introTimers = [
+    setTimeout(() => {
+      setStage('Checking the recipe book…');
+      cookAnimator.play('interaction');
+    }, 1500),
+    setTimeout(() => {
+      setStage('Chopping ingredients…');
+      cookAnimator.play('chopping');
+    }, 4300),
+    setTimeout(() => {
+      setStage('Cooking in progress…');
+      cookAnimator.play('stirring');
+      state.timer.introDone = true;
+    }, 7300),
   ];
-  state.timer.introTimers = introTimers;
+}
 
-  document.getElementById('countdown-readout').textContent = formatMs(state.timer.remainingMs);
+function clearIntroTimers() {
+  state.timer.introTimers.forEach(clearTimeout);
+  state.timer.introTimers = [];
+}
 
-  const tickMs = 250;
-  state.timer.tickHandle = setInterval(() => {
-    state.timer.remainingMs -= tickMs;
-    document.getElementById('countdown-readout').textContent = formatMs(state.timer.remainingMs);
-    if (state.timer.remainingMs <= 0) {
+function startTicking() {
+  if (state.timer.tickHandle) clearInterval(state.timer.tickHandle);
+  const tick = () => {
+    const remainingMs = Math.max(0, state.timer.endAt - Date.now());
+    document.getElementById('countdown-readout').textContent = formatMs(remainingMs);
+    updateProgressRing(remainingMs / state.timer.totalMs);
+    if (remainingMs <= 0) {
       clearInterval(state.timer.tickHandle);
-      introTimers.forEach(clearTimeout);
+      clearIntroTimers();
       cookAnimator.stop();
+      clearSession();
       finishCooking();
     }
-  }, tickMs);
+  };
+  tick();
+  // A short interval keeps the readout smooth; actual elapsed time always
+  // comes from Date.now() so drift/background-tab throttling can't desync it.
+  state.timer.tickHandle = setInterval(tick, 250);
+}
 
+function startCookingSession(minutes) {
+  state.timer.totalMs = minutes * 60 * 1000;
+  state.timer.endAt = Date.now() + state.timer.totalMs;
+  state.timer.paused = false;
+  state.timer.introDone = false;
+  saveSession();
+
+  setupCookingScene();
+  runIntroSequence();
+  startTicking();
+
+  document.getElementById('pause-cook-btn').textContent = 'Pause';
   showView('cooking');
+}
+
+function restoreActiveSession(session) {
+  state.timer.totalMs = session.totalMs;
+  state.timer.endAt = session.endAt;
+  state.timer.paused = false;
+  state.timer.introDone = true; // skip the intro flourish on reload, go straight to steady state
+
+  setupCookingScene();
+  document.getElementById('countdown-stage').textContent = 'Cooking in progress…';
+  cookAnimator.play('stirring');
+  startTicking();
+
+  document.getElementById('pause-cook-btn').textContent = 'Pause';
+  showView('cooking');
+}
+
+function restorePausedSession(session) {
+  state.timer.totalMs = session.totalMs;
+  state.timer.remainingAtPauseMs = session.remainingAtPauseMs;
+  state.timer.paused = true;
+  state.timer.introDone = true;
+
+  setupCookingScene();
+  cookAnimator.play('stirring');
+  cookAnimator.stop();
+  document.getElementById('countdown-stage').textContent = 'Paused';
+  document.getElementById('countdown-readout').textContent = formatMs(session.remainingAtPauseMs);
+  updateProgressRing(session.remainingAtPauseMs / session.totalMs);
+
+  document.getElementById('pause-cook-btn').textContent = 'Resume';
+  showView('cooking');
+}
+
+function togglePauseCooking() {
+  if (state.timer.paused) {
+    state.timer.endAt = Date.now() + state.timer.remainingAtPauseMs;
+    state.timer.paused = false;
+    document.getElementById('pause-cook-btn').textContent = 'Pause';
+    document.getElementById('countdown-stage').textContent = 'Cooking in progress…';
+    cookAnimator.play('stirring');
+    startTicking();
+  } else {
+    state.timer.remainingAtPauseMs = Math.max(0, state.timer.endAt - Date.now());
+    state.timer.paused = true;
+    state.timer.introDone = true;
+    clearIntroTimers();
+    if (state.timer.tickHandle) clearInterval(state.timer.tickHandle);
+    cookAnimator.stop();
+    document.getElementById('countdown-stage').textContent = 'Paused';
+    document.getElementById('pause-cook-btn').textContent = 'Resume';
+  }
+  saveSession();
 }
 
 function cancelCooking() {
   if (state.timer.tickHandle) clearInterval(state.timer.tickHandle);
-  if (state.timer.introTimers) state.timer.introTimers.forEach(clearTimeout);
+  clearIntroTimers();
   if (cookAnimator) cookAnimator.stop();
+  state.timer.totalMs = 0;
+  clearSession();
   showView('home');
 }
 
@@ -282,6 +437,9 @@ function finishCooking() {
   const presentAnimator = new Animator(presentImg, state.data.chef.sections);
   presentAnimator.play('presenting');
 
+  playDingSound();
+  if (document.hidden) startTitleFlash();
+
   showView('complete');
 }
 
@@ -292,7 +450,8 @@ function updateBookBadge() {
 function renderRecipeBook() {
   const grid = document.getElementById('recipe-grid');
   grid.innerHTML = '';
-  for (const r of state.data.recipes.sprites) {
+  const all = state.data.recipes.sprites;
+  for (const r of all) {
     const unlocked = state.unlocked.has(r.id);
     const card = document.createElement('div');
     card.className = 'recipe-card' + (unlocked ? '' : ' locked');
@@ -306,6 +465,14 @@ function renderRecipeBook() {
     card.appendChild(name);
     grid.appendChild(card);
   }
+  document.getElementById('collection-complete').classList.toggle('hidden', state.unlocked.size < all.length);
+}
+
+function resetProgress() {
+  state.unlocked = new Set();
+  saveUnlocked();
+  updateBookBadge();
+  renderRecipeBook();
 }
 
 // ---------------------------------------------------------------------------
@@ -313,12 +480,16 @@ function renderRecipeBook() {
 // ---------------------------------------------------------------------------
 
 let selectedMinutes = 25;
+const DIAL_MAX_MINUTES = 180;
 
-function setDialMinutes(minutes) {
+function setDialMinutes(minutes, { deselectPresets = false } = {}) {
   selectedMinutes = minutes;
   document.getElementById('dial-readout').textContent = `${String(minutes).padStart(2, '0')}:00`;
-  const angle = Math.min(minutes, 120) / 120 * 360;
+  const angle = Math.min(minutes, DIAL_MAX_MINUTES) / DIAL_MAX_MINUTES * 360;
   document.getElementById('dial-hand').style.transform = `translateX(-50%) rotate(${angle}deg)`;
+  if (deselectPresets) {
+    document.querySelectorAll('.duration-btn').forEach(b => b.classList.remove('selected'));
+  }
 }
 
 function wireSetupView() {
@@ -338,6 +509,41 @@ function wireSetupView() {
     });
   });
   customRange.addEventListener('input', () => setDialMinutes(Number(customRange.value)));
+
+  // The dial itself is a real input too: drag the hand to set minutes directly.
+  const dial = document.getElementById('dial');
+  let dragging = false;
+
+  const minutesFromEvent = evt => {
+    const rect = dial.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const dx = evt.clientX - cx;
+    const dy = evt.clientY - cy;
+    // The hand rests pointing straight down at 0deg (see .dial-hand's
+    // transform-origin) and CSS rotate() is clockwise-positive, so 0deg maps
+    // to "pointing down", not "pointing up".
+    let angle = Math.atan2(-dx, dy) * 180 / Math.PI;
+    if (angle < 0) angle += 360;
+    return Math.max(1, Math.round(angle / 360 * DIAL_MAX_MINUTES));
+  };
+
+  dial.addEventListener('pointerdown', evt => {
+    dragging = true;
+    dial.setPointerCapture(evt.pointerId);
+    customRange.classList.remove('hidden');
+    const minutes = minutesFromEvent(evt);
+    customRange.value = Math.min(minutes, Number(customRange.max));
+    setDialMinutes(minutes, { deselectPresets: true });
+  });
+  dial.addEventListener('pointermove', evt => {
+    if (!dragging) return;
+    const minutes = minutesFromEvent(evt);
+    customRange.value = Math.min(minutes, Number(customRange.max));
+    setDialMinutes(minutes, { deselectPresets: true });
+  });
+  dial.addEventListener('pointerup', () => { dragging = false; });
+  dial.addEventListener('pointercancel', () => { dragging = false; });
 }
 
 // ---------------------------------------------------------------------------
@@ -355,10 +561,31 @@ async function main() {
   document.getElementById('start-cooking-btn').addEventListener('click', () => showView('setup'));
   document.getElementById('back-to-home').addEventListener('click', () => showView('home'));
   document.getElementById('begin-timer-btn').addEventListener('click', () => startCookingSession(selectedMinutes));
+  document.getElementById('pause-cook-btn').addEventListener('click', togglePauseCooking);
   document.getElementById('cancel-cook-btn').addEventListener('click', cancelCooking);
   document.getElementById('done-btn').addEventListener('click', () => showView('home'));
   document.getElementById('nav-home').addEventListener('click', () => showView('home'));
   document.getElementById('nav-book').addEventListener('click', () => { renderRecipeBook(); showView('book'); });
+  document.getElementById('reset-progress-btn').addEventListener('click', () => {
+    if (confirm('Clear your entire recipe collection? This can\'t be undone.')) resetProgress();
+  });
+
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) stopTitleFlash(); });
+
+  // Resume an in-progress focus session if the page was reloaded mid-cook.
+  const session = loadSession();
+  if (session) {
+    if (session.paused) {
+      restorePausedSession(session);
+    } else if (session.endAt > Date.now()) {
+      restoreActiveSession(session);
+    } else {
+      // The timer ran out while the tab was closed/reloaded — still award the dish.
+      state.timer.totalMs = session.totalMs;
+      clearSession();
+      finishCooking();
+    }
+  }
 }
 
 main();

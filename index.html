@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Focus Kitchen</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8D%B3%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -49,9 +50,9 @@
         <button class="duration-btn very-short" data-min="8">VERY SHORT<br><small>5-10m</small></button>
         <button class="duration-btn short" data-min="25">SHORT<br><small>15-30m</small></button>
         <button class="duration-btn medium" data-min="60">MEDIUM<br><small>45-80m</small></button>
-        <button class="duration-btn other" data-min="custom">OTHER<br><small>1-30m</small></button>
+        <button class="duration-btn other" data-min="custom">OTHER<br><small>Set any length</small></button>
       </div>
-      <input type="range" id="custom-range" min="1" max="120" value="25" class="hidden">
+      <input type="range" id="custom-range" min="1" max="180" value="25" class="hidden">
       <div class="setup-actions">
         <button id="back-to-home" class="ghost-btn">Back</button>
         <button id="begin-timer-btn" class="primary-btn">Start Cooking</button>
@@ -64,9 +65,18 @@
         <!-- populated by scene composer -->
       </div>
       <div class="countdown-wrap">
-        <div class="countdown" id="countdown-readout">25:00</div>
+        <div class="progress-ring-wrap">
+          <svg class="progress-ring" viewBox="0 0 120 120" aria-hidden="true">
+            <circle class="progress-ring-track" cx="60" cy="60" r="54"></circle>
+            <circle class="progress-ring-bar" id="progress-ring-bar" cx="60" cy="60" r="54"></circle>
+          </svg>
+          <div class="countdown" id="countdown-readout" aria-live="polite">25:00</div>
+        </div>
         <div class="countdown-label" id="countdown-stage">The chef arrives &amp; gathers ingredients&hellip;</div>
-        <button id="cancel-cook-btn" class="ghost-btn">Cancel</button>
+        <div class="cooking-actions">
+          <button id="pause-cook-btn" class="ghost-btn">Pause</button>
+          <button id="cancel-cook-btn" class="ghost-btn">Cancel</button>
+        </div>
       </div>
     </section>
 
@@ -90,7 +100,12 @@
     <!-- RECIPE BOOK -->
     <section id="view-book" class="view">
       <h2>RECIPE COLLECTION</h2>
+      <div id="collection-complete" class="unlock-banner hidden">
+        <div class="unlock-title">COLLECTION COMPLETE!</div>
+        <div class="unlock-sub">You've cooked every dish in the book</div>
+      </div>
       <div class="recipe-grid" id="recipe-grid"></div>
+      <button id="reset-progress-btn" class="ghost-btn small">Reset progress</button>
     </section>
 
   </main>
