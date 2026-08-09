@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Focus Kitchen v2 — Tileset Gallery</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .gallery-wrap { max-width: 1100px; margin: 0 auto; padding: 24px; width: 100%; }
+  .gallery-section h2 { color: var(--accent); letter-spacing: 2px; margin-bottom: 4px; }
+  .gallery-section .section-note { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 14px; }
+  .gallery-tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; }
+  .gallery-card { background: var(--bg-panel); border: 2px solid var(--brown); border-radius: 8px; padding: 10px; text-align: center; }
+  .gallery-card .thumb { display:flex; align-items:center; justify-content:center; height: 90px; }
+  .gallery-card img { max-width: 100%; max-height: 90px; image-rendering: pixelated; }
+  .gallery-card .gname { font-size: 0.74rem; margin-top: 8px; color: var(--text-light); }
+  .gallery-card .gpx { font-size: 0.62rem; color: var(--text-muted); margin-top: 2px; }
+</style>
+</head>
+<body>
+<div id="app">
+  <header class="topbar">
+    <h1>FOCUS KITCHEN <span class="ver">v2</span></h1>
+    <nav>
+      <a href="index.html" class="nav-btn" style="text-decoration:none; display:inline-block;">Kitchen App</a>
+      <button class="nav-btn active">Tileset</button>
+    </nav>
+  </header>
+  <main id="stage" style="display:block;">
+    <div class="gallery-wrap">
+      <section class="gallery-section">
+        <h2>v2 Environment Tileset</h2>
+        <div class="section-note" id="note"></div>
+        <div class="gallery-tiles" id="grid"></div>
+      </section>
+    </div>
+  </main>
+</div>
+<script>
+async function main() {
+  const data = await fetch('../data/tiles_v2.json').then(r => r.json());
+  document.getElementById('note').textContent = data.note;
+  const grid = document.getElementById('grid');
+  for (const s of data.sprites) {
+    const card = document.createElement('div');
+    card.className = 'gallery-card';
+    const thumb = document.createElement('div');
+    thumb.className = 'thumb';
+    const img = document.createElement('img');
+    img.src = '../' + s.file; img.alt = s.id; img.loading = 'lazy';
+    thumb.appendChild(img);
+    const name = document.createElement('div');
+    name.className = 'gname'; name.textContent = s.id;
+    const px = document.createElement('div');
+    px.className = 'gpx'; px.textContent = s.px ? `${s.px.w}×${s.px.h}px` : '';
+    card.appendChild(thumb); card.appendChild(name); card.appendChild(px);
+    grid.appendChild(card);
+  }
+}
+main();
+</script>
+</body>
+</html>

@@ -1,0 +1,173 @@
+{
+  "note": "v2 tileset \u2014 cohesive 3/4 top-down pixel art authored in the new reference sheet's style, on the PRD-locked palette (mahogany #4A2C11, cream #F2E3D5, steel #8C969E, terracotta #B86536, walnut #361F0A). Drawn at 4x the logical grid; CSS renders pixelated.",
+  "sprites": [
+    {
+      "id": "floor_checker",
+      "file": "assets/tiles_v2/floor_checker.png",
+      "px": {
+        "w": 32,
+        "h": 32
+      }
+    },
+    {
+      "id": "floor_terracotta",
+      "file": "assets/tiles_v2/floor_terracotta.png",
+      "px": {
+        "w": 32,
+        "h": 32
+      }
+    },
+    {
+      "id": "floor_stone",
+      "file": "assets/tiles_v2/floor_stone.png",
+      "px": {
+        "w": 32,
+        "h": 32
+      }
+    },
+    {
+      "id": "floor_wood",
+      "file": "assets/tiles_v2/floor_wood.png",
+      "px": {
+        "w": 32,
+        "h": 32
+      }
+    },
+    {
+      "id": "wall_wood_panel",
+      "file": "assets/tiles_v2/wall_wood_panel.png",
+      "px": {
+        "w": 32,
+        "h": 24
+      }
+    },
+    {
+      "id": "wall_plaster",
+      "file": "assets/tiles_v2/wall_plaster.png",
+      "px": {
+        "w": 32,
+        "h": 24
+      }
+    },
+    {
+      "id": "cabinet_upper_run",
+      "file": "assets/tiles_v2/cabinet_upper_run.png",
+      "px": {
+        "w": 48,
+        "h": 14
+      }
+    },
+    {
+      "id": "cabinet_lower_run",
+      "file": "assets/tiles_v2/cabinet_lower_run.png",
+      "px": {
+        "w": 48,
+        "h": 20
+      }
+    },
+    {
+      "id": "counter_corner_L",
+      "file": "assets/tiles_v2/counter_corner_L.png",
+      "px": {
+        "w": 24,
+        "h": 22
+      }
+    },
+    {
+      "id": "counter_single_sink",
+      "file": "assets/tiles_v2/counter_single_sink.png",
+      "px": {
+        "w": 28,
+        "h": 20
+      }
+    },
+    {
+      "id": "counter_double_sink",
+      "file": "assets/tiles_v2/counter_double_sink.png",
+      "px": {
+        "w": 40,
+        "h": 20
+      }
+    },
+    {
+      "id": "fridge",
+      "file": "assets/tiles_v2/fridge.png",
+      "px": {
+        "w": 20,
+        "h": 34
+      }
+    },
+    {
+      "id": "dishwasher",
+      "file": "assets/tiles_v2/dishwasher.png",
+      "px": {
+        "w": 18,
+        "h": 18
+      }
+    },
+    {
+      "id": "stove_range",
+      "file": "assets/tiles_v2/stove_range.png",
+      "px": {
+        "w": 40,
+        "h": 20
+      }
+    },
+    {
+      "id": "extractor_hood",
+      "file": "assets/tiles_v2/extractor_hood.png",
+      "px": {
+        "w": 24,
+        "h": 14
+      }
+    },
+    {
+      "id": "shelf_metal",
+      "file": "assets/tiles_v2/shelf_metal.png",
+      "px": {
+        "w": 16,
+        "h": 20
+      }
+    },
+    {
+      "id": "shelf_wood",
+      "file": "assets/tiles_v2/shelf_wood.png",
+      "px": {
+        "w": 16,
+        "h": 20
+      }
+    },
+    {
+      "id": "spice_rack",
+      "file": "assets/tiles_v2/spice_rack.png",
+      "px": {
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "id": "utensil_rack",
+      "file": "assets/tiles_v2/utensil_rack.png",
+      "px": {
+        "w": 20,
+        "h": 10
+      }
+    },
+    {
+      "id": "distillery_tube",
+      "file": "assets/tiles_v2/distillery_tube.png",
+      "px": {
+        "w": 16,
+        "h": 40
+      }
+    },
+    {
+      "id": "desk_clock",
+      "file": "assets/tiles_v2/desk_clock.png",
+      "px": {
+        "w": 16,
+        "h": 16
+      }
+    }
+  ]
+}
