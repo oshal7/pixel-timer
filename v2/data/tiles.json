@@ -1,0 +1,192 @@
+{
+  "note": "PLACEHOLDER for v2 \u2014 reuses v1 sliced tiles via ../assets/tiles. Replace with tiles sliced from the new labelled asset sheet (see scripts/slice_sheet.py) once the sheet image is on disk.",
+  "sprites": [
+    {
+      "id": "floor_tile_tan",
+      "file": "../assets/tiles/floor_tile_tan.png",
+      "source_sheet": "dfe66706-1000183343.jpg",
+      "source_bbox": {
+        "x": 235,
+        "y": 63,
+        "w": 141,
+        "h": 156
+      }
+    },
+    {
+      "id": "floor_tile_stone",
+      "file": "../assets/tiles/floor_tile_stone.png",
+      "source_sheet": "dfe66706-1000183343.jpg",
+      "source_bbox": {
+        "x": 387,
+        "y": 62,
+        "w": 95,
+        "h": 157
+      }
+    },
+    {
+      "id": "wood_floor_panel_a",
+      "file": "../assets/tiles/wood_floor_panel_a.png",
+      "source_sheet": "dfe66706-1000183343.jpg",
+      "source_bbox": {
+        "x": 47,
+        "y": 234,
+        "w": 164,
+        "h": 142
+      }
+    },
+    {
+      "id": "wood_floor_panel_b",
+      "file": "../assets/tiles/wood_floor_panel_b.png",
+      "source_sheet": "dfe66706-1000183343.jpg",
+      "source_bbox": {
+        "x": 233,
+        "y": 234,
+        "w": 293,
+        "h": 142
+      }
+    },
+    {
+      "id": "cabinet_door_single",
+      "file": "../assets/tiles/cabinet_door_single.png",
+      "source_sheet": "dfe66706-1000183343.jpg",
+      "source_bbox": {
+        "x": 551,
+        "y": 62,
+        "w": 65,
+        "h": 95
+      }
+    },
+    {
+      "id": "counter_single_sink",
+      "file": "../assets/tiles/counter_single_sink.png",
+      "source_sheet": "dfe66706-1000183343.jpg",
+      "source_bbox": {
+        "x": 786,
+        "y": 159,
+        "w": 139,
+        "h": 93
+      }
+    },
+    {
+      "id": "counter_double_sink",
+      "file": "../assets/tiles/counter_double_sink.png",
+      "source_sheet": "dfe66706-1000183343.jpg",
+      "source_bbox": {
+        "x": 551,
+        "y": 252,
+        "w": 224,
+        "h": 92
+      }
+    },
+    {
+      "id": "cabinet_upper_run",
+      "file": "../assets/tiles/cabinet_upper_run.png",
+      "source_sheet": "dfe66706-1000183343.jpg",
+      "source_bbox": {
+        "x": 47,
+        "y": 437,
+        "w": 375,
+        "h": 102
+      }
+    },
+    {
+      "id": "cabinet_corner",
+      "file": "../assets/tiles/cabinet_corner.png",
+      "source_sheet": "dfe66706-1000183343.jpg",
+      "source_bbox": {
+        "x": 433,
+        "y": 437,
+        "w": 93,
+        "h": 270
+      }
+    },
+    {
+      "id": "cabinet_lower_run",
+      "file": "../assets/tiles/cabinet_lower_run.png",
+      "source_sheet": "dfe66706-1000183343.jpg",
+      "source_bbox": {
+        "x": 47,
+        "y": 578,
+        "w": 375,
+        "h": 129
+      }
+    },
+    {
+      "id": "shelf_metal",
+      "file": "../assets/tiles/shelf_metal.png",
+      "source_sheet": "dfe66706-1000183343.jpg",
+      "source_bbox": {
+        "x": 573,
+        "y": 398,
+        "w": 99,
+        "h": 115
+      }
+    },
+    {
+      "id": "shelf_wood",
+      "file": "../assets/tiles/shelf_wood.png",
+      "source_sheet": "dfe66706-1000183343.jpg",
+      "source_bbox": {
+        "x": 691,
+        "y": 398,
+        "w": 114,
+        "h": 115
+      }
+    },
+    {
+      "id": "utensil_rack",
+      "file": "../assets/tiles/utensil_rack.png",
+      "source_sheet": "dfe66706-1000183343.jpg",
+      "source_bbox": {
+        "x": 809,
+        "y": 544,
+        "w": 98,
+        "h": 61
+      }
+    },
+    {
+      "id": "extractor_hood",
+      "file": "../assets/tiles/extractor_hood.png",
+      "source_sheet": "dfe66706-1000183343.jpg",
+      "source_bbox": {
+        "x": 233,
+        "y": 765,
+        "w": 105,
+        "h": 75
+      }
+    },
+    {
+      "id": "fridge",
+      "file": "../assets/tiles/fridge.png",
+      "source_sheet": "dfe66706-1000183343.jpg",
+      "source_bbox": {
+        "x": 406,
+        "y": 780,
+        "w": 104,
+        "h": 200
+      }
+    },
+    {
+      "id": "stove_range",
+      "file": "../assets/tiles/stove_range.png",
+      "source_sheet": "dfe66706-1000183343.jpg",
+      "source_bbox": {
+        "x": 123,
+        "y": 871,
+        "w": 276,
+        "h": 109
+      }
+    },
+    {
+      "id": "utensil_spatula",
+      "file": "../assets/tiles/utensil_spatula.png",
+      "source_sheet": "dfe66706-1000183343.jpg",
+      "source_bbox": {
+        "x": 760,
+        "y": 717,
+        "w": 24,
+        "h": 71
+      }
+    }
+  ]
+}
