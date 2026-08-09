@@ -94,6 +94,10 @@ async function loadData() {
   ingredients.sprites.forEach(s => { s.file = '../' + s.file; });
   recipes.sprites.forEach(s => { s.file = '../' + s.file; });
   for (const name in chef.sections) chef.sections[name].frames.forEach(f => { f.file = '../' + f.file; });
+  // Hero ingredients recreated from the new asset sheet override the v1 art by id;
+  // the rest of the pantry keeps the v1 icons so variety isn't lost.
+  const HERO_INGREDIENTS = ['tomato', 'bell_pepper', 'chili', 'fish', 'ground_beef', 'eggs', 'flour', 'sugar'];
+  ingredients.sprites.forEach(s => { if (HERO_INGREDIENTS.includes(s.id)) s.file = `assets/ing2/${s.id}.png`; });
   state.data = { ingredients, tiles, chef, recipes };
 }
 function tileById(id) { return state.data.tiles.sprites.find(s => s.id === id); }
@@ -140,25 +144,39 @@ function composeKitchenScene(container) {
   container.innerHTML = '';
   const t = id => { const s = tileById(id); return s ? s.file : ''; };
 
-  container.style.backgroundImage = `url(${t('floor_tile_stone')})`;
-  container.style.backgroundSize = '84px 84px';
+  // Floor: checkered tiles across the whole scene (PRD terracotta/cream).
+  container.style.backgroundImage = `url(${t('floor_checkered')})`;
+  container.style.backgroundSize = '56px 56px';
   container.style.backgroundRepeat = 'repeat';
+  container.style.backgroundPosition = 'bottom left';
 
-  const floor = document.createElement('div');
-  floor.className = 'scene-layer';
-  Object.assign(floor.style, {
-    left: 0, right: 0, bottom: 0, height: '40%', zIndex: '0',
-    backgroundImage: `url(${t('floor_tile_tan')})`, backgroundSize: '84px 92px', backgroundRepeat: 'repeat',
+  // Back wall strip (top band) + continuous counter run beneath it.
+  const strip = (cls, styleObj) => {
+    const el = document.createElement('div');
+    el.className = 'scene-layer ' + cls;
+    Object.assign(el.style, { position: 'absolute', ...styleObj });
+    container.appendChild(el);
+  };
+  strip('wall-band', {
+    left: 0, right: 0, top: 0, height: '22%', zIndex: '0',
+    backgroundImage: `url(${t('wall_wood_panel')})`, backgroundSize: '44px 66px', backgroundRepeat: 'repeat-x',
   });
-  container.appendChild(floor);
+  strip('counter-band', {
+    left: 0, right: 0, top: '22%', height: '20%', zIndex: '1',
+    backgroundImage: `url(${t('counter_base_straight')})`, backgroundSize: '44px 44px', backgroundRepeat: 'repeat-x',
+  });
 
+  // Positioned appliances / fixtures (front elevation + top faces per PRD).
   const layers = [
-    { id: 'cabinet_upper_run', style: { left: '3%',  top: '2%',  width: '50%', zIndex: 2 } },
-    { id: 'extractor_hood',    style: { left: '19%', top: '12%', width: '17%', zIndex: 3 } },
-    { id: 'fridge',            style: { right: '4%', top: '3%',  width: '15%', zIndex: 2 } },
-    { id: 'cabinet_lower_run', style: { left: '3%',  top: '38%', width: '60%', zIndex: 2 } },
-    { id: 'counter_double_sink', style: { right: '5%', top: '44%', width: '26%', zIndex: 3 } },
-    { id: 'stove_range',       style: { left: '8%',  top: '36%', width: '33%', zIndex: 3 } },
+    { id: 'refrigerator',      style: { right: '3%',  top: '1%',  width: '13%', zIndex: 3 } },
+    { id: 'range_hood',        style: { left: '13%', top: '2%',  width: '22%', zIndex: 2 } },
+    { id: 'shelf_wood',        style: { left: '45%', top: '2%',  width: '11%', zIndex: 2 } },
+    { id: 'spice_rack',        style: { right: '38%', top: '3%',  width: '9%',  zIndex: 2 } },
+    { id: 'stove_range',       style: { left: '12%', top: '24%', width: '25%', zIndex: 3 } },
+    { id: 'sink_double_basin', style: { right: '6%',  top: '26%', width: '24%', zIndex: 3 } },
+    { id: 'counter_corner_l',  style: { left: '40%', top: '24%', width: '11%', zIndex: 2 } },
+    // NB: no standalone cutting board / stove-side pot here — the chef's chop and
+    // stir frames are full vignettes that already contain those props.
   ];
   for (const layer of layers) {
     const tile = tileById(layer.id);
@@ -401,7 +419,7 @@ function setStage(text) {
 function setupCookingScene() {
   const scene = document.getElementById('cooking-scene');
   composeKitchenScene(scene);
-  const chefImg = placeChef(scene, { left: '42%', top: '60%', width: '78px', zIndex: 4 }, 'chef-cook');
+  const chefImg = placeChef(scene, { left: '40%', top: '54%', width: '96px', zIndex: 4 }, 'chef-cook');
   cookAnimator = new Animator(chefImg, state.data.chef.sections);
   return chefImg;
 }
@@ -425,7 +443,7 @@ function runIntroSequence(chefImg) {
     setTimeout(() => {
       setStage('Checking the recipe book…');
       cookAnimator.play('walking');
-      chefImg.style.left = '52%'; chefImg.style.top = '62%'; // walk to the prep counter
+      chefImg.style.left = '48%'; chefImg.style.top = '48%'; // walk to the prep counter
     }, 3200),
     setTimeout(() => {
       setStage('Chopping ingredients…');
@@ -435,7 +453,7 @@ function runIntroSequence(chefImg) {
     setTimeout(() => {
       setStage('Cooking in progress…');
       cookAnimator.play('walking');
-      chefImg.style.left = '18%'; chefImg.style.top = '52%'; // walk to the stove
+      chefImg.style.left = '16%'; chefImg.style.top = '46%'; // walk to the stove
     }, 6600),
     setTimeout(() => {
       cookAnimator.play('stirring');
@@ -491,7 +509,7 @@ function restoreActiveSession(session) {
 
   renderPantry('cook-');
   const chefImg = setupCookingScene();
-  chefImg.style.left = '18%'; chefImg.style.top = '52%';
+  chefImg.style.left = '16%'; chefImg.style.top = '46%';
   document.getElementById('cook-dish-hint').textContent = 'Cooking in progress…';
   document.getElementById('countdown-stage').textContent = 'Cooking in progress…';
   cookAnimator.play('stirring');
@@ -509,7 +527,7 @@ function restorePausedSession(session) {
 
   renderPantry('cook-');
   const chefImg = setupCookingScene();
-  chefImg.style.left = '18%'; chefImg.style.top = '52%';
+  chefImg.style.left = '16%'; chefImg.style.top = '46%';
   cookAnimator.play('stirring'); cookAnimator.stop();
   document.getElementById('countdown-stage').textContent = 'Paused';
   document.getElementById('cook-dish-hint').textContent = 'Paused';

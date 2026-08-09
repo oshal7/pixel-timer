@@ -81,21 +81,19 @@
           <div class="pantry pantry-right"  id="cook-pantry-right"></div>
           <div class="kitchen-scene" id="cooking-scene"><!-- scene composer --></div>
 
-          <!-- distillery tube widget: fluid gauge tied to progress -->
+          <!-- distillery tube widget (sprite housing + animated fluid overlay) -->
           <div class="distillery" id="distillery" aria-hidden="true">
-            <div class="distillery-tube">
-              <div class="distillery-fluid" id="distillery-fluid"></div>
-            </div>
-            <div class="distillery-coil"></div>
-            <div class="distillery-beaker"><div class="distillery-beaker-fluid" id="distillery-beaker-fluid"></div></div>
+            <img class="distillery-sprite" src="assets/tiles/distillery_tube.png" alt="">
+            <div class="distillery-col"><div class="distillery-fluid" id="distillery-fluid"></div></div>
+            <div class="distillery-beaker-clip"><div class="distillery-beaker-fluid" id="distillery-beaker-fluid"></div></div>
           </div>
 
-          <!-- mantel clock widget: hand sweeps with progress -->
+          <!-- mantel clock widget (sprite + overlaid sweeping hands) -->
           <div class="mantel-clock" id="mantel-clock" aria-hidden="true">
-            <div class="clock-face">
+            <img class="clock-sprite" src="assets/tiles/desk_clock.png" alt="">
+            <div class="clock-hands">
               <div class="clock-hand clock-hand-min" id="clock-hand-min"></div>
               <div class="clock-hand clock-hand-hour" id="clock-hand-hour"></div>
-              <div class="clock-pivot"></div>
             </div>
           </div>
         </div>
