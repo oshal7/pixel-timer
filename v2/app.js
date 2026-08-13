@@ -158,12 +158,18 @@ function moveChef(img, spot) { Object.assign(img.style, spot); }
 // ---------------------------------------------------------------------------
 
 function pantrySelection() {
-  // A stable spread of distinct ingredients around the four edges.
+  // Spread EVERY ingredient around the four edges, in perimeter order
+  // (top L->R, right T->B, bottom L->R, left T->B). Horizontal edges are wider
+  // so they carry more icons, keeping the spacing even all the way around.
   const sprites = state.data.ingredients.sprites;
-  const top = [], bottom = [], left = [], right = [];
-  const edges = [top, right, bottom, left];
-  sprites.forEach((s, i) => edges[i % 4].push(s));
-  return { top, right, bottom, left };
+  const n = sprites.length;
+  const topN = Math.round(n * 0.28);
+  const rightN = Math.round(n * 0.22);
+  const bottomN = Math.round(n * 0.28);
+  const leftN = n - topN - rightN - bottomN;
+  let i = 0;
+  const take = k => sprites.slice(i, i += k);
+  return { top: take(topN), right: take(rightN), bottom: take(bottomN), left: take(leftN) };
 }
 
 function decoratePantry() {
@@ -172,7 +178,7 @@ function decoratePantry() {
     const el = document.getElementById('pantry-' + edge);
     if (!el) continue;
     el.innerHTML = '';
-    for (const s of list.slice(0, edge === 'top' || edge === 'bottom' ? 10 : 6)) {
+    for (const s of list) {
       const img = document.createElement('img');
       img.className = 'pantry-slot' + (state.spent.has(s.id) ? ' spent' : '');
       img.src = asset(s.file);
