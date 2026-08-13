@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - claude/sprite-sheet-analysis-nc7jso
+      - claude/new-version-asset-updates-senjgi
   workflow_dispatch:
 
 permissions:
