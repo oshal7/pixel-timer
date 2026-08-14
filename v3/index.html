@@ -3,38 +3,36 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Focus Kitchen v2</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8D%B2%3C/text%3E%3C/svg%3E">
+<title>Focus Kitchen v3</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A7%BA%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div id="app">
 
   <header class="topbar">
-    <h1>FOCUS KITCHEN <span class="ver">v2</span></h1>
+    <h1>FOCUS KITCHEN <span class="ver">v3</span></h1>
     <nav>
       <button id="nav-home" class="nav-btn active">Kitchen</button>
       <button id="nav-book" class="nav-btn">Recipe Book <span id="book-count" class="badge">0</span></button>
-      <a href="gallery.html" class="nav-btn" style="text-decoration:none; display:inline-block;">Tileset</a>
-      <a href="../v3/index.html" class="nav-btn" style="text-decoration:none; display:inline-block;">v3 →</a>
-      <a href="../index.html" class="nav-btn" style="text-decoration:none; display:inline-block;">v1</a>
+      <button id="audio-toggle" class="audio-toggle" title="Toggle sound">🔊</button>
+      <a href="../v2/index.html" class="nav-btn" style="text-decoration:none; display:inline-block;">v2</a>
     </nav>
   </header>
 
   <main id="stage">
 
-    <!-- HOME / IDLE KITCHEN SCENE -->
+    <!-- HOME -->
     <section id="view-home" class="view active">
-      <div class="pantry-frame" id="pantry-frame">
-        <div class="pantry-edge top" id="pantry-top"></div>
-        <div class="pantry-edge left" id="pantry-left"></div>
-        <div class="pantry-edge right" id="pantry-right"></div>
-        <div class="pantry-edge bottom" id="pantry-bottom"></div>
-        <div class="kitchen-scene" id="kitchen-scene"><!-- composed by JS --></div>
+      <div class="pantry-frame" id="pantry-home">
+        <div class="pantry-edge top" id="home-top"></div>
+        <div class="pantry-edge left" id="home-left"></div>
+        <div class="pantry-edge right" id="home-right"></div>
+        <div class="pantry-edge bottom" id="home-bottom"></div>
+        <div class="kitchen-scene" id="home-scene"></div>
       </div>
-
       <div class="home-copy">
-        <p class="tagline">Heating a cookbook for cooling focus.</p>
+        <p class="tagline">The chef gathers from the whole pantry, then cooks your focus.</p>
         <p class="pantry-note" id="pantry-note"></p>
         <button id="start-cooking-btn" class="primary-btn">Start Cooking</button>
       </div>
@@ -62,14 +60,30 @@
       <p class="tier-hint" id="tier-hint"></p>
       <div class="setup-actions">
         <button id="back-to-home" class="ghost-btn">Back</button>
-        <button id="begin-timer-btn" class="primary-btn">Start Cooking</button>
+        <button id="begin-timer-btn" class="primary-btn">Gather &amp; Cook</button>
       </div>
     </section>
 
-    <!-- COOKING IN PROGRESS -->
+    <!-- GATHER SEQUENCE -->
+    <section id="view-gather" class="view">
+      <div class="pantry-frame" id="pantry-gather">
+        <div class="pantry-edge top" id="gather-top"></div>
+        <div class="pantry-edge left" id="gather-left"></div>
+        <div class="pantry-edge right" id="gather-right"></div>
+        <div class="pantry-edge bottom" id="gather-bottom"></div>
+        <div class="kitchen-scene" id="gather-scene"></div>
+        <img id="gather-chef" class="gather-chef" alt="chef gathering">
+      </div>
+      <div class="gather-hud">
+        <div class="g-label" id="gather-label">The chef heads out to gather…</div>
+        <div class="basket-count"><span class="b-emoji">🧺</span> <span id="basket-count">0</span> gathered</div>
+      </div>
+    </section>
+
+    <!-- COOKING -->
     <section id="view-cooking" class="view">
       <div class="cook-layout">
-        <div class="kitchen-scene cooking" id="cooking-scene"><!-- composed by JS --></div>
+        <div class="kitchen-scene cooking" id="cooking-scene"></div>
         <div class="distillery" id="distillery" title="Distillation progress">
           <div class="distillery-fill" id="distillery-fill"></div>
           <div class="distillery-coil"></div>
@@ -83,7 +97,7 @@
           </svg>
           <div class="countdown" id="countdown-readout" aria-live="polite">25:00</div>
         </div>
-        <div class="countdown-label" id="countdown-stage">The chef arrives &amp; gathers ingredients&hellip;</div>
+        <div class="countdown-label" id="countdown-stage">Cooking in progress…</div>
         <div class="phase-track" id="phase-track" aria-hidden="true">
           <span class="phase-dot" data-phase="gather">Gather</span>
           <span class="phase-dot" data-phase="prep">Prep</span>
@@ -97,7 +111,7 @@
       </div>
     </section>
 
-    <!-- DISH COMPLETE -->
+    <!-- COMPLETE -->
     <section id="view-complete" class="view">
       <h2>DISH COMPLETE!</h2>
       <div class="complete-scene">
@@ -122,10 +136,7 @@
         <div class="unlock-sub">You've cooked every dish in the book</div>
       </div>
       <div class="recipe-grid" id="recipe-grid"></div>
-      <div class="book-actions">
-        <button id="reset-pantry-btn" class="ghost-btn small">Restock pantry</button>
-        <button id="reset-progress-btn" class="ghost-btn small">Reset progress</button>
-      </div>
+      <button id="reset-progress-btn" class="ghost-btn small">Reset progress</button>
     </section>
 
   </main>

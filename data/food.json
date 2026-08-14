@@ -1,0 +1,255 @@
+{
+  "_readme": "v3 food manifest. To swap art: drop a same-named PNG into assets/food_v3/ (e.g. tomato.png) \u2014 no code change. To add/rename/reorder an item, edit this list. 'file' is the sprite path, 'label' is the tooltip, 'id' must be unique.",
+  "items": [
+    {
+      "id": "tomato",
+      "label": "Tomato",
+      "file": "assets/food_v3/tomato.png"
+    },
+    {
+      "id": "basil",
+      "label": "Basil",
+      "file": "assets/food_v3/basil.png"
+    },
+    {
+      "id": "onion",
+      "label": "Onion",
+      "file": "assets/food_v3/onion.png"
+    },
+    {
+      "id": "bell_pepper",
+      "label": "Bell Pepper",
+      "file": "assets/food_v3/bell_pepper.png"
+    },
+    {
+      "id": "garlic",
+      "label": "Garlic",
+      "file": "assets/food_v3/garlic.png"
+    },
+    {
+      "id": "oregano",
+      "label": "Oregano",
+      "file": "assets/food_v3/oregano.png"
+    },
+    {
+      "id": "carrot",
+      "label": "Carrot",
+      "file": "assets/food_v3/carrot.png"
+    },
+    {
+      "id": "potato",
+      "label": "Potato",
+      "file": "assets/food_v3/potato.png"
+    },
+    {
+      "id": "ginger",
+      "label": "Ginger",
+      "file": "assets/food_v3/ginger.png"
+    },
+    {
+      "id": "chili",
+      "label": "Chili",
+      "file": "assets/food_v3/chili.png"
+    },
+    {
+      "id": "ground_beef",
+      "label": "Ground Beef",
+      "file": "assets/food_v3/ground_beef.png"
+    },
+    {
+      "id": "chicken",
+      "label": "Chicken",
+      "file": "assets/food_v3/chicken.png"
+    },
+    {
+      "id": "pork_chop",
+      "label": "Pork Chop",
+      "file": "assets/food_v3/pork_chop.png"
+    },
+    {
+      "id": "fish",
+      "label": "Fish",
+      "file": "assets/food_v3/fish.png"
+    },
+    {
+      "id": "eggs",
+      "label": "Eggs",
+      "file": "assets/food_v3/eggs.png"
+    },
+    {
+      "id": "sausage",
+      "label": "Sausage",
+      "file": "assets/food_v3/sausage.png"
+    },
+    {
+      "id": "milk",
+      "label": "Milk",
+      "file": "assets/food_v3/milk.png"
+    },
+    {
+      "id": "butter",
+      "label": "Butter",
+      "file": "assets/food_v3/butter.png"
+    },
+    {
+      "id": "cheese",
+      "label": "Cheese",
+      "file": "assets/food_v3/cheese.png"
+    },
+    {
+      "id": "bacon",
+      "label": "Bacon",
+      "file": "assets/food_v3/bacon.png"
+    },
+    {
+      "id": "flour",
+      "label": "Flour",
+      "file": "assets/food_v3/flour.png"
+    },
+    {
+      "id": "pasta",
+      "label": "Pasta",
+      "file": "assets/food_v3/pasta.png"
+    },
+    {
+      "id": "rice",
+      "label": "Rice",
+      "file": "assets/food_v3/rice.png"
+    },
+    {
+      "id": "sugar",
+      "label": "Sugar",
+      "file": "assets/food_v3/sugar.png"
+    },
+    {
+      "id": "salt",
+      "label": "Salt",
+      "file": "assets/food_v3/salt.png"
+    },
+    {
+      "id": "pepper",
+      "label": "Pepper",
+      "file": "assets/food_v3/pepper.png"
+    },
+    {
+      "id": "bread",
+      "label": "Bread",
+      "file": "assets/food_v3/bread.png"
+    },
+    {
+      "id": "dough",
+      "label": "Dough",
+      "file": "assets/food_v3/dough.png"
+    },
+    {
+      "id": "olive_oil",
+      "label": "Olive Oil",
+      "file": "assets/food_v3/olive_oil.png"
+    },
+    {
+      "id": "yeast",
+      "label": "Yeast",
+      "file": "assets/food_v3/yeast.png"
+    },
+    {
+      "id": "rosemary",
+      "label": "Rosemary",
+      "file": "assets/food_v3/rosemary.png"
+    },
+    {
+      "id": "thyme",
+      "label": "Thyme",
+      "file": "assets/food_v3/thyme.png"
+    },
+    {
+      "id": "parsley",
+      "label": "Parsley",
+      "file": "assets/food_v3/parsley.png"
+    },
+    {
+      "id": "cinnamon",
+      "label": "Cinnamon",
+      "file": "assets/food_v3/cinnamon.png"
+    },
+    {
+      "id": "soy_sauce",
+      "label": "Soy Sauce",
+      "file": "assets/food_v3/soy_sauce.png"
+    },
+    {
+      "id": "bay_leaf",
+      "label": "Bay Leaf",
+      "file": "assets/food_v3/bay_leaf.png"
+    },
+    {
+      "id": "saffron",
+      "label": "Saffron",
+      "file": "assets/food_v3/saffron.png"
+    },
+    {
+      "id": "star_anise",
+      "label": "Star Anise",
+      "file": "assets/food_v3/star_anise.png"
+    },
+    {
+      "id": "peppercorns",
+      "label": "Peppercorns",
+      "file": "assets/food_v3/peppercorns.png"
+    },
+    {
+      "id": "vanilla",
+      "label": "Vanilla",
+      "file": "assets/food_v3/vanilla.png"
+    },
+    {
+      "id": "apple",
+      "label": "Apple",
+      "file": "assets/food_v3/apple.png"
+    },
+    {
+      "id": "orange",
+      "label": "Orange",
+      "file": "assets/food_v3/orange.png"
+    },
+    {
+      "id": "banana",
+      "label": "Banana",
+      "file": "assets/food_v3/banana.png"
+    },
+    {
+      "id": "lemon",
+      "label": "Lemon",
+      "file": "assets/food_v3/lemon.png"
+    },
+    {
+      "id": "lime",
+      "label": "Lime",
+      "file": "assets/food_v3/lime.png"
+    },
+    {
+      "id": "grapes",
+      "label": "Grapes",
+      "file": "assets/food_v3/grapes.png"
+    },
+    {
+      "id": "strawberry",
+      "label": "Strawberry",
+      "file": "assets/food_v3/strawberry.png"
+    },
+    {
+      "id": "blueberry",
+      "label": "Blueberry",
+      "file": "assets/food_v3/blueberry.png"
+    },
+    {
+      "id": "mushroom",
+      "label": "Mushroom",
+      "file": "assets/food_v3/mushroom.png"
+    },
+    {
+      "id": "corn",
+      "label": "Corn",
+      "file": "assets/food_v3/corn.png"
+    }
+  ]
+}
