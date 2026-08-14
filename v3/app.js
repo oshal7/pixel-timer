@@ -15,8 +15,9 @@ const STORAGE_KEY = 'focus-kitchen-v3-unlocked';
 const SESSION_KEY = 'focus-kitchen-v3-session';
 const MUTE_KEY    = 'focus-kitchen-v3-muted';
 
-const GATHER_COUNT = 14;   // how many items the chef visits (spread around the border)
-const HOP_MS = 620;        // time to walk between two items
+const GATHER_COUNT = 12;   // how many items the chef visits (spread around the border)
+const HOP_MS = 1300;       // slow, calm stroll between two items
+const GRAB_PAUSE_MS = 520; // gentle beat after each pickup
 
 const state = {
   data: { food: null, tiles: null, chef: null, recipes: null },
@@ -126,7 +127,7 @@ const audio = {
       o.connect(g).connect(lp).connect(this.master); o.start(t); o.stop(t + 1.0);
     };
     step();
-    this.musicTimer = setInterval(step, 430);
+    this.musicTimer = setInterval(step, 560); // slower, calmer tempo
   },
   stopMusic() { if (this.musicTimer) { clearInterval(this.musicTimer); this.musicTimer = null; } },
 };
@@ -318,26 +319,30 @@ async function runGatherSequence(minutes) {
 
   for (const slot of targets) {
     const p = slotPoint(frame, slot);
+    gatherChef.classList.add('walking');   // gentle bob while strolling
     gatherAnimator.play('walking');
     placeGatherChef(p.x, p.y);
-    // footsteps across the hop
-    for (let s = 0; s < 3; s++) { audio.footstep(); await sleep(HOP_MS / 3); }
-    // grab
+    // soft, unhurried footsteps across the long hop
+    for (let s = 0; s < 4; s++) { audio.footstep(); await sleep(HOP_MS / 4); }
+    // reach out and pluck the item
+    gatherChef.classList.remove('walking');
     gatherAnimator.play('interaction');
     slot.classList.add('collected');
     audio.pop();
     collected++;
     document.getElementById('basket-count').textContent = String(collected);
     if (collected === Math.ceil(targets.length / 2)) gatherLabel('Basket filling up…');
-    await sleep(200);
+    await sleep(GRAB_PAUSE_MS);   // a calm little beat before moving on
   }
 
   gatherLabel('Back to the kitchen!');
+  gatherChef.classList.add('walking');
   gatherAnimator.play('walking');
   placeGatherChef(c.x, c.y);
   await sleep(HOP_MS);
+  gatherChef.classList.remove('walking');
   gatherAnimator.play('presenting');
-  await sleep(500);
+  await sleep(700);
 
   startCookingSession(minutes);
 }
