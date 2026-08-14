@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Focus Kitchen — Animation Library</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .lib-wrap { max-width: 1100px; margin: 0 auto; padding: 24px; width: 100%; }
+  .lib-intro { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; line-height: 1.5; }
+  .lib-intro strong { color: var(--text-light); }
+  .anim-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; }
+  .anim-card { background: var(--bg-panel); border: 2px solid var(--brown); border-radius: 10px; padding: 14px; }
+  .anim-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 10px; }
+  .anim-head h3 { color: var(--accent); text-transform: capitalize; letter-spacing: 1px; }
+  .anim-head .meta { font-size: 0.72rem; color: var(--text-muted); }
+  .anim-stage {
+    display: flex; align-items: flex-end; justify-content: center;
+    height: 150px; background: repeating-conic-gradient(#2c2016 0% 25%, #241811 0% 50%) 50% / 28px 28px;
+    border-radius: 8px; border: 1px solid var(--brown-dark); margin-bottom: 10px;
+  }
+  .anim-stage img { height: 130px; width: auto; image-rendering: pixelated; }
+  .filmstrip { display: flex; gap: 4px; overflow-x: auto; padding-bottom: 4px; }
+  .filmstrip figure { flex: 0 0 auto; text-align: center; }
+  .filmstrip img { height: 56px; width: auto; image-rendering: pixelated; border: 1px solid var(--brown-dark); border-radius: 4px; background: var(--bg-dark); }
+  .filmstrip figcaption { font-size: 0.6rem; color: var(--text-muted); margin-top: 2px; }
+  .controls { display: flex; gap: 8px; margin-top: 8px; }
+  .controls button { font-size: 0.72rem; padding: 4px 10px; }
+  .flag {
+    margin-top: 6px; font-size: 0.72rem; color: #e8b06a;
+    background: rgba(232,176,106,0.1); border: 1px solid rgba(232,176,106,0.35);
+    border-radius: 6px; padding: 6px 8px;
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <header class="topbar">
+    <h1>FOCUS KITCHEN <span class="ver">v3</span></h1>
+    <nav>
+      <a href="index.html" class="nav-btn" style="text-decoration:none; display:inline-block;">Kitchen</a>
+      <button class="nav-btn active">Animations</button>
+    </nav>
+  </header>
+  <main id="stage" style="display:block;">
+    <div class="lib-wrap">
+      <h2 style="color:var(--accent); letter-spacing:2px; margin-bottom:6px;">Chef Animation Library</h2>
+      <p class="lib-intro" id="lib-intro">Loading…</p>
+      <div class="anim-grid" id="anim-grid"></div>
+    </div>
+  </main>
+</div>
+<script>
+const BASE = '../';
+const asset = p => (p && !/^https?:|^\.\.\//.test(p)) ? BASE + p : p;
+
+// which sections the game actually plays, and where
+const USAGE = {
+  idle:        'Home screen — chef standing still.',
+  walking:     'Gather sequence + intro — chef travelling between spots.',
+  chopping:    'Cook intro — prep phase.',
+  stirring:    'Cooking phase — stirring the pot.',
+  presenting:  'Dish Complete — holding up the finished dish.',
+  interaction: 'Gather — reaching out to pick up an item.',
+};
+// honest notes on what's missing / rough per the PRD state machine
+const FLAGS = {
+  walking: 'Only ONE direction. PRD wants 6 frames × 4 directions (up/down/left/right). '
+         + 'Because there is just one cycle, the chef appears to slide sideways/backward '
+         + 'when he walks to ingredients. Needs directional walk art to fix properly.',
+  interaction: 'Plays once as a generic "reach". No basket / carry pose, so gathering does '
+         + 'not show him actually holding food.',
+  idle: 'No occasional blink/breath variation beyond the loop.',
+};
+
+class Loop {
+  constructor(img, frames, ms, loop) { this.img=img; this.frames=frames; this.ms=ms; this.loop=loop; this.i=0; this.h=null; }
+  start() { this.stop(); this.render(); this.h=setInterval(()=>this.tick(), this.ms); }
+  tick() { this.i++; if (this.i>=this.frames.length) { if(this.loop){this.i=0;} else {this.i=this.frames.length-1; this.render(); this.stop(); return;} } this.render(); }
+  render() { this.img.src = asset(this.frames[this.i].file); }
+  stop() { if(this.h){clearInterval(this.h); this.h=null;} }
+}
+
+async function main() {
+  const data = await fetch(BASE + 'data/chef_animations.json').then(r => r.json());
+  const sections = data.sections;
+  const names = Object.keys(sections);
+  document.getElementById('lib-intro').innerHTML =
+    `<strong>${names.length} animations</strong> exist for the chef, sourced from <code>${data.source_sheet || 'the chef sheet'}</code>. `
+    + `Each plays live below with its full filmstrip. Amber notes flag gaps vs. the PRD state machine — `
+    + `most importantly, the walk is <strong>not directional</strong>, which is why in-game movement looks off.`;
+
+  const grid = document.getElementById('anim-grid');
+  for (const name of names) {
+    const sec = sections[name];
+    const card = document.createElement('div');
+    card.className = 'anim-card';
+
+    const head = document.createElement('div');
+    head.className = 'anim-head';
+    head.innerHTML = `<h3>${name}</h3><span class="meta">${sec.frames.length} frames · ${sec.frame_ms}ms · ${sec.loop?'loops':'once'}</span>`;
+    card.appendChild(head);
+
+    const stage = document.createElement('div');
+    stage.className = 'anim-stage';
+    const big = document.createElement('img');
+    big.alt = name;
+    stage.appendChild(big);
+    card.appendChild(stage);
+
+    const usage = document.createElement('div');
+    usage.style.cssText = 'font-size:0.75rem;color:var(--text-muted);margin-bottom:8px;';
+    usage.textContent = USAGE[name] || '';
+    card.appendChild(usage);
+
+    const strip = document.createElement('div');
+    strip.className = 'filmstrip';
+    sec.frames.forEach((f, i) => {
+      const fig = document.createElement('figure');
+      const im = document.createElement('img'); im.src = asset(f.file); im.alt = `${name} ${i}`; im.loading='lazy';
+      const cap = document.createElement('figcaption'); cap.textContent = i;
+      fig.appendChild(im); fig.appendChild(cap); strip.appendChild(fig);
+    });
+    card.appendChild(strip);
+
+    if (FLAGS[name]) {
+      const flag = document.createElement('div');
+      flag.className = 'flag';
+      flag.textContent = '⚠ ' + FLAGS[name];
+      card.appendChild(flag);
+    }
+
+    const controls = document.createElement('div');
+    controls.className = 'controls';
+    const loop = new Loop(big, sec.frames, sec.frame_ms, sec.loop);
+    const replay = document.createElement('button'); replay.className='ghost-btn small'; replay.textContent='Replay';
+    replay.onclick = () => { loop.i = 0; loop.start(); };
+    controls.appendChild(replay);
+    card.appendChild(controls);
+
+    grid.appendChild(card);
+    loop.start();
+  }
+}
+main();
+</script>
+</body>
+</html>

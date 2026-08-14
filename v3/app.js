@@ -15,9 +15,9 @@ const STORAGE_KEY = 'focus-kitchen-v3-unlocked';
 const SESSION_KEY = 'focus-kitchen-v3-session';
 const MUTE_KEY    = 'focus-kitchen-v3-muted';
 
-const GATHER_COUNT = 12;   // how many items the chef visits (spread around the border)
-const HOP_MS = 1300;       // slow, calm stroll between two items
-const GRAB_PAUSE_MS = 520; // gentle beat after each pickup
+const GATHER_COUNT = 10;   // how many items the chef visits (spread around the border)
+const HOP_MS = 2000;       // very slow, calm stroll between two items
+const GRAB_PAUSE_MS = 850; // long gentle beat after each pickup
 
 const state = {
   data: { food: null, tiles: null, chef: null, recipes: null },
@@ -273,8 +273,13 @@ function slotPoint(frame, slot) {
   return { x: r.left - fr.left + r.width / 2, y: r.top - fr.top + r.height / 2 };
 }
 
+let lastChefX = 0;
 function placeGatherChef(x, y) {
   const w = gatherChef.offsetWidth || 74, h = gatherChef.offsetHeight || 74;
+  // face the way we're walking (horizontal), so movement reads intentionally
+  if (x < lastChefX - 3) gatherChef.style.setProperty('--face', '-1');
+  else if (x > lastChefX + 3) gatherChef.style.setProperty('--face', '1');
+  lastChefX = x;
   gatherChef.style.left = `${x - w / 2}px`;
   gatherChef.style.top = `${y - h}px`; // feet at the point
 }
@@ -303,6 +308,7 @@ async function runGatherSequence(minutes) {
   // let layout settle so getBoundingClientRect is correct
   await sleep(60);
   const c = centerOfFrame(frame);
+  lastChefX = c.x;
   gatherChef.style.transition = 'none';
   placeGatherChef(c.x, c.y);
   gatherAnimator.play('idle');
