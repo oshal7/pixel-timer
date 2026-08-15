@@ -1,0 +1,496 @@
+<title>Focus Kitchen Chef Sprite Bible</title>
+<style>
+  :root {
+    --ground:      #f6efe4;
+    --panel:       #fffaf2;
+    --panel-2:     #efe4d3;
+    --ink:         #2a1d12;
+    --ink-soft:    #6b5744;
+    --ink-faint:   #97836c;
+    --rule:        #ddcdb6;
+    --accent:      #b5601f;
+    --accent-soft: #f0d9c2;
+    --key:         #2f7d4f;
+    --key-soft:    #dcefe0;
+    --warn:        #a8401f;
+    --warn-soft:   #f6ddd2;
+    --term-bg:     #241a12;
+    --term-ink:    #f0e2cd;
+    --term-dim:    #a08c72;
+    --term-accent: #e29a5a;
+    --shadow: 0 1px 2px rgba(42,29,18,.06), 0 8px 24px -12px rgba(42,29,18,.18);
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  :root:not([data-theme="light"]) { }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:      #191309;
+      --panel:       #221a10;
+      --panel-2:     #2c2216;
+      --ink:         #f4e9d8;
+      --ink-soft:    #c2ae94;
+      --ink-faint:   #92806a;
+      --rule:        #3b2e1f;
+      --accent:      #e0954f;
+      --accent-soft: #3a2716;
+      --key:         #77c48d;
+      --key-soft:    #1d2f22;
+      --warn:        #e08056;
+      --warn-soft:   #3a2015;
+      --term-bg:     #120d07;
+      --term-ink:    #f0e2cd;
+      --term-dim:    #8d7a62;
+      --term-accent: #e29a5a;
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.7);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground:      #191309;
+    --panel:       #221a10;
+    --panel-2:     #2c2216;
+    --ink:         #f4e9d8;
+    --ink-soft:    #c2ae94;
+    --ink-faint:   #92806a;
+    --rule:        #3b2e1f;
+    --accent:      #e0954f;
+    --accent-soft: #3a2716;
+    --key:         #77c48d;
+    --key-soft:    #1d2f22;
+    --warn:        #e08056;
+    --warn-soft:   #3a2015;
+    --term-bg:     #120d07;
+    --term-ink:    #f0e2cd;
+    --term-dim:    #8d7a62;
+    --term-accent: #e29a5a;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.7);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 940px; margin: 0 auto; padding: 0 24px 96px; }
+
+  .mast { border-bottom: 3px solid var(--ink); padding: 56px 0 20px; margin-bottom: 40px; }
+  .eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--accent); margin: 0 0 14px; }
+  h1 { font-family: var(--mono); font-size: clamp(30px, 6vw, 52px); line-height: 1.02; letter-spacing: -.02em; font-weight: 700; margin: 0 0 16px; text-wrap: balance; }
+  .standfirst { font-size: 17px; color: var(--ink-soft); max-width: 62ch; margin: 0; }
+  .mast-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; font-family: var(--mono); font-size: 11px; }
+  .chip { background: var(--panel-2); border: 1px solid var(--rule); padding: 4px 10px; border-radius: 100px; color: var(--ink-soft); letter-spacing: .04em; }
+  .chip b { color: var(--ink); font-weight: 600; }
+
+  section { margin: 0 0 56px; scroll-margin-top: 20px; }
+  h2 { font-family: var(--mono); font-size: 13px; letter-spacing: .18em; text-transform: uppercase; color: var(--accent); margin: 0 0 6px; padding-bottom: 10px; border-bottom: 1px solid var(--rule); display: flex; align-items: baseline; gap: 10px; }
+  h2 .num { color: var(--ink-faint); font-weight: 400; }
+  .lede { font-size: 16px; color: var(--ink-soft); margin: 16px 0 24px; max-width: 66ch; }
+  h3 { font-size: 17px; margin: 32px 0 8px; letter-spacing: -.01em; }
+  h4 { font-size: 14.5px; margin: 0 0 4px; letter-spacing: -.005em; }
+  p { margin: 0 0 14px; max-width: 68ch; }
+  a { color: var(--accent); }
+
+  .tw { overflow-x: auto; margin: 20px 0; border: 1px solid var(--rule); border-radius: 8px; background: var(--panel); }
+  table { border-collapse: collapse; width: 100%; font-size: 13.5px; min-width: 560px; }
+  th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  th { font-family: var(--mono); font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-faint); font-weight: 600; background: var(--panel-2); }
+  tr:last-child td { border-bottom: none; }
+  td code, .ic { font-family: var(--mono); font-size: 12.5px; background: var(--panel-2); padding: 1.5px 6px; border-radius: 4px; color: var(--ink); white-space: nowrap; }
+  .num-col { font-variant-numeric: tabular-nums; }
+
+  .sheet { background: var(--panel); border: 1px solid var(--rule); border-radius: 10px; margin: 0 0 18px; overflow: hidden; box-shadow: var(--shadow); }
+  .sheet-hd { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding: 13px 16px; background: var(--panel-2); border-bottom: 1px solid var(--rule); }
+  .sheet-id { font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--accent); letter-spacing: .1em; }
+  .sheet-nm { font-weight: 650; font-size: 15px; flex: 1; min-width: 180px; }
+  .sheet-sz { font-family: var(--mono); font-size: 11px; color: var(--ink-faint); }
+  .term { position: relative; background: var(--term-bg); color: var(--term-ink); font-family: var(--mono); font-size: 12.5px; line-height: 1.62; padding: 16px 16px 16px; margin: 0; white-space: pre-wrap; word-break: break-word; max-height: 300px; overflow-y: auto; }
+  .copy { position: absolute; top: 10px; right: 10px; font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; cursor: pointer; background: var(--term-accent); color: #201509; border: none; padding: 6px 11px; border-radius: 5px; font-weight: 700; transition: transform .12s ease, opacity .12s ease; }
+  .copy:hover { transform: translateY(-1px); }
+  .copy:focus-visible { outline: 2px solid var(--term-ink); outline-offset: 2px; }
+  .copy.done { background: var(--key); color: #fff; }
+
+  .call { border-left: 4px solid var(--key); background: var(--key-soft); padding: 14px 16px; border-radius: 0 8px 8px 0; margin: 20px 0; font-size: 14.5px; }
+  .call.warn { border-left-color: var(--warn); background: var(--warn-soft); }
+  .call.skip { border-left-color: var(--ink-faint); background: var(--panel-2); }
+  .call b { display: block; margin-bottom: 3px; font-size: 13px; letter-spacing: .02em; }
+  .call p { margin: 0; max-width: none; }
+
+  ul.tight { margin: 12px 0; padding-left: 20px; }
+  ul.tight li { margin-bottom: 7px; font-size: 14.5px; }
+
+  .footer { border-top: 3px solid var(--ink); padding-top: 20px; margin-top: 20px; font-size: 14px; color: var(--ink-soft); }
+  .toc { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px; margin: 20px 0; }
+  .toc a { display: block; background: var(--panel); border: 1px solid var(--rule); border-radius: 7px; padding: 10px 13px; font-size: 13.5px; text-decoration: none; color: var(--ink); box-shadow: var(--shadow); }
+  .toc a b { color: var(--accent); font-family: var(--mono); font-size: 11px; display: block; margin-bottom: 2px; }
+  .status { font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; padding: 2px 7px; border-radius: 100px; }
+  .status.new { background: var(--warn-soft); color: var(--warn); }
+  .status.existing { background: var(--key-soft); color: var(--key); }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+
+<div class="wrap">
+
+<header class="mast">
+  <p class="eyebrow">Focus Kitchen · Character Production Bible</p>
+  <h1>Chef Sprite Bible</h1>
+  <p class="standfirst">Companion to the environment asset bible — every prompt needed to build out the chef's full animation set from your character reference sheet, organised the same way: a style clamp you paste every time, a fixed direction convention, and one prompt per action.</p>
+  <div class="mast-meta">
+    <span class="chip">Character frame <b>~32 × 48 px tile</b></span>
+    <span class="chip">Perspective <b>3/4 top-down</b></span>
+    <span class="chip">Key color <b>#00FF00</b></span>
+    <span class="chip">Real directions <b>Down · Up · Right</b> (Left = mirror)</span>
+  </div>
+</header>
+
+<section id="basis">
+  <h2><span class="num">01</span> Working from your reference</h2>
+  <p class="lede">The sheet you shared — idle / walking / carrying-walk in 4 directions, green background, labelled callouts — is exactly the style anchor this needs. It already answers most of the open questions: hat, mustache, bandana, jacket, sash, trousers and shoes are all locked, and it proves your outline-on-green approach keys cleanly (unlike the soft FX problem — a chef sprite is opaque and hard-edged everywhere, so green screen is the right call here, no changes needed to that part of your workflow).</p>
+  <div class="call">
+    <b>Attach it to every prompt below</b>
+    <p>Crop the reference down to just the chef (drop the labels/compass/section headers) and attach that crop to every single generation run in this bible, the same way you'd attach a style anchor for the environment sheets. That single image is what keeps 24 separate prompts looking like one character.</p>
+  </div>
+</section>
+
+<section id="directions">
+  <h2><span class="num">02</span> Direction convention</h2>
+  <p class="lede">Your reference generated all 4 directions independently, which is why the reference sheet itself is worth keeping — but for every animation below you only need to <b>generate 3 real directions</b>. The 4th is a free horizontal flip, exactly like <code>walk_left</code> already works in the current build.</p>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>Direction</th><th>Compass</th><th>Source</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td><b>Down</b></td><td>S — facing the player</td><td>Generate</td><td>Used when walking toward camera, exiting through the door, coming downstairs.</td></tr>
+        <tr><td><b>Up</b></td><td>N — back to the player</td><td>Generate</td><td>Used when walking away from camera, going through the door, going upstairs.</td></tr>
+        <tr><td><b>Right</b></td><td>E</td><td>Generate</td><td>The "real" side-facing art, matching how <code>walk_right</code> already works.</td></tr>
+        <tr><td><b>Left</b></td><td>W</td><td class="ic">flip: true</td><td>Horizontal mirror of Right, applied in-game. No art needed — the engine already does this for <code>walk_left</code>.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="call warn">
+    <b>When mirroring breaks</b>
+    <p>A flipped sprite reads wrong if anything on the character is asymmetric in a way that matters — a hand held out to one specific side, an object passed hand-to-hand. Chopping, stirring, presenting and the packet actions below are all front-facing at a fixed counter, so they're exempt from this rule entirely: generate them once, no mirroring involved.</p>
+  </div>
+</section>
+
+<section id="style">
+  <h2><span class="num">03</span> The character style clamp</h2>
+  <p class="lede">Paste this at the top of every prompt in section 05, with the cropped reference image attached. It encodes the character design plus the technical rules that keep frames slotting into an animation without jitter.</p>
+
+  <div class="sheet">
+    <div class="sheet-hd"><span class="sheet-id">CLAMP</span><span class="sheet-nm">Character + technical rules — paste every time</span><span class="sheet-sz">attach reference crop</span></div>
+    <pre class="term" id="cs0"><button class="copy" data-t="cs0">Copy</button>MATCH THE ATTACHED REFERENCE IMAGE EXACTLY. Same character, same proportions, same palette, same outline weight — this is a style anchor, not inspiration.
+
+CHARACTER: a cheerful middle-aged male chef. Tan skin, thick brown mustache, warm friendly expression. Tall white pleated chef's toque. Red bandana knotted at the neck. White double-breasted chef's jacket with a row of small buttons down the front. Red sash/belt at the waist. Grey trousers. Brown leather shoes.
+
+STYLE:
+- 32-bit cozy pixel art, in the style of Stardew Valley character sprites, 3/4 top-down perspective — face and body read clearly with a hint of the top of the hat/shoulders, never a flat side profile and never a flat overhead view.
+- Bold, clean, consistent 2px dark outline around the ENTIRE silhouette and major interior seams (hat brim, jacket lapel, sash, shoe tops). This is what keys cleanly off the green — keep it identical weight on every frame.
+- Crisp flat pixel shading, 3-4 tones per colour, no gradients wider than a couple of pixels, no blur, no soft anti-aliasing haze.
+- Single light source from the upper-left, soft warm highlight, gentle cool shadow — matches the kitchen environment sheets.
+- Character drawn at IDENTICAL scale in every image: same head size, same body height, same hat height, same shoulder width. Do not zoom in or out between frames.
+
+ANIMATION RULES (critical — this is what makes frames playable, not just a nice picture):
+- All frames of one sequence are the SAME canvas size, and the character's feet stay glued to the SAME baseline row in every single frame. Only the pose changes — no vertical or horizontal drift frame to frame, or the animation will jitter in-game.
+- Frames are laid out in a single horizontal row, left to right, evenly spaced, in the exact order they play back.
+- Each frame must be a genuinely different pose along the motion, not a near-duplicate — show real progression.
+
+SHEET RULES:
+- BACKGROUND MUST BE PURE FLAT CHROMA GREEN #00FF00, uniform edge to edge.
+- NO drop shadow cast onto the green (contact shadow is a separate overlay, handled elsewhere).
+- NO text, NO labels, NO numbers, NO watermarks, NO speech bubbles, NO motion lines.</pre>
+  </div>
+</section>
+
+<section id="spec">
+  <h2><span class="num">04</span> Animation spec</h2>
+  <p class="lede">Every action you listed, mapped to a state name, frame count and loop behaviour. <span class="status existing">existing</span> means art already lives in <span class="ic">assets/chef_v3/</span> — those prompts are included for a consistency pass but are optional. <span class="status new">new</span> needs generating from scratch.</p>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>#</th><th>State</th><th>Directions</th><th>Frames</th><th>Loop</th><th></th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td class="ic">idle_down / up / right</td><td>3 + mirror</td><td class="num-col">6</td><td>loop</td><td><span class="status new">new</span></td></tr>
+        <tr><td>2</td><td class="ic">walk_down / up / right</td><td>3 + mirror</td><td class="num-col">8</td><td>loop</td><td><span class="status new">new</span></td></tr>
+        <tr><td>3</td><td class="ic">door_in / door_out</td><td>1 each</td><td class="num-col">6</td><td>one-shot</td><td><span class="status new">new</span></td></tr>
+        <tr><td>4</td><td class="ic">stairs_up / stairs_down</td><td>1 each</td><td class="num-col">8</td><td>loop</td><td><span class="status new">new</span></td></tr>
+        <tr><td>5</td><td class="ic">carry_empty_right</td><td>1 + mirror</td><td class="num-col">8</td><td>loop</td><td><span class="status new">new</span></td></tr>
+        <tr><td>6</td><td class="ic">carry_full_right</td><td>1 + mirror</td><td class="num-col">8</td><td>loop</td><td><span class="status new">new</span> (replaces the <code>carry</code> placeholder)</td></tr>
+        <tr><td>7</td><td class="ic">stairs_up_empty</td><td>1</td><td class="num-col">8</td><td>loop</td><td><span class="status new">new</span></td></tr>
+        <tr><td>8</td><td class="ic">stairs_down_full</td><td>1</td><td class="num-col">8</td><td>loop</td><td><span class="status new">new</span></td></tr>
+        <tr><td>9</td><td class="ic">sit_down / sit_idle</td><td>1 (matches nook armchair)</td><td class="num-col">4 / 6</td><td>one-shot / loop</td><td><span class="status new">new</span></td></tr>
+        <tr><td>10</td><td class="ic">celebrate</td><td>1 (front-facing)</td><td class="num-col">8</td><td>one-shot</td><td><span class="status new">new</span></td></tr>
+        <tr><td>11</td><td class="ic">chop</td><td>1 (front-facing)</td><td class="num-col">6</td><td>loop</td><td><span class="status existing">existing</span></td></tr>
+        <tr><td>12</td><td class="ic">read_book</td><td>1 (front-facing)</td><td class="num-col">8</td><td>one-shot</td><td><span class="status existing">existing</span></td></tr>
+        <tr><td>13</td><td class="ic">present</td><td>1 (front-facing)</td><td class="num-col">6</td><td>one-shot</td><td><span class="status existing">existing</span></td></tr>
+        <tr><td>14</td><td class="ic">stir</td><td>1 (front-facing)</td><td class="num-col">6</td><td>loop</td><td><span class="status existing">existing</span></td></tr>
+        <tr><td>15</td><td class="ic">packet_cut / packet_pour</td><td>1 each (front-facing)</td><td class="num-col">6</td><td>one-shot</td><td><span class="status new">new</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="call">
+    <b>Why chop / present / stir / read don't get vegetable- or dish-specific versions</b>
+    <p>The knife-and-board motion is identical whatever's being chopped, and the presenting pose is identical whatever dish is held — what actually changes is a separate prop (an ingredient icon from Sheet 09, a dish icon from Sheet 08/dishes) composited into the chef's hands at render time. One chop sheet and one present sheet cover every ingredient and every dish; you never need 109 versions of "chef presenting."</p>
+  </div>
+</section>
+
+<section id="toc">
+  <h2><span class="num">05</span> The prompts</h2>
+  <p class="lede">Style clamp first (section 03), reference image attached, then one block below per action. Jump to any of them:</p>
+  <div class="toc">
+    <a href="#c01"><b>01</b>Idle — 3 directions</a>
+    <a href="#c02"><b>02</b>Walk — 3 directions</a>
+    <a href="#c03"><b>03</b>Door in / out</a>
+    <a href="#c04"><b>04</b>Stairs up / down</a>
+    <a href="#c05"><b>05</b>Carry, empty basket</a>
+    <a href="#c06"><b>06</b>Carry, full basket</a>
+    <a href="#c07"><b>07</b>Stairs up, empty basket</a>
+    <a href="#c08"><b>08</b>Stairs down, full basket</a>
+    <a href="#c09"><b>09</b>Sit &amp; chill</a>
+    <a href="#c10"><b>10</b>Celebration</a>
+    <a href="#c11"><b>11</b>Chopping</a>
+    <a href="#c12"><b>12</b>Reading the recipe book</a>
+    <a href="#c13"><b>13</b>Presenting the dish</a>
+    <a href="#c14"><b>14</b>Stirring</a>
+    <a href="#c15"><b>15</b>Packet cut &amp; pour</a>
+  </div>
+
+  <h3 id="c01">01 · Idle — 3 directions</h3>
+  <p>Your reference shows one static pose per direction. For an actual idle loop, each direction needs a subtle breathing/blink cycle — small enough that it reads as "standing still," not a new pose.</p>
+  <div class="sheet">
+    <div class="sheet-hd"><span class="sheet-id">CH01a</span><span class="sheet-nm">Idle — Down (facing player)</span><span class="sheet-sz">6 frames · loop</span></div>
+    <pre class="term" id="c01a"><button class="copy" data-t="c01a">Copy</button>Following the character style clamp above, generate a 6-frame idle animation strip, character facing DOWN toward the viewer (front-facing), standing still.
+
+The motion is a SUBTLE breathing/settling loop only: chest rising and falling very slightly, one small blink somewhere in the middle frames, maybe a faint sway. The character's feet and overall pose barely change — this must read as "standing still," not walking or gesturing. Frame 1 and frame 6 should be similar enough to loop seamlessly back to frame 1.</pre>
+  </div>
+  <div class="sheet">
+    <div class="sheet-hd"><span class="sheet-id">CH01b</span><span class="sheet-nm">Idle — Up (back to player)</span><span class="sheet-sz">6 frames · loop</span></div>
+    <pre class="term" id="c01b"><button class="copy" data-t="c01b">Copy</button>Following the character style clamp above, generate a 6-frame idle animation strip, character facing UP, away from the viewer (back-facing — hat and shoulders visible, back of the jacket), standing still.
+
+Same subtle breathing/settling loop as a front-facing idle — shoulders rising and falling very slightly. No blink needed since the face isn't visible; instead let the hat sway a tiny amount. Must loop seamlessly.</pre>
+  </div>
+  <div class="sheet">
+    <div class="sheet-hd"><span class="sheet-id">CH01c</span><span class="sheet-nm">Idle — Right (side-facing)</span><span class="sheet-sz">6 frames · loop</span></div>
+    <pre class="term" id="c01c"><button class="copy" data-t="c01c">Copy</button>Following the character style clamp above, generate a 6-frame idle animation strip, character facing RIGHT in profile, standing still.
+
+Same subtle breathing/settling loop. Mustache and hat profile should stay perfectly consistent in silhouette across all 6 frames — only the chest/shoulder rise-and-fall changes. Must loop seamlessly. (Left-facing idle is this sheet mirrored — do not generate it separately.)</pre>
+  </div>
+
+  <h3 id="c02">02 · Walk — 3 directions</h3>
+  <p>Replaces the current up/down walk placeholders (which just reuse the side-walk art) and gives a real 8-frame cycle for a smoother loop than the existing 12-frame one.</p>
+  <div class="sheet">
+    <div class="sheet-hd"><span class="sheet-id">CH02a</span><span class="sheet-nm">Walk — Down</span><span class="sheet-sz">8 frames · loop</span></div>
+    <pre class="term" id="c02a"><button class="copy" data-t="c02a">Copy</button>Following the character style clamp above, generate an 8-frame walk cycle, character walking DOWN toward the viewer (front-facing).
+
+A full walk cycle: alternating leading leg, natural arm swing opposite the leading leg, a slight up-down bob of the whole body on each step. Frame 1 and frame 8 must connect seamlessly so the cycle loops without a visible pop. Keep the hat and mustache silhouette steady — only the body below the neck should really move.</pre>
+  </div>
+  <div class="sheet">
+    <div class="sheet-hd"><span class="sheet-id">CH02b</span><span class="sheet-nm">Walk — Up</span><span class="sheet-sz">8 frames · loop</span></div>
+    <pre class="term" id="c02b"><button class="copy" data-t="c02b">Copy</button>Following the character style clamp above, generate an 8-frame walk cycle, character walking UP, away from the viewer (back-facing).
+
+Same full walk cycle as the down-facing version — alternating leading leg visible from behind, arm swing, slight body bob — but seen from behind. Frame 1 and frame 8 must connect seamlessly to loop.</pre>
+  </div>
+  <div class="sheet">
+    <div class="sheet-hd"><span class="sheet-id">CH02c</span><span class="sheet-nm">Walk — Right</span><span class="sheet-sz">8 frames · loop</span></div>
+    <pre class="term" id="c02c"><button class="copy" data-t="c02c">Copy</button>Following the character style clamp above, generate an 8-frame walk cycle, character walking RIGHT in profile.
+
+Classic side walk cycle: full leg-and-arm stride visible in profile, slight body bob. Frame 1 and frame 8 must connect seamlessly to loop. (Left-facing walk is this sheet mirrored — do not generate it separately; this replaces the current placeholder art.)</pre>
+  </div>
+
+  <h3 id="c03">03 · Door in / out</h3>
+  <div class="call skip">
+    <b>You may not need new art here at all</b>
+    <p>The doorway is a fixed back-wall fixture (Sheet 03 of the environment bible), so "coming from the door" is really just <code>walk_down</code> starting near the door tile, and "going to the door" is <code>walk_up</code> ending at the door tile, timed against the door's open/closed frames. Only use the dedicated prompts below if you want one extra "stepping over the threshold" beat — a slight duck and a hand near the doorknob — layered in at the start/end of the walk.</p>
+  </div>
+  <div class="sheet">
+    <div class="sheet-hd"><span class="sheet-id">CH03a</span><span class="sheet-nm">Door — Entering (threshold beat)</span><span class="sheet-sz">6 frames · one-shot</span></div>
+    <pre class="term" id="c03a"><button class="copy" data-t="c03a">Copy</button>Following the character style clamp above, generate a 6-frame one-shot animation: the chef stepping IN through a doorway, facing DOWN toward the viewer (walking out of the doorway into the room).
+
+Frame 1: character mostly in silhouette/shadow, just inside the doorway, one hand still touching a doorknob at their side. Frames 2-4: stepping forward and down into full light, hand leaving the doorknob. Frames 5-6: settles into a normal downward walking stride, fully in the room. This is a ONE-SHOT transition, not a loop — after frame 6 the regular walk_down cycle takes over.</pre>
+  </div>
+  <div class="sheet">
+    <div class="sheet-hd"><span class="sheet-id">CH03b</span><span class="sheet-nm">Door — Exiting (threshold beat)</span><span class="sheet-sz">6 frames · one-shot</span></div>
+    <pre class="term" id="c03b"><button class="copy" data-t="c03b">Copy</button>Following the character style clamp above, generate a 6-frame one-shot animation: the chef stepping OUT through a doorway, facing UP away from the viewer (walking toward the doorway and through it).
+
+Frames 1-3: normal upward walking stride, approaching the doorway. Frames 4-5: reaching a hand toward a doorknob, stepping into the doorway opening. Frame 6: mostly in silhouette/shadow, stepped through, about to leave frame. This is a ONE-SHOT transition, not a loop.</pre>
+  </div>
+
+  <h3 id="c04">04 · Stairs up / down</h3>
+  <p>The staircase asset (environment Sheet 03) is a single fixed-angle object, so unlike walking there's only one direction to generate for each — no left/right variant needed.</p>
+  <div class="sheet">
+    <div class="sheet-hd"><span class="sheet-id">CH04a</span><span class="sheet-nm">Stairs — Ascending</span><span class="sheet-sz">8 frames · loop</span></div>
+    <pre class="term" id="c04a"><button class="copy" data-t="c04a">Copy</button>Following the character style clamp above, generate an 8-frame walk cycle: the chef climbing a staircase, facing UP and slightly angled as if stepping onto rising steps.
+
+Exaggerate the knee lift on each step compared to a flat walk cycle — the leading leg should visibly rise higher before planting on the next step, and the torso leans forward slightly into the climb. The character's baseline row should still be consistent frame to frame (the illusion of climbing height comes from the pose, not from moving the character up the canvas — height changes are handled by the game, not the art). Frame 1 and frame 8 connect seamlessly to loop.</pre>
+  </div>
+  <div class="sheet">
+    <div class="sheet-hd"><span class="sheet-id">CH04b</span><span class="sheet-nm">Stairs — Descending</span><span class="sheet-sz">8 frames · loop</span></div>
+    <pre class="term" id="c04b"><button class="copy" data-t="c04b">Copy</button>Following the character style clamp above, generate an 8-frame walk cycle: the chef descending a staircase, facing DOWN and slightly angled as if stepping down onto lower steps.
+
+Exaggerate the knee lift and add a very slight forward-leaning caution to the pose compared to a flat walk cycle. Same baseline-row rule as the ascending sheet — the art shows the pose, not a vertical position change. Frame 1 and frame 8 connect seamlessly to loop.</pre>
+  </div>
+
+  <h3 id="c05">05 · Carry, empty basket — walking left/right</h3>
+  <div class="sheet">
+    <div class="sheet-hd"><span class="sheet-id">CH05</span><span class="sheet-nm">Carry empty — Right</span><span class="sheet-sz">8 frames · loop</span></div>
+    <pre class="term" id="c05"><button class="copy" data-t="c05">Copy</button>Following the character style clamp above, generate an 8-frame walk cycle, character walking RIGHT in profile, holding an EMPTY woven wicker gathering basket in both arms against their chest/waist.
+
+The basket is plainly empty — visible interior, no ingredients inside. Arms are bent to cradle the basket so they don't swing freely like a normal walk cycle; the walking motion comes mainly from the legs and a slight body bob, with the basket staying steady and level (not bouncing) across all frames. Frame 1 and frame 8 connect seamlessly to loop. (Left-facing is this sheet mirrored — do not generate it separately.)</pre>
+  </div>
+
+  <h3 id="c06">06 · Carry, full basket — walking left/right</h3>
+  <div class="sheet">
+    <div class="sheet-hd"><span class="sheet-id">CH06</span><span class="sheet-nm">Carry full — Right</span><span class="sheet-sz">8 frames · loop</span></div>
+    <pre class="term" id="c06"><button class="copy" data-t="c06">Copy</button>Following the character style clamp above, generate an 8-frame walk cycle, character walking RIGHT in profile, holding the SAME woven wicker gathering basket now FULL of colourful mixed vegetables (tomato, carrot, a leafy green) piled visibly above the rim.
+
+Same cradle-hold as the empty-basket sheet — arms bent, basket held steady and level, walking motion from the legs and a slight body bob. Frame 1 and frame 8 connect seamlessly to loop. (Left-facing is this sheet mirrored — do not generate it separately. This replaces the current <code>carry</code> placeholder in the manifest.)</pre>
+  </div>
+
+  <h3 id="c07">07 · Stairs up, empty basket</h3>
+  <div class="sheet">
+    <div class="sheet-hd"><span class="sheet-id">CH07</span><span class="sheet-nm">Stairs ascending — empty basket</span><span class="sheet-sz">8 frames · loop</span></div>
+    <pre class="term" id="c07"><button class="copy" data-t="c07">Copy</button>Following the character style clamp above, generate an 8-frame walk cycle: the chef climbing a staircase (facing UP, exaggerated knee lift, same pose logic as the plain stairs-ascending sheet), while holding an EMPTY woven wicker basket cradled against the chest with both arms.
+
+Basket stays level and steady while the legs do the exaggerated stair-climb motion. Same baseline-row rule as the other stairs sheets. Frame 1 and frame 8 connect seamlessly to loop.</pre>
+  </div>
+
+  <h3 id="c08">08 · Stairs down, full basket</h3>
+  <div class="sheet">
+    <div class="sheet-hd"><span class="sheet-id">CH08</span><span class="sheet-nm">Stairs descending — full basket</span><span class="sheet-sz">8 frames · loop</span></div>
+    <pre class="term" id="c08"><button class="copy" data-t="c08">Copy</button>Following the character style clamp above, generate an 8-frame walk cycle: the chef descending a staircase (facing DOWN, exaggerated knee lift and slight forward-leaning caution, same pose logic as the plain stairs-descending sheet), while holding the SAME basket now FULL of colourful mixed vegetables piled above the rim.
+
+Basket stays level and steady, held a little more carefully/cautiously than the empty-basket versions since it's heavier — a subtle difference in arm tension, not a different hold. Same baseline-row rule as the other stairs sheets. Frame 1 and frame 8 connect seamlessly to loop.</pre>
+  </div>
+
+  <h3 id="c09">09 · Sit &amp; chill on the couch</h3>
+  <p>Matches the armchair-facing-right piece from environment Sheet 07. Two parts: a one-shot settling-in transition, then a looping chill idle.</p>
+  <div class="sheet">
+    <div class="sheet-hd"><span class="sheet-id">CH09a</span><span class="sheet-nm">Sit down (settle into chair)</span><span class="sheet-sz">4 frames · one-shot</span></div>
+    <pre class="term" id="c09a"><button class="copy" data-t="c09a">Copy</button>Following the character style clamp above, generate a 4-frame one-shot animation: the chef sitting down into an armchair, seen in 3/4 side view facing RIGHT (matching an armchair that opens/faces right).
+
+Frame 1: standing beside the chair, starting to bend. Frame 2-3: lowering into the seat, knees bending, one hand on the armrest. Frame 4: fully seated, relaxed, legs bent at the knee as if resting on a low chair, back against the chair back. Draw ONLY the character — no chair furniture in the image, that's composited separately as the environment prop. Leave enough open space below/behind the pose that a chair back and armrest can be layered behind the character without overlapping the body.</pre>
+  </div>
+  <div class="sheet">
+    <div class="sheet-hd"><span class="sheet-id">CH09b</span><span class="sheet-nm">Sitting idle (chilling loop)</span><span class="sheet-sz">6 frames · loop</span></div>
+    <pre class="term" id="c09b"><button class="copy" data-t="c09b">Copy</button>Following the character style clamp above, generate a 6-frame looping animation: the chef relaxed and sitting in a chair, seen in 3/4 side view facing RIGHT, matching the final pose of the sit-down sheet exactly (same seated position, knees bent, back against a chair).
+
+Subtle chill loop: slow breathing rise/fall, a slow blink, maybe one hand tapping an armrest lightly or resting on the stomach. Nothing that looks like standing up or reaching. Draw ONLY the character, no chair furniture — same empty space behind/below for compositing as the sit-down sheet. Frame 1 and frame 6 must loop seamlessly.</pre>
+  </div>
+
+  <h3 id="c10">10 · Celebration</h3>
+  <div class="sheet">
+    <div class="sheet-hd"><span class="sheet-id">CH10</span><span class="sheet-nm">Celebration — completed dish / streak</span><span class="sheet-sz">8 frames · one-shot</span></div>
+    <pre class="term" id="c10"><button class="copy" data-t="c10">Copy</button>Following the character style clamp above, generate an 8-frame one-shot celebration animation, character facing DOWN toward the viewer, standing in place (not walking).
+
+A joyful, energetic beat: both arms thrown up in a small victory pump, a little hop off the ground at the peak (feet briefly lifted), big happy grin, chef hat bouncing slightly. Frames 1-3 wind up and rise, frames 4-5 are the peak (arms fully up, small hop), frames 6-8 settle back down to a happy standing pose (does not need to loop — this plays once then the game returns to idle_down).</pre>
+  </div>
+
+  <h3 id="c11">11 · Chopping vegetables</h3>
+  <div class="call skip">
+    <b>One animation covers every vegetable</b>
+    <p>The vegetable on the board is a separate prop, not baked into the sprite — the knife motion is identical whatever's underneath it. Only regenerate this if you want a style-consistency pass; the existing <code>chop</code> art already works.</p>
+  </div>
+  <div class="sheet">
+    <div class="sheet-hd"><span class="sheet-id">CH11</span><span class="sheet-nm">Chopping (optional regen)</span><span class="sheet-sz">6 frames · loop</span></div>
+    <pre class="term" id="c11"><button class="copy" data-t="c11">Copy</button>Following the character style clamp above, generate a 6-frame looping animation: the chef standing at a counter facing DOWN/slightly toward the viewer, chopping with a knife on a cutting board in front of them.
+
+One knife hand raised and brought down in a repeating chop motion, the other hand steadying near the board (not on the blade path). Show the character from roughly the waist up, as if standing behind a counter — leave the lower third of the frame as plain background so a counter prop can be composited in front of the legs. Do NOT draw any food, cutting board or knife-board contents — only the chef and the knife itself; the board and ingredient are separate props layered underneath. Frame 1 and frame 6 connect seamlessly to loop.</pre>
+  </div>
+
+  <h3 id="c12">12 · Reading the recipe book</h3>
+  <div class="call skip">
+    <b>Existing art already covers this</b>
+    <p>The current <code>read_book</code> state (8 frames) already does this. Only use the prompt below for a consistency pass against the new reference.</p>
+  </div>
+  <div class="sheet">
+    <div class="sheet-hd"><span class="sheet-id">CH12</span><span class="sheet-nm">Reading recipe book (optional regen)</span><span class="sheet-sz">8 frames · one-shot</span></div>
+    <pre class="term" id="c12"><button class="copy" data-t="c12">Copy</button>Following the character style clamp above, generate an 8-frame one-shot animation: the chef facing DOWN/slightly toward the viewer, holding an open book in both hands at chest height and reading it.
+
+Frames 1-2: lifting the book into reading position. Frames 3-6: reading — eyes moving, one small page-turn gesture, a thoughtful head tilt. Frames 7-8: lowering the book slightly as if satisfied, ready to act on the recipe. The book itself should be a plain closed-pattern cover with no readable text, just a simple ribbon bookmark. One-shot, does not need to loop.</pre>
+  </div>
+
+  <h3 id="c13">13 · Presenting the dish</h3>
+  <div class="call skip">
+    <b>Existing art already covers this, and it's dish-agnostic</b>
+    <p>The current <code>present</code> state (6 frames) already does this, and works for any of the 109 dishes since the dish itself is a separate prop held up in the empty space between the chef's hands. Only use the prompt below for a consistency pass.</p>
+  </div>
+  <div class="sheet">
+    <div class="sheet-hd"><span class="sheet-id">CH13</span><span class="sheet-nm">Presenting the dish (optional regen)</span><span class="sheet-sz">6 frames · one-shot</span></div>
+    <pre class="term" id="c13"><button class="copy" data-t="c13">Copy</button>Following the character style clamp above, generate a 6-frame one-shot animation: the chef facing DOWN toward the viewer, raising both open hands upward together as if presenting/showing off a finished dish held between them, big proud smile.
+
+Frames 1-2: hands starting to rise from waist height. Frames 3-4: hands reaching chest/shoulder height, palms up and slightly cupped as if holding a plate between them (draw the hands and arms in a pose that leaves an open gap between the palms — the dish itself is composited into that gap as a separate prop, do NOT draw any food or plate). Frames 5-6: hold the raised presenting pose, proud expression. One-shot, does not need to loop.</pre>
+  </div>
+
+  <h3 id="c14">14 · Stirring</h3>
+  <div class="call skip">
+    <b>Existing art already covers this</b>
+    <p>The current <code>stir</code> state (6 frames) already does this. Only use the prompt below for a consistency pass.</p>
+  </div>
+  <div class="sheet">
+    <div class="sheet-hd"><span class="sheet-id">CH14</span><span class="sheet-nm">Stirring the pot (optional regen)</span><span class="sheet-sz">6 frames · loop</span></div>
+    <pre class="term" id="c14"><button class="copy" data-t="c14">Copy</button>Following the character style clamp above, generate a 6-frame looping animation: the chef standing at a stove facing DOWN/slightly toward the viewer, one hand holding a wooden spoon and stirring in a circular motion, the other hand resting on their hip or steadying near the pot rim.
+
+Show the character from roughly the waist up, as if standing behind a stove — leave the lower third of the frame as plain background so a stove/pot prop can be composited in front. Do NOT draw the pot or its contents — only the chef and the spoon; the pot is a separate environment/prop layer. The spoon should trace a clear circular path across the 6 frames. Frame 1 and frame 6 connect seamlessly to loop.</pre>
+  </div>
+
+  <h3 id="c15">15 · Packet cut &amp; pour</h3>
+  <p>New two-part interaction at the kitchen island: opening a sealed ingredient sack, then pouring its contents. Split into two short one-shot sheets so either can be reused independently.</p>
+  <div class="sheet">
+    <div class="sheet-hd"><span class="sheet-id">CH15a</span><span class="sheet-nm">Packet — cutting open</span><span class="sheet-sz">6 frames · one-shot</span></div>
+    <pre class="term" id="c15a"><button class="copy" data-t="c15a">Copy</button>Following the character style clamp above, generate a 6-frame one-shot animation: the chef standing at a kitchen island facing DOWN/slightly toward the viewer, holding a small paper/cloth ingredient sack in one hand and cutting it open along the top with a small knife held in the other hand.
+
+Frames 1-2: bringing the knife to the top of the sack, positioning the blade. Frames 3-4: drawing the blade across in a cutting motion, the top of the sack starting to open. Frames 5-6: sack fully open at the top, knife pulling away, ready to pour. Keep the sack a plain, unlabelled paper-brown colour — no text or branding. One-shot, does not need to loop; feeds directly into the pouring sheet.</pre>
+  </div>
+  <div class="sheet">
+    <div class="sheet-hd"><span class="sheet-id">CH15b</span><span class="sheet-nm">Packet — pouring</span><span class="sheet-sz">6 frames · one-shot</span></div>
+    <pre class="term" id="c15b"><button class="copy" data-t="c15b">Copy</button>Following the character style clamp above, generate a 6-frame one-shot animation: the chef standing at a kitchen island facing DOWN/slightly toward the viewer, holding the SAME opened sack from the cutting sheet in both hands and tipping it forward and down to pour its contents out in front of them.
+
+Frames 1-2: lifting the open sack, starting to tilt it forward. Frames 3-4: sack angled downward, a small stream of pale contents (flour or grain — keep it a simple pale colour, not a specific labelled ingredient) visibly pouring out of the opening. Frames 5-6: sack tilting back upright, pour finishing, sack now visibly emptier/flatter. Leave open space below the pour stream so a bowl or counter prop can be composited underneath to catch it. One-shot, does not need to loop.</pre>
+  </div>
+</section>
+
+<section id="send">
+  <h2><span class="num">06</span> What to send back</h2>
+  <p class="lede">Same deal as the environment bible — raw sheets, green background and all, I handle keying and slicing.</p>
+  <ul class="tight">
+    <li>Name files by sheet ID from section 05, e.g. <code>CH02a_walk_down.png</code>, <code>CH15b_packet_pour.png</code>.</li>
+    <li>Every iteration is worth keeping even if it's not the one we ship — drop them in <code>assets_src/raw_sheets/</code> exactly like the environment sheets.</li>
+    <li>Once a sheet is approved, it becomes a new entry in <code>data/chef_v3.json</code> under the state names from the section 04 table (<code>gen_chef_v3.py</code> gets extended with the new states, same pattern as the existing ones) — nothing in <code>v3/app.js</code> needs to change beyond referencing the new state names where each interaction triggers.</li>
+  </ul>
+</section>
+
+<p class="footer">Reference image attached to every run, one action per prompt, mirror for left instead of regenerating it — that's what keeps 24 separate generations reading as one chef.</p>
+
+</div>
+
+<script>
+  document.querySelectorAll('.copy').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var pre = document.getElementById(btn.dataset.t);
+      var text = Array.from(pre.childNodes)
+        .filter(function (n) { return n.nodeType === 3; })
+        .map(function (n) { return n.textContent; })
+        .join('').trim();
+      var done = function () {
+        btn.textContent = 'Copied';
+        btn.classList.add('done');
+        setTimeout(function () { btn.textContent = 'Copy'; btn.classList.remove('done'); }, 1600);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, function () { fallback(text, done); });
+      } else { fallback(text, done); }
+    });
+  });
+  function fallback(text, done) {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); done(); } catch (e) {}
+    document.body.removeChild(ta);
+  }
+</script>
