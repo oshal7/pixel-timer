@@ -1,0 +1,1587 @@
+{
+  "_readme": "Per-dish ingredient lists (ids from the 50-item pantry). The v3 chef gathers exactly these. Edit freely: change 'ingredients', 'tier' (1-4) or 'minutes' [min,max]. 'tier' controls which dishes a chosen focus length can produce.",
+  "dishes": [
+    {
+      "id": "recipe_0_0",
+      "name": "Tea",
+      "tier": 1,
+      "minutes": [
+        5,
+        10
+      ],
+      "ingredients": [
+        "lemon",
+        "sugar"
+      ]
+    },
+    {
+      "id": "recipe_0_1",
+      "name": "Toast",
+      "tier": 1,
+      "minutes": [
+        5,
+        10
+      ],
+      "ingredients": [
+        "bread",
+        "butter"
+      ]
+    },
+    {
+      "id": "recipe_0_2",
+      "name": "Hard-Boiled Egg",
+      "tier": 1,
+      "minutes": [
+        5,
+        10
+      ],
+      "ingredients": [
+        "eggs"
+      ]
+    },
+    {
+      "id": "recipe_0_4",
+      "name": "Apple Slices",
+      "tier": 1,
+      "minutes": [
+        5,
+        10
+      ],
+      "ingredients": [
+        "apple"
+      ]
+    },
+    {
+      "id": "recipe_0_5",
+      "name": "Cereal Bowl",
+      "tier": 1,
+      "minutes": [
+        5,
+        10
+      ],
+      "ingredients": [
+        "milk",
+        "sugar"
+      ]
+    },
+    {
+      "id": "recipe_0_6",
+      "name": "Coffee",
+      "tier": 1,
+      "minutes": [
+        5,
+        10
+      ],
+      "ingredients": [
+        "milk",
+        "sugar"
+      ]
+    },
+    {
+      "id": "recipe_0_7",
+      "name": "Banana",
+      "tier": 1,
+      "minutes": [
+        5,
+        10
+      ],
+      "ingredients": [
+        "banana"
+      ]
+    },
+    {
+      "id": "recipe_0_9",
+      "name": "Instant Ramen",
+      "tier": 2,
+      "minutes": [
+        15,
+        20
+      ],
+      "ingredients": [
+        "pasta",
+        "soy_sauce",
+        "onion"
+      ]
+    },
+    {
+      "id": "recipe_0_10",
+      "name": "Cheese Slices",
+      "tier": 1,
+      "minutes": [
+        5,
+        10
+      ],
+      "ingredients": [
+        "cheese"
+      ]
+    },
+    {
+      "id": "recipe_0_11",
+      "name": "Orange Juice",
+      "tier": 1,
+      "minutes": [
+        5,
+        10
+      ],
+      "ingredients": [
+        "orange"
+      ]
+    },
+    {
+      "id": "recipe_1_0",
+      "name": "Grilled Cheese",
+      "tier": 2,
+      "minutes": [
+        15,
+        20
+      ],
+      "ingredients": [
+        "bread",
+        "cheese",
+        "butter"
+      ]
+    },
+    {
+      "id": "recipe_1_1",
+      "name": "Yogurt Cup",
+      "tier": 1,
+      "minutes": [
+        5,
+        10
+      ],
+      "ingredients": [
+        "milk",
+        "blueberry"
+      ]
+    },
+    {
+      "id": "recipe_1_2",
+      "name": "Omelette",
+      "tier": 2,
+      "minutes": [
+        15,
+        20
+      ],
+      "ingredients": [
+        "eggs",
+        "cheese",
+        "pepper"
+      ]
+    },
+    {
+      "id": "recipe_1_4",
+      "name": "Pretzel",
+      "tier": 2,
+      "minutes": [
+        15,
+        20
+      ],
+      "ingredients": [
+        "flour",
+        "yeast",
+        "salt"
+      ]
+    },
+    {
+      "id": "recipe_1_5",
+      "name": "Bagel",
+      "tier": 1,
+      "minutes": [
+        5,
+        10
+      ],
+      "ingredients": [
+        "flour",
+        "yeast"
+      ]
+    },
+    {
+      "id": "recipe_1_6",
+      "name": "Miso Soup",
+      "tier": 2,
+      "minutes": [
+        15,
+        20
+      ],
+      "ingredients": [
+        "soy_sauce",
+        "mushroom",
+        "onion"
+      ]
+    },
+    {
+      "id": "recipe_1_7",
+      "name": "Taco",
+      "tier": 3,
+      "minutes": [
+        25,
+        35
+      ],
+      "ingredients": [
+        "ground_beef",
+        "cheese",
+        "tomato",
+        "onion"
+      ]
+    },
+    {
+      "id": "recipe_1_9",
+      "name": "Hot Dog",
+      "tier": 1,
+      "minutes": [
+        5,
+        10
+      ],
+      "ingredients": [
+        "bread",
+        "sausage"
+      ]
+    },
+    {
+      "id": "recipe_1_10",
+      "name": "French Fries",
+      "tier": 1,
+      "minutes": [
+        5,
+        10
+      ],
+      "ingredients": [
+        "potato",
+        "salt"
+      ]
+    },
+    {
+      "id": "recipe_1_11",
+      "name": "Pita & Hummus",
+      "tier": 2,
+      "minutes": [
+        15,
+        20
+      ],
+      "ingredients": [
+        "bread",
+        "olive_oil",
+        "garlic"
+      ]
+    },
+    {
+      "id": "recipe_2_0",
+      "name": "Dim Sum",
+      "tier": 2,
+      "minutes": [
+        15,
+        20
+      ],
+      "ingredients": [
+        "pork_chop",
+        "flour",
+        "ginger"
+      ]
+    },
+    {
+      "id": "recipe_2_1",
+      "name": "Croissant",
+      "tier": 2,
+      "minutes": [
+        15,
+        20
+      ],
+      "ingredients": [
+        "flour",
+        "butter",
+        "yeast"
+      ]
+    },
+    {
+      "id": "recipe_2_2",
+      "name": "Mac & Cheese",
+      "tier": 3,
+      "minutes": [
+        25,
+        35
+      ],
+      "ingredients": [
+        "pasta",
+        "cheese",
+        "milk",
+        "butter"
+      ]
+    },
+    {
+      "id": "recipe_2_4",
+      "name": "Biryani",
+      "tier": 4,
+      "minutes": [
+        45,
+        75
+      ],
+      "ingredients": [
+        "rice",
+        "chicken",
+        "saffron",
+        "onion",
+        "ginger",
+        "garlic"
+      ]
+    },
+    {
+      "id": "recipe_2_5",
+      "name": "Fish & Chips",
+      "tier": 3,
+      "minutes": [
+        25,
+        35
+      ],
+      "ingredients": [
+        "fish",
+        "potato",
+        "flour",
+        "lemon"
+      ]
+    },
+    {
+      "id": "recipe_2_6",
+      "name": "Chef's Surprise #1",
+      "tier": 2,
+      "minutes": [
+        15,
+        20
+      ],
+      "ingredients": [
+        "rice",
+        "apple",
+        "cinnamon"
+      ]
+    },
+    {
+      "id": "recipe_2_7",
+      "name": "Gyro",
+      "tier": 3,
+      "minutes": [
+        25,
+        35
+      ],
+      "ingredients": [
+        "chicken",
+        "bread",
+        "onion",
+        "tomato"
+      ]
+    },
+    {
+      "id": "recipe_2_9",
+      "name": "Arepas",
+      "tier": 1,
+      "minutes": [
+        5,
+        10
+      ],
+      "ingredients": [
+        "corn",
+        "cheese"
+      ]
+    },
+    {
+      "id": "recipe_2_10",
+      "name": "Sauerkraut & Sausage",
+      "tier": 2,
+      "minutes": [
+        15,
+        20
+      ],
+      "ingredients": [
+        "sausage",
+        "onion",
+        "potato"
+      ]
+    },
+    {
+      "id": "recipe_2_11",
+      "name": "Kung Pao Chicken",
+      "tier": 3,
+      "minutes": [
+        25,
+        35
+      ],
+      "ingredients": [
+        "chicken",
+        "chili",
+        "peppercorns",
+        "bell_pepper"
+      ]
+    },
+    {
+      "id": "recipe_3_0",
+      "name": "Bao Buns",
+      "tier": 2,
+      "minutes": [
+        15,
+        20
+      ],
+      "ingredients": [
+        "flour",
+        "pork_chop",
+        "yeast"
+      ]
+    },
+    {
+      "id": "recipe_3_1",
+      "name": "Enchiladas",
+      "tier": 3,
+      "minutes": [
+        25,
+        35
+      ],
+      "ingredients": [
+        "chicken",
+        "tomato",
+        "cheese",
+        "chili"
+      ]
+    },
+    {
+      "id": "recipe_3_2",
+      "name": "Pelmeni",
+      "tier": 2,
+      "minutes": [
+        15,
+        20
+      ],
+      "ingredients": [
+        "flour",
+        "ground_beef",
+        "onion"
+      ]
+    },
+    {
+      "id": "recipe_3_4",
+      "name": "Chef's Surprise #2",
+      "tier": 2,
+      "minutes": [
+        15,
+        20
+      ],
+      "ingredients": [
+        "rosemary",
+        "bacon",
+        "corn"
+      ]
+    },
+    {
+      "id": "recipe_3_5",
+      "name": "Chef's Surprise #3",
+      "tier": 2,
+      "minutes": [
+        15,
+        20
+      ],
+      "ingredients": [
+        "saffron",
+        "banana",
+        "dough"
+      ]
+    },
+    {
+      "id": "recipe_3_6",
+      "name": "Mochi",
+      "tier": 1,
+      "minutes": [
+        5,
+        10
+      ],
+      "ingredients": [
+        "rice",
+        "sugar"
+      ]
+    },
+    {
+      "id": "recipe_3_7",
+      "name": "Onigiri",
+      "tier": 1,
+      "minutes": [
+        5,
+        10
+      ],
+      "ingredients": [
+        "rice",
+        "fish"
+      ]
+    },
+    {
+      "id": "recipe_3_9",
+      "name": "Borscht",
+      "tier": 3,
+      "minutes": [
+        25,
+        35
+      ],
+      "ingredients": [
+        "carrot",
+        "onion",
+        "potato",
+        "tomato"
+      ]
+    },
+    {
+      "id": "recipe_3_10",
+      "name": "Poutine",
+      "tier": 1,
+      "minutes": [
+        5,
+        10
+      ],
+      "ingredients": [
+        "potato",
+        "cheese"
+      ]
+    },
+    {
+      "id": "recipe_3_11",
+      "name": "Chef's Surprise #4",
+      "tier": 2,
+      "minutes": [
+        15,
+        20
+      ],
+      "ingredients": [
+        "salt",
+        "basil",
+        "eggs"
+      ]
+    },
+    {
+      "id": "recipe_4_0",
+      "name": "Chef's Surprise #5",
+      "tier": 2,
+      "minutes": [
+        15,
+        20
+      ],
+      "ingredients": [
+        "sausage",
+        "bay_leaf",
+        "fish"
+      ]
+    },
+    {
+      "id": "recipe_4_1",
+      "name": "Pelmeni Bowl",
+      "tier": 2,
+      "minutes": [
+        15,
+        20
+      ],
+      "ingredients": [
+        "flour",
+        "ground_beef",
+        "onion"
+      ]
+    },
+    {
+      "id": "recipe_4_2",
+      "name": "Borscht Bowl",
+      "tier": 3,
+      "minutes": [
+        25,
+        35
+      ],
+      "ingredients": [
+        "carrot",
+        "onion",
+        "potato",
+        "tomato"
+      ]
+    },
+    {
+      "id": "recipe_4_4",
+      "name": "Chef's Surprise #6",
+      "tier": 2,
+      "minutes": [
+        15,
+        20
+      ],
+      "ingredients": [
+        "soy_sauce",
+        "bell_pepper",
+        "flour"
+      ]
+    },
+    {
+      "id": "recipe_4_5",
+      "name": "Chef's Surprise #7",
+      "tier": 2,
+      "minutes": [
+        15,
+        20
+      ],
+      "ingredients": [
+        "star_anise",
+        "blueberry",
+        "garlic"
+      ]
+    },
+    {
+      "id": "recipe_4_7",
+      "name": "Chef's Surprise #8",
+      "tier": 2,
+      "minutes": [
+        15,
+        20
+      ],
+      "ingredients": [
+        "strawberry",
+        "bread",
+        "ginger"
+      ]
+    },
+    {
+      "id": "recipe_4_8",
+      "name": "Laksa",
+      "tier": 3,
+      "minutes": [
+        25,
+        35
+      ],
+      "ingredients": [
+        "pasta",
+        "chili",
+        "fish",
+        "ginger"
+      ]
+    },
+    {
+      "id": "recipe_4_9",
+      "name": "Chef's Surprise #9",
+      "tier": 2,
+      "minutes": [
+        15,
+        20
+      ],
+      "ingredients": [
+        "sugar",
+        "butter",
+        "grapes"
+      ]
+    },
+    {
+      "id": "recipe_4_10",
+      "name": "Chef's Surprise #10",
+      "tier": 2,
+      "minutes": [
+        15,
+        20
+      ],
+      "ingredients": [
+        "pork_chop",
+        "vanilla",
+        "chicken"
+      ]
+    },
+    {
+      "id": "recipe_5_0",
+      "name": "Gelato",
+      "tier": 2,
+      "minutes": [
+        15,
+        20
+      ],
+      "ingredients": [
+        "milk",
+        "sugar",
+        "vanilla"
+      ]
+    },
+    {
+      "id": "recipe_5_1",
+      "name": "Onigiri Bowl",
+      "tier": 1,
+      "minutes": [
+        5,
+        10
+      ],
+      "ingredients": [
+        "rice",
+        "fish"
+      ]
+    },
+    {
+      "id": "recipe_5_2",
+      "name": "Baklava",
+      "tier": 3,
+      "minutes": [
+        25,
+        35
+      ],
+      "ingredients": [
+        "flour",
+        "sugar",
+        "butter",
+        "cinnamon"
+      ]
+    },
+    {
+      "id": "recipe_5_3",
+      "name": "Churros",
+      "tier": 2,
+      "minutes": [
+        15,
+        20
+      ],
+      "ingredients": [
+        "flour",
+        "sugar",
+        "cinnamon"
+      ]
+    },
+    {
+      "id": "recipe_5_4",
+      "name": "Gelato Cup",
+      "tier": 2,
+      "minutes": [
+        15,
+        20
+      ],
+      "ingredients": [
+        "milk",
+        "sugar",
+        "vanilla"
+      ]
+    },
+    {
+      "id": "recipe_5_5",
+      "name": "Bubble Tea",
+      "tier": 1,
+      "minutes": [
+        5,
+        10
+      ],
+      "ingredients": [
+        "milk",
+        "sugar"
+      ]
+    },
+    {
+      "id": "recipe_5_6",
+      "name": "Fruit Salad",
+      "tier": 3,
+      "minutes": [
+        25,
+        35
+      ],
+      "ingredients": [
+        "apple",
+        "strawberry",
+        "orange",
+        "banana"
+      ]
+    },
+    {
+      "id": "recipe_5_7",
+      "name": "Fruit Bowl",
+      "tier": 2,
+      "minutes": [
+        15,
+        20
+      ],
+      "ingredients": [
+        "apple",
+        "banana",
+        "grapes"
+      ]
+    },
+    {
+      "id": "recipe_5_8",
+      "name": "Tom Yum",
+      "tier": 3,
+      "minutes": [
+        25,
+        35
+      ],
+      "ingredients": [
+        "chili",
+        "ginger",
+        "mushroom",
+        "lime"
+      ]
+    },
+    {
+      "id": "recipe_5_9",
+      "name": "Kebab Plate",
+      "tier": 2,
+      "minutes": [
+        15,
+        20
+      ],
+      "ingredients": [
+        "chicken",
+        "bell_pepper",
+        "onion"
+      ]
+    },
+    {
+      "id": "recipe_5_10",
+      "name": "Falafel Wrap",
+      "tier": 3,
+      "minutes": [
+        25,
+        35
+      ],
+      "ingredients": [
+        "bread",
+        "garlic",
+        "onion",
+        "parsley"
+      ]
+    },
+    {
+      "id": "recipe_5_11",
+      "name": "Caprese Salad",
+      "tier": 3,
+      "minutes": [
+        25,
+        35
+      ],
+      "ingredients": [
+        "tomato",
+        "cheese",
+        "basil",
+        "olive_oil"
+      ]
+    },
+    {
+      "id": "recipe_6_0",
+      "name": "Grilled Cheese Plate",
+      "tier": 2,
+      "minutes": [
+        15,
+        20
+      ],
+      "ingredients": [
+        "bread",
+        "cheese",
+        "butter"
+      ]
+    },
+    {
+      "id": "recipe_6_1",
+      "name": "Dim Sum Plate",
+      "tier": 2,
+      "minutes": [
+        15,
+        20
+      ],
+      "ingredients": [
+        "pork_chop",
+        "flour",
+        "ginger"
+      ]
+    },
+    {
+      "id": "recipe_6_2",
+      "name": "Pad Thai",
+      "tier": 3,
+      "minutes": [
+        25,
+        35
+      ],
+      "ingredients": [
+        "pasta",
+        "eggs",
+        "chicken",
+        "soy_sauce"
+      ]
+    },
+    {
+      "id": "recipe_6_3",
+      "name": "Arepas Plate",
+      "tier": 1,
+      "minutes": [
+        5,
+        10
+      ],
+      "ingredients": [
+        "corn",
+        "cheese"
+      ]
+    },
+    {
+      "id": "recipe_6_4",
+      "name": "Falafel Plate",
+      "tier": 3,
+      "minutes": [
+        25,
+        35
+      ],
+      "ingredients": [
+        "bread",
+        "garlic",
+        "onion",
+        "parsley"
+      ]
+    },
+    {
+      "id": "recipe_6_5",
+      "name": "Satay Skewers",
+      "tier": 2,
+      "minutes": [
+        15,
+        20
+      ],
+      "ingredients": [
+        "chicken",
+        "garlic",
+        "chili"
+      ]
+    },
+    {
+      "id": "recipe_6_6",
+      "name": "Satay Skewers",
+      "tier": 2,
+      "minutes": [
+        15,
+        20
+      ],
+      "ingredients": [
+        "chicken",
+        "garlic",
+        "chili"
+      ]
+    },
+    {
+      "id": "recipe_6_7",
+      "name": "Adobo",
+      "tier": 3,
+      "minutes": [
+        25,
+        35
+      ],
+      "ingredients": [
+        "chicken",
+        "soy_sauce",
+        "garlic",
+        "bay_leaf"
+      ]
+    },
+    {
+      "id": "recipe_6_8",
+      "name": "Pho Bo",
+      "tier": 4,
+      "minutes": [
+        45,
+        75
+      ],
+      "ingredients": [
+        "pasta",
+        "ground_beef",
+        "ginger",
+        "onion",
+        "star_anise"
+      ]
+    },
+    {
+      "id": "recipe_6_9",
+      "name": "Bulgogi",
+      "tier": 3,
+      "minutes": [
+        25,
+        35
+      ],
+      "ingredients": [
+        "ground_beef",
+        "soy_sauce",
+        "garlic",
+        "onion"
+      ]
+    },
+    {
+      "id": "recipe_6_10",
+      "name": "Chef's Surprise #11",
+      "tier": 2,
+      "minutes": [
+        15,
+        20
+      ],
+      "ingredients": [
+        "potato",
+        "yeast",
+        "chili"
+      ]
+    },
+    {
+      "id": "recipe_6_11",
+      "name": "Bulgogi Bowl",
+      "tier": 3,
+      "minutes": [
+        25,
+        35
+      ],
+      "ingredients": [
+        "ground_beef",
+        "soy_sauce",
+        "garlic",
+        "onion"
+      ]
+    },
+    {
+      "id": "recipe_7_0",
+      "name": "Peking Duck",
+      "tier": 3,
+      "minutes": [
+        25,
+        35
+      ],
+      "ingredients": [
+        "chicken",
+        "soy_sauce",
+        "ginger",
+        "onion"
+      ]
+    },
+    {
+      "id": "recipe_7_1",
+      "name": "Mussel Plate",
+      "tier": 3,
+      "minutes": [
+        25,
+        35
+      ],
+      "ingredients": [
+        "fish",
+        "garlic",
+        "butter",
+        "parsley"
+      ]
+    },
+    {
+      "id": "recipe_7_2",
+      "name": "Chicken Bowl",
+      "tier": 2,
+      "minutes": [
+        15,
+        20
+      ],
+      "ingredients": [
+        "chicken",
+        "rice",
+        "onion"
+      ]
+    },
+    {
+      "id": "recipe_7_3",
+      "name": "Pho Bo Bowl",
+      "tier": 4,
+      "minutes": [
+        45,
+        75
+      ],
+      "ingredients": [
+        "pasta",
+        "ground_beef",
+        "ginger",
+        "onion",
+        "star_anise"
+      ]
+    },
+    {
+      "id": "recipe_7_4",
+      "name": "Bulgogi Plate",
+      "tier": 3,
+      "minutes": [
+        25,
+        35
+      ],
+      "ingredients": [
+        "ground_beef",
+        "soy_sauce",
+        "garlic",
+        "onion"
+      ]
+    },
+    {
+      "id": "recipe_7_5",
+      "name": "Laksa Bowl",
+      "tier": 3,
+      "minutes": [
+        25,
+        35
+      ],
+      "ingredients": [
+        "pasta",
+        "chili",
+        "fish",
+        "ginger"
+      ]
+    },
+    {
+      "id": "recipe_7_6",
+      "name": "Paella Valenciana",
+      "tier": 4,
+      "minutes": [
+        45,
+        75
+      ],
+      "ingredients": [
+        "rice",
+        "chicken",
+        "saffron",
+        "bell_pepper",
+        "tomato"
+      ]
+    },
+    {
+      "id": "recipe_7_7",
+      "name": "Cassoulet",
+      "tier": 4,
+      "minutes": [
+        45,
+        75
+      ],
+      "ingredients": [
+        "sausage",
+        "pork_chop",
+        "bacon",
+        "onion",
+        "thyme"
+      ]
+    },
+    {
+      "id": "recipe_7_8",
+      "name": "Ratatouille",
+      "tier": 4,
+      "minutes": [
+        45,
+        75
+      ],
+      "ingredients": [
+        "tomato",
+        "bell_pepper",
+        "mushroom",
+        "onion",
+        "garlic",
+        "olive_oil"
+      ]
+    },
+    {
+      "id": "recipe_7_9",
+      "name": "Ratatouille Bowl",
+      "tier": 4,
+      "minutes": [
+        45,
+        75
+      ],
+      "ingredients": [
+        "tomato",
+        "bell_pepper",
+        "mushroom",
+        "onion",
+        "garlic",
+        "olive_oil"
+      ]
+    },
+    {
+      "id": "recipe_7_10",
+      "name": "Jumbalaya",
+      "tier": 4,
+      "minutes": [
+        45,
+        75
+      ],
+      "ingredients": [
+        "sausage",
+        "chicken",
+        "rice",
+        "bell_pepper",
+        "tomato"
+      ]
+    },
+    {
+      "id": "recipe_7_11",
+      "name": "Pesto Pasta",
+      "tier": 4,
+      "minutes": [
+        45,
+        75
+      ],
+      "ingredients": [
+        "pasta",
+        "basil",
+        "garlic",
+        "olive_oil",
+        "cheese"
+      ]
+    },
+    {
+      "id": "recipe_8_0",
+      "name": "Pesto Pasta Bowl",
+      "tier": 4,
+      "minutes": [
+        45,
+        75
+      ],
+      "ingredients": [
+        "pasta",
+        "basil",
+        "garlic",
+        "olive_oil",
+        "cheese"
+      ]
+    },
+    {
+      "id": "recipe_8_1",
+      "name": "Takoyaki",
+      "tier": 2,
+      "minutes": [
+        15,
+        20
+      ],
+      "ingredients": [
+        "flour",
+        "fish",
+        "eggs"
+      ]
+    },
+    {
+      "id": "recipe_8_2",
+      "name": "Chef's Surprise #12",
+      "tier": 2,
+      "minutes": [
+        15,
+        20
+      ],
+      "ingredients": [
+        "rice",
+        "apple",
+        "cinnamon"
+      ]
+    },
+    {
+      "id": "recipe_8_3",
+      "name": "Jumbalaya Bowl",
+      "tier": 4,
+      "minutes": [
+        45,
+        75
+      ],
+      "ingredients": [
+        "sausage",
+        "chicken",
+        "rice",
+        "bell_pepper",
+        "tomato"
+      ]
+    },
+    {
+      "id": "recipe_8_4",
+      "name": "Pesto Pasta Plate",
+      "tier": 4,
+      "minutes": [
+        45,
+        75
+      ],
+      "ingredients": [
+        "pasta",
+        "basil",
+        "garlic",
+        "olive_oil",
+        "cheese"
+      ]
+    },
+    {
+      "id": "recipe_8_5",
+      "name": "Korma Curry",
+      "tier": 4,
+      "minutes": [
+        45,
+        75
+      ],
+      "ingredients": [
+        "chicken",
+        "milk",
+        "ginger",
+        "garlic",
+        "saffron"
+      ]
+    },
+    {
+      "id": "recipe_8_6",
+      "name": "Korma Curry Bowl",
+      "tier": 4,
+      "minutes": [
+        45,
+        75
+      ],
+      "ingredients": [
+        "chicken",
+        "milk",
+        "ginger",
+        "garlic",
+        "saffron"
+      ]
+    },
+    {
+      "id": "recipe_8_7",
+      "name": "Mulligatawny",
+      "tier": 4,
+      "minutes": [
+        45,
+        75
+      ],
+      "ingredients": [
+        "chicken",
+        "carrot",
+        "onion",
+        "rice",
+        "ginger"
+      ]
+    },
+    {
+      "id": "recipe_8_8",
+      "name": "Pad Thai Plate",
+      "tier": 3,
+      "minutes": [
+        25,
+        35
+      ],
+      "ingredients": [
+        "pasta",
+        "eggs",
+        "chicken",
+        "soy_sauce"
+      ]
+    },
+    {
+      "id": "recipe_8_9",
+      "name": "Greek Salad",
+      "tier": 4,
+      "minutes": [
+        45,
+        75
+      ],
+      "ingredients": [
+        "tomato",
+        "cheese",
+        "onion",
+        "olive_oil",
+        "bell_pepper"
+      ]
+    },
+    {
+      "id": "recipe_8_10",
+      "name": "Caprese Salad Bowl",
+      "tier": 3,
+      "minutes": [
+        25,
+        35
+      ],
+      "ingredients": [
+        "tomato",
+        "cheese",
+        "basil",
+        "olive_oil"
+      ]
+    },
+    {
+      "id": "recipe_8_11",
+      "name": "Hummus Plate",
+      "tier": 2,
+      "minutes": [
+        15,
+        20
+      ],
+      "ingredients": [
+        "bread",
+        "olive_oil",
+        "garlic"
+      ]
+    },
+    {
+      "id": "recipe_9_0",
+      "name": "Sushi Platter",
+      "tier": 2,
+      "minutes": [
+        15,
+        20
+      ],
+      "ingredients": [
+        "rice",
+        "fish",
+        "soy_sauce"
+      ]
+    },
+    {
+      "id": "recipe_9_1",
+      "name": "Ramen Bowl",
+      "tier": 3,
+      "minutes": [
+        25,
+        35
+      ],
+      "ingredients": [
+        "pasta",
+        "soy_sauce",
+        "eggs",
+        "onion"
+      ]
+    },
+    {
+      "id": "recipe_9_2",
+      "name": "Butter Chicken Curry",
+      "tier": 4,
+      "minutes": [
+        45,
+        75
+      ],
+      "ingredients": [
+        "chicken",
+        "butter",
+        "tomato",
+        "milk",
+        "ginger",
+        "garlic"
+      ]
+    },
+    {
+      "id": "recipe_9_3",
+      "name": "Pho Bowl",
+      "tier": 4,
+      "minutes": [
+        45,
+        75
+      ],
+      "ingredients": [
+        "pasta",
+        "chicken",
+        "ginger",
+        "onion",
+        "star_anise"
+      ]
+    },
+    {
+      "id": "recipe_9_4",
+      "name": "Lasagna",
+      "tier": 4,
+      "minutes": [
+        45,
+        75
+      ],
+      "ingredients": [
+        "pasta",
+        "ground_beef",
+        "tomato",
+        "cheese",
+        "onion",
+        "garlic"
+      ]
+    },
+    {
+      "id": "recipe_9_5",
+      "name": "Kebab Skewers",
+      "tier": 2,
+      "minutes": [
+        15,
+        20
+      ],
+      "ingredients": [
+        "chicken",
+        "bell_pepper",
+        "onion"
+      ]
+    },
+    {
+      "id": "recipe_9_6",
+      "name": "Spaghetti Bolognese",
+      "tier": 4,
+      "minutes": [
+        45,
+        75
+      ],
+      "ingredients": [
+        "pasta",
+        "ground_beef",
+        "tomato",
+        "onion",
+        "garlic"
+      ]
+    },
+    {
+      "id": "recipe_9_7",
+      "name": "Roast Chicken",
+      "tier": 4,
+      "minutes": [
+        45,
+        75
+      ],
+      "ingredients": [
+        "chicken",
+        "potato",
+        "rosemary",
+        "garlic",
+        "butter"
+      ]
+    },
+    {
+      "id": "recipe_9_8",
+      "name": "Gumbo",
+      "tier": 4,
+      "minutes": [
+        45,
+        75
+      ],
+      "ingredients": [
+        "sausage",
+        "fish",
+        "bell_pepper",
+        "onion",
+        "rice"
+      ]
+    },
+    {
+      "id": "recipe_9_9",
+      "name": "Pizza Slice",
+      "tier": 3,
+      "minutes": [
+        25,
+        35
+      ],
+      "ingredients": [
+        "dough",
+        "tomato",
+        "cheese",
+        "basil"
+      ]
+    },
+    {
+      "id": "recipe_9_10",
+      "name": "Seafood Paella",
+      "tier": 4,
+      "minutes": [
+        45,
+        75
+      ],
+      "ingredients": [
+        "rice",
+        "fish",
+        "saffron",
+        "bell_pepper",
+        "onion",
+        "garlic"
+      ]
+    },
+    {
+      "id": "recipe_9_11",
+      "name": "Shakshuka",
+      "tier": 4,
+      "minutes": [
+        45,
+        75
+      ],
+      "ingredients": [
+        "eggs",
+        "tomato",
+        "bell_pepper",
+        "onion",
+        "garlic"
+      ]
+    }
+  ]
+}

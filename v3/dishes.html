@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Focus Kitchen — Dish List</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%96%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+<style>
+  .d-wrap { max-width: 1100px; margin: 0 auto; padding: 24px; width: 100%; }
+  .d-intro { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5; }
+  .d-intro code { background: var(--bg-panel); padding: 1px 5px; border-radius: 4px; }
+  .tier-filter { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
+  .tier-filter button.active { background: var(--accent); border-color: var(--accent-dark); color: #fff; }
+  .tier-block h2 { color: var(--accent); letter-spacing: 1px; margin: 18px 0 4px; }
+  .tier-block .tsub { color: var(--text-muted); font-size: 0.8rem; margin-bottom: 12px; }
+  .dish-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+  .dish-card { background: var(--bg-panel); border: 2px solid var(--brown); border-radius: 10px; padding: 12px; display: flex; gap: 12px; align-items: center; }
+  .dish-card > img { width: 66px; height: 66px; object-fit: contain; image-rendering: pixelated; flex: 0 0 auto; border-radius: 6px; background: var(--bg-dark); }
+  .dish-meta { min-width: 0; }
+  .dish-name { font-weight: bold; color: var(--text-light); }
+  .dish-time { font-size: 0.72rem; color: var(--text-muted); margin: 2px 0 6px; }
+  .ing-row { display: flex; flex-wrap: wrap; gap: 4px; }
+  .ing-row .ing { display: flex; align-items: center; gap: 3px; background: var(--bg-dark); border: 1px solid var(--brown-dark); border-radius: 10px; padding: 1px 6px 1px 2px; font-size: 0.66rem; color: var(--text-muted); }
+  .ing-row .ing img { width: 16px; height: 16px; object-fit: contain; image-rendering: pixelated; }
+  .count { color: var(--text-muted); font-size: 0.8rem; margin-left: 6px; }
+</style>
+</head>
+<body>
+<div id="app">
+  <header class="topbar">
+    <h1>FOCUS KITCHEN <span class="ver">v3</span></h1>
+    <nav>
+      <a href="index.html" class="nav-btn" style="text-decoration:none; display:inline-block;">Kitchen</a>
+      <button class="nav-btn active">Dishes</button>
+      <a href="animations.html" class="nav-btn" style="text-decoration:none; display:inline-block;">Animations</a>
+    </nav>
+  </header>
+  <main id="stage" style="display:block;">
+    <div class="d-wrap">
+      <h2 style="color:var(--accent); letter-spacing:2px;">Dish List <span class="count" id="count"></span></h2>
+      <p class="d-intro" id="intro">Loading…</p>
+      <div class="tier-filter" id="tier-filter"></div>
+      <div id="tiers"></div>
+    </div>
+  </main>
+</div>
+<script>
+const BASE = '../';
+const asset = p => (p && !/^https?:|^\.\.\//.test(p)) ? BASE + p : p;
+const TIERS = { 1: 'Quick prep · drinks & light bites', 2: 'Light meals & snacks', 3: 'Standard entrées', 4: 'Gourmet feasts' };
+let DATA = {};
+
+async function main() {
+  const [dishesDoc, recipes, food] = await Promise.all([
+    fetch(BASE + 'data/dishes_v3.json').then(r => r.json()),
+    fetch(BASE + 'data/recipes.json').then(r => r.json()),
+    fetch(BASE + 'data/food.json').then(r => r.ok ? r.json() : { items: [] }).catch(() => ({ items: [] })),
+  ]);
+  const recById = {}; recipes.sprites.forEach(r => recById[r.id] = r);
+  const foodById = {}; (food.items || []).forEach(f => foodById[f.id] = f);
+  DATA = { dishes: dishesDoc.dishes, recById, foodById };
+
+  document.getElementById('count').textContent = `(${DATA.dishes.length})`;
+  document.getElementById('intro').innerHTML =
+    `Every dish and the exact ingredients the chef gathers for it. Tier is set by focus length. `
+    + `Edit any recipe in <code>data/dishes_v3.json</code>.`;
+
+  const filter = document.getElementById('tier-filter');
+  ['all', 1, 2, 3, 4].forEach(t => {
+    const b = document.createElement('button'); b.className = 'nav-btn' + (t === 'all' ? ' active' : '');
+    b.textContent = t === 'all' ? 'All' : `Tier ${t}`;
+    b.onclick = () => { filter.querySelectorAll('button').forEach(x => x.classList.remove('active')); b.classList.add('active'); render(t); };
+    filter.appendChild(b);
+  });
+  render('all');
+}
+
+function ingChip(id) {
+  const f = DATA.foodById[id];
+  const src = f ? asset(f.file) : '';
+  const label = f ? f.label : id;
+  return `<span class="ing">${src ? `<img src="${src}" alt="">` : ''}${label}</span>`;
+}
+
+function render(tier) {
+  const host = document.getElementById('tiers'); host.innerHTML = '';
+  const tiers = tier === 'all' ? [1, 2, 3, 4] : [tier];
+  for (const t of tiers) {
+    const list = DATA.dishes.filter(d => d.tier === t);
+    if (!list.length) continue;
+    const block = document.createElement('div'); block.className = 'tier-block';
+    const min = Math.min(...list.map(d => d.minutes[0])), max = Math.max(...list.map(d => d.minutes[1]));
+    block.innerHTML = `<h2>Tier ${t} <span class="count">${list.length} dishes · ${min}–${max} min</span></h2><div class="tsub">${TIERS[t]}</div>`;
+    const grid = document.createElement('div'); grid.className = 'dish-grid';
+    for (const d of list) {
+      const rec = DATA.recById[d.id];
+      const card = document.createElement('div'); card.className = 'dish-card';
+      card.innerHTML =
+        `<img src="${rec ? asset(rec.file) : ''}" alt="${d.name}">`
+        + `<div class="dish-meta"><div class="dish-name">${d.name}</div>`
+        + `<div class="dish-time">${d.minutes[0]}–${d.minutes[1]} min · ${d.ingredients.length} ingredients</div>`
+        + `<div class="ing-row">${d.ingredients.map(ingChip).join('')}</div></div>`;
+      grid.appendChild(card);
+    }
+    block.appendChild(grid); host.appendChild(block);
+  }
+}
+main();
+</script>
+</body>
+</html>

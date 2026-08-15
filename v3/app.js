@@ -1,28 +1,26 @@
 // ---------------------------------------------------------------------------
 // Focus Kitchen v3
-//   * food items arranged around the whole pantry frame, loaded from
-//     data/food.json -> assets/food_v3/<id>.png (drop-in replaceable art)
-//   * "Start" sends the chef roaming the entire border to GATHER every item
-//     into a basket, with footstep + pickup sounds and gentle music
-//   * then the usual cook -> complete -> recipe-book flow (from v2)
-// Self-contained copy; v1/v2 untouched.
+//   * swappable chef animations via data/chef_v3.json (state -> folder)
+//   * each dish has a real ingredient list (data/dishes_v3.json); the chef
+//     gathers EXACTLY those ingredients
+//   * the chef walks the pantry PERIMETER orthogonally (no diagonal jumps):
+//     along a row, turn a corner, along the next side — one item at a time
+//   * footstep / pickup SFX + soft music
+// Self-contained; v1/v2 untouched.
 // ---------------------------------------------------------------------------
 
 const BASE = '../';
 const asset = p => (p && !/^https?:|^\.\.\//.test(p)) ? BASE + p : p;
 
 const STORAGE_KEY = 'focus-kitchen-v3-unlocked';
-const SESSION_KEY = 'focus-kitchen-v3-session';
 const MUTE_KEY    = 'focus-kitchen-v3-muted';
 
-const GATHER_COUNT = 10;   // how many items the chef visits (spread around the border)
-const HOP_MS = 2000;       // very slow, calm stroll between two items
-const GRAB_PAUSE_MS = 850; // long gentle beat after each pickup
+const WALK_SPEED = 90;     // px/second — slow, calm stroll
+const GRAB_PAUSE_MS = 850; // gentle beat while plucking each item
 
 const state = {
-  data: { food: null, tiles: null, chef: null, recipes: null },
+  data: { food: null, foodById: {}, tiles: null, chef: null, dishes: null, recipes: null },
   unlocked: loadSet(STORAGE_KEY),
-  timer: { totalMs: 0, endAt: 0, tickHandle: null, introTimers: [], paused: false, remainingAtPauseMs: 0 },
 };
 
 function loadSet(key) { try { return new Set(JSON.parse(localStorage.getItem(key) || '[]')); } catch { return new Set(); } }
@@ -30,36 +28,29 @@ function saveSet(key, set) { localStorage.setItem(key, JSON.stringify([...set]))
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 // ---------------------------------------------------------------------------
-// Data loading — food.json is the single source for the pantry; if it is
-// missing we fall back to the shared ingredients.json so the app still runs.
+// Data loading
 // ---------------------------------------------------------------------------
 
 async function loadData() {
-  const [food, tiles, chef, recipes] = await Promise.all([
+  const [food, tiles, chef, dishes, recipes] = await Promise.all([
     fetch(BASE + 'data/food.json').then(r => r.ok ? r.json() : null).catch(() => null),
     fetch(BASE + 'data/tiles_v2.json').then(r => r.json()),
-    fetch(BASE + 'data/chef_animations.json').then(r => r.json()),
+    fetch(BASE + 'data/chef_v3.json').then(r => r.json()),
+    fetch(BASE + 'data/dishes_v3.json').then(r => r.json()),
     fetch(BASE + 'data/recipes.json').then(r => r.json()),
   ]);
-  let items;
-  if (food && food.items) {
-    items = food.items;
-  } else {
-    const ing = await fetch(BASE + 'data/ingredients.json').then(r => r.json());
-    items = ing.sprites.map(s => ({ id: s.id, label: s.label, file: s.file }));
-  }
-  state.data = { food: items, tiles, chef, recipes };
+  let items = food && food.items ? food.items
+    : (await fetch(BASE + 'data/ingredients.json').then(r => r.json())).sprites.map(s => ({ id: s.id, label: s.label, file: s.file }));
+  const foodById = {};
+  for (const it of items) foodById[it.id] = it;
+  state.data = { food: items, foodById, tiles, chef, dishes: dishes.dishes, recipes };
 }
 
-function tileFile(id) {
-  const s = state.data.tiles.sprites.find(t => t.id === id);
-  return s ? asset(s.file) : '';
-}
+function tileFile(id) { const s = state.data.tiles.sprites.find(t => t.id === id); return s ? asset(s.file) : ''; }
+function recipeById(id) { return state.data.recipes.sprites.find(r => r.id === id); }
 
 // ---------------------------------------------------------------------------
-// Audio — all synthesized with WebAudio, so no audio files are needed and the
-// art stays the only thing you have to supply. Footsteps + pickups + a soft
-// lofi arpeggio, all behind one mute toggle.
+// Audio (synthesized)
 // ---------------------------------------------------------------------------
 
 const audio = {
@@ -71,29 +62,19 @@ const audio = {
     this.master.gain.value = this.muted ? 0 : 0.9;
     this.master.connect(this.ctx.destination);
   },
-  setMuted(m) {
-    this.muted = m;
-    localStorage.setItem(MUTE_KEY, m ? '1' : '0');
-    if (this.master) this.master.gain.value = m ? 0 : 0.9;
-  },
+  setMuted(m) { this.muted = m; localStorage.setItem(MUTE_KEY, m ? '1' : '0'); if (this.master) this.master.gain.value = m ? 0 : 0.9; },
   footstep() {
     if (!this.ctx || this.muted) return;
-    const t = this.ctx.currentTime;
-    const o = this.ctx.createOscillator(), g = this.ctx.createGain();
+    const t = this.ctx.currentTime, o = this.ctx.createOscillator(), g = this.ctx.createGain();
     o.type = 'triangle'; o.frequency.value = 90 + Math.random() * 20;
-    g.gain.setValueAtTime(0.12, t);
-    g.gain.exponentialRampToValueAtTime(0.001, t + 0.09);
+    g.gain.setValueAtTime(0.1, t); g.gain.exponentialRampToValueAtTime(0.001, t + 0.09);
     o.connect(g).connect(this.master); o.start(t); o.stop(t + 0.1);
   },
   pop() {
     if (!this.ctx || this.muted) return;
-    const t = this.ctx.currentTime;
-    const o = this.ctx.createOscillator(), g = this.ctx.createGain();
-    o.type = 'sine'; o.frequency.setValueAtTime(520, t);
-    o.frequency.exponentialRampToValueAtTime(1040, t + 0.12);
-    g.gain.setValueAtTime(0.001, t);
-    g.gain.exponentialRampToValueAtTime(0.22, t + 0.02);
-    g.gain.exponentialRampToValueAtTime(0.001, t + 0.18);
+    const t = this.ctx.currentTime, o = this.ctx.createOscillator(), g = this.ctx.createGain();
+    o.type = 'sine'; o.frequency.setValueAtTime(520, t); o.frequency.exponentialRampToValueAtTime(1040, t + 0.12);
+    g.gain.setValueAtTime(0.001, t); g.gain.exponentialRampToValueAtTime(0.22, t + 0.02); g.gain.exponentialRampToValueAtTime(0.001, t + 0.18);
     o.connect(g).connect(this.master); o.start(t); o.stop(t + 0.2);
   },
   ding() {
@@ -102,101 +83,90 @@ const audio = {
     [880, 1174.66].forEach((f, i) => {
       const o = this.ctx.createOscillator(), g = this.ctx.createGain();
       o.type = 'sine'; o.frequency.value = f;
-      g.gain.setValueAtTime(0, now + i * 0.15);
-      g.gain.linearRampToValueAtTime(0.2, now + i * 0.15 + 0.02);
-      g.gain.exponentialRampToValueAtTime(0.001, now + i * 0.15 + 0.5);
+      g.gain.setValueAtTime(0, now + i * 0.15); g.gain.linearRampToValueAtTime(0.2, now + i * 0.15 + 0.02); g.gain.exponentialRampToValueAtTime(0.001, now + i * 0.15 + 0.5);
       o.connect(g).connect(this.master); o.start(now + i * 0.15); o.stop(now + i * 0.15 + 0.5);
     });
   },
-  // soft, slow pentatonic arpeggio — cozy background bed
   startMusic() {
     if (!this.ctx || this.musicTimer) return;
-    const scale = [220.00, 261.63, 293.66, 329.63, 392.00, 440.00]; // A minor pentatonic-ish
+    const scale = [220.00, 261.63, 293.66, 329.63, 392.00, 440.00];
     let i = 0;
     const step = () => {
       if (this.muted) return;
-      const t = this.ctx.currentTime;
-      const f = scale[i % scale.length];
-      i++;
+      const t = this.ctx.currentTime, f = scale[i++ % scale.length];
       const o = this.ctx.createOscillator(), g = this.ctx.createGain(), lp = this.ctx.createBiquadFilter();
-      lp.type = 'lowpass'; lp.frequency.value = 900;
-      o.type = 'sine'; o.frequency.value = f;
-      g.gain.setValueAtTime(0.0001, t);
-      g.gain.exponentialRampToValueAtTime(0.07, t + 0.06);
-      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.9);
+      lp.type = 'lowpass'; lp.frequency.value = 900; o.type = 'sine'; o.frequency.value = f;
+      g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.07, t + 0.06); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.9);
       o.connect(g).connect(lp).connect(this.master); o.start(t); o.stop(t + 1.0);
     };
-    step();
-    this.musicTimer = setInterval(step, 560); // slower, calmer tempo
+    step(); this.musicTimer = setInterval(step, 560);
   },
   stopMusic() { if (this.musicTimer) { clearInterval(this.musicTimer); this.musicTimer = null; } },
 };
 
 // ---------------------------------------------------------------------------
-// Animator
+// Animator — plays a named STATE from data/chef_v3.json (dir + count + timing).
+// Sets --face so `flip` states (and CSS bob) mirror horizontally.
 // ---------------------------------------------------------------------------
 
 class Animator {
-  constructor(imgEl, sections) { this.img = imgEl; this.sections = sections; this.handle = null; this.frameIndex = 0; this.current = null; this.onComplete = null; }
+  constructor(imgEl, states) { this.img = imgEl; this.states = states; this.handle = null; this.i = 0; this.current = null; this.onComplete = null; }
+  _frames(st) { return Array.from({ length: st.count }, (_, i) => asset(`${st.dir}/${String(i).padStart(2, '0')}.png`)); }
   play(name, { onComplete } = {}) {
+    const st = this.states[name];
+    if (!st || !st.count) return;
     this.stop();
-    const section = this.sections[name];
-    if (!section) return;
-    const isSwitch = this.current !== null && this.current !== name;
-    this.current = name; this.frameIndex = 0; this.onComplete = onComplete || null;
-    const start = () => { this._render(section); this.img.style.opacity = '1'; this.handle = setInterval(() => this._advance(section), section.frame_ms); };
-    if (isSwitch) { this.img.style.opacity = '0'; setTimeout(start, 140); } else { start(); }
+    this.current = name; this.i = 0; this.onComplete = onComplete || null;
+    this.frames = this._frames(st); this.loop = st.loop;
+    this.img.style.setProperty('--face', st.flip ? '-1' : '1');
+    this.img.src = this.frames[0];
+    this.img.style.opacity = '1';
+    this.handle = setInterval(() => this._tick(), st.frame_ms);
   }
-  _advance(section) {
-    this.frameIndex++;
-    if (this.frameIndex >= section.frames.length) {
-      if (section.loop) { this.frameIndex = 0; }
-      else { this.frameIndex = section.frames.length - 1; this._render(section); this.stop(); if (this.onComplete) this.onComplete(); return; }
+  _tick() {
+    this.i++;
+    if (this.i >= this.frames.length) {
+      if (this.loop) { this.i = 0; }
+      else { this.i = this.frames.length - 1; this.img.src = this.frames[this.i]; this.stop(); if (this.onComplete) this.onComplete(); return; }
     }
-    this._render(section);
+    this.img.src = this.frames[this.i];
   }
-  _render(section) { this.img.src = asset(section.frames[this.frameIndex].file); }
   stop() { if (this.handle) { clearInterval(this.handle); this.handle = null; } }
 }
 
 // ---------------------------------------------------------------------------
-// Scene + pantry building
+// Scene + pantry
 // ---------------------------------------------------------------------------
 
 function composeKitchenScene(container) {
   container.innerHTML = '';
   container.style.backgroundImage = `url(${tileFile('floor_terracotta')})`;
-  container.style.backgroundSize = '64px 64px';
-  container.style.backgroundRepeat = 'repeat';
-
+  container.style.backgroundSize = '64px 64px'; container.style.backgroundRepeat = 'repeat';
   const wall = document.createElement('div');
   wall.className = 'scene-layer';
   Object.assign(wall.style, { left: 0, right: 0, top: 0, height: '30%', zIndex: '0',
     backgroundImage: `url(${tileFile('wall_wood_panel')})`, backgroundSize: '80px 60px', backgroundRepeat: 'repeat' });
   container.appendChild(wall);
-
   const layers = [
-    { id: 'cabinet_upper_run', style: { left: '5%',  top: '4%',  width: '46%', zIndex: 2 } },
-    { id: 'extractor_hood',    style: { left: '14%', top: '14%', width: '18%', zIndex: 3 } },
-    { id: 'desk_clock',        style: { right: '6%', top: '5%',  width: '9%',  zIndex: 3 } },
-    { id: 'fridge',            style: { right: '4%', top: '20%', width: '15%', zIndex: 2 } },
-    { id: 'cabinet_lower_run', style: { left: '4%',  top: '40%', width: '40%', zIndex: 2 } },
-    { id: 'stove_range',       style: { left: '7%',  top: '38%', width: '32%', zIndex: 3 } },
+    { id: 'cabinet_upper_run', style: { left: '5%', top: '4%', width: '46%', zIndex: 2 } },
+    { id: 'extractor_hood', style: { left: '14%', top: '14%', width: '18%', zIndex: 3 } },
+    { id: 'desk_clock', style: { right: '6%', top: '5%', width: '9%', zIndex: 3 } },
+    { id: 'fridge', style: { right: '4%', top: '20%', width: '15%', zIndex: 2 } },
+    { id: 'cabinet_lower_run', style: { left: '4%', top: '40%', width: '40%', zIndex: 2 } },
+    { id: 'stove_range', style: { left: '7%', top: '38%', width: '32%', zIndex: 3 } },
     { id: 'counter_double_sink', style: { left: '45%', top: '40%', width: '30%', zIndex: 2 } },
-    { id: 'dishwasher',        style: { right: '22%', top: '44%', width: '13%', zIndex: 2 } },
-    { id: 'utensil_rack',      style: { left: '52%', top: '20%', width: '15%', zIndex: 3 } },
-    { id: 'spice_rack',        style: { left: '70%', top: '18%', width: '11%', zIndex: 3 } },
+    { id: 'dishwasher', style: { right: '22%', top: '44%', width: '13%', zIndex: 2 } },
+    { id: 'utensil_rack', style: { left: '52%', top: '20%', width: '15%', zIndex: 3 } },
+    { id: 'spice_rack', style: { left: '70%', top: '18%', width: '11%', zIndex: 3 } },
   ];
   for (const layer of layers) {
     const img = document.createElement('img');
-    img.className = 'scene-layer';
-    img.src = tileFile(layer.id);
+    img.className = 'scene-layer'; img.src = tileFile(layer.id);
     Object.assign(img.style, { position: 'absolute', height: 'auto', ...layer.style, zIndex: String(layer.style.zIndex) });
     container.appendChild(img);
   }
 }
 
-// Distribute EVERY food item around the four edges of a frame (perimeter order).
 function edgeSplit(items) {
   const n = items.length;
   const topN = Math.round(n * 0.28), rightN = Math.round(n * 0.22), bottomN = Math.round(n * 0.28);
@@ -207,21 +177,17 @@ function edgeSplit(items) {
 
 function buildPantry(prefix) {
   const sel = edgeSplit(state.data.food);
-  const slots = [];
   for (const edge of ['top', 'right', 'bottom', 'left']) {
     const el = document.getElementById(`${prefix}-${edge}`);
     if (!el) continue;
     el.innerHTML = '';
     for (const item of sel[edge]) {
       const img = document.createElement('img');
-      img.className = 'pantry-slot';
-      img.src = asset(item.file);
-      img.alt = item.label; img.title = item.label; img.dataset.id = item.id;
+      img.className = 'pantry-slot'; img.src = asset(item.file);
+      img.alt = item.label; img.title = item.label; img.dataset.id = item.id; img.dataset.edge = edge;
       el.appendChild(img);
-      slots.push(img);
     }
   }
-  return slots; // in perimeter order
 }
 
 // ---------------------------------------------------------------------------
@@ -239,247 +205,245 @@ let homeAnimator = null;
 function initHomeScene() {
   composeKitchenScene(document.getElementById('home-scene'));
   buildPantry('home');
-  const note = document.getElementById('pantry-note');
-  note.textContent = `${state.data.food.length} ingredients around the pantry — swap any art in assets/food_v3/.`;
-  // idle chef sits in the home scene
+  document.getElementById('pantry-note').textContent =
+    `${state.data.food.length} ingredients around the pantry — swap any art in assets/food_v3/.`;
   const scene = document.getElementById('home-scene');
   const chef = document.createElement('img');
   chef.className = 'chef-sprite scene-layer';
   Object.assign(chef.style, { position: 'absolute', left: '44%', top: '66%', width: '84px', height: 'auto', zIndex: 5 });
   scene.appendChild(chef);
-  homeAnimator = new Animator(chef, state.data.chef.sections);
+  homeAnimator = new Animator(chef, state.data.chef.states);
   homeAnimator.play('idle');
 }
 
 // ---------------------------------------------------------------------------
-// THE GATHER SEQUENCE — chef roams the whole border collecting food.
+// Dish selection — pick a dish whose tier matches the chosen focus length.
 // ---------------------------------------------------------------------------
 
-let gatherChef = null, gatherAnimator = null;
+function tierForMinutes(m) { return m <= 10 ? 1 : m <= 20 ? 2 : m <= 35 ? 3 : 4; }
+
+function chooseDish(minutes) {
+  const tier = tierForMinutes(minutes);
+  let pool = state.data.dishes.filter(d => d.tier === tier);
+  if (!pool.length) pool = state.data.dishes;
+  const locked = pool.filter(d => !state.unlocked.has(d.id));
+  const from = locked.length ? locked : pool;
+  return from[Math.floor(Math.random() * from.length)];
+}
+
+// ---------------------------------------------------------------------------
+// THE GATHER SEQUENCE — orthogonal walk around the pantry perimeter,
+// stopping only at this dish's ingredients, in clockwise order.
+// ---------------------------------------------------------------------------
+
+let gatherChef = null, gatherAnimator = null, chefPt = { x: 0, y: 0 };
 
 function gatherLabel(text) {
   const el = document.getElementById('gather-label');
   el.style.opacity = '0';
-  setTimeout(() => { el.textContent = text; el.style.opacity = '1'; }, 160);
+  setTimeout(() => { el.innerHTML = text; el.style.opacity = '1'; }, 160);
 }
 
-function centerOfFrame(frame) {
-  return { x: frame.clientWidth / 2, y: frame.clientHeight / 2 };
-}
-
-// position (relative to the frame) of a slot's centre
 function slotPoint(frame, slot) {
   const fr = frame.getBoundingClientRect(), r = slot.getBoundingClientRect();
   return { x: r.left - fr.left + r.width / 2, y: r.top - fr.top + r.height / 2 };
 }
-
-let lastChefX = 0;
 function placeGatherChef(x, y) {
-  const w = gatherChef.offsetWidth || 74, h = gatherChef.offsetHeight || 74;
-  // face the way we're walking (horizontal), so movement reads intentionally
-  if (x < lastChefX - 3) gatherChef.style.setProperty('--face', '-1');
-  else if (x > lastChefX + 3) gatherChef.style.setProperty('--face', '1');
-  lastChefX = x;
+  const w = gatherChef.offsetWidth || 78, h = gatherChef.offsetHeight || 78;
   gatherChef.style.left = `${x - w / 2}px`;
-  gatherChef.style.top = `${y - h}px`; // feet at the point
+  gatherChef.style.top = `${y - h}px`;
 }
 
-// Pick GATHER_COUNT slots evenly spread around the perimeter so the chef
-// visits every side, not just one corner.
-function pickTargets(slots) {
-  const n = Math.min(GATHER_COUNT, slots.length);
-  const step = slots.length / n;
-  const out = [];
-  for (let i = 0; i < n; i++) out.push(slots[Math.floor(i * step)]);
-  return out;
+// clockwise perimeter order for a set of slots
+function clockwise(slots, frame) {
+  const order = { top: 0, right: 1, bottom: 2, left: 3 };
+  return slots.slice().sort((a, b) => {
+    const ea = order[a.dataset.edge], eb = order[b.dataset.edge];
+    if (ea !== eb) return ea - eb;
+    const pa = slotPoint(frame, a), pb = slotPoint(frame, b);
+    if (a.dataset.edge === 'top') return pa.x - pb.x;
+    if (a.dataset.edge === 'right') return pa.y - pb.y;
+    if (a.dataset.edge === 'bottom') return pb.x - pa.x;
+    return pb.y - pa.y; // left, bottom->top
+  });
 }
 
-async function runGatherSequence(minutes) {
+// one axis-aligned step; picks the matching directional walk state
+async function walkSegment(nx, ny) {
+  const dx = nx - chefPt.x, dy = ny - chefPt.y;
+  const dist = Math.abs(dx) + Math.abs(dy);
+  if (dist < 1) return;
+  const dur = Math.max(300, dist / WALK_SPEED * 1000);
+  let st = Math.abs(dx) >= Math.abs(dy) ? (dx >= 0 ? 'walk_right' : 'walk_left') : (dy >= 0 ? 'walk_down' : 'walk_up');
+  gatherChef.classList.add('walking');
+  gatherAnimator.play(st);
+  gatherChef.style.transitionDuration = `${dur}ms`;
+  placeGatherChef(nx, ny);
+  const steps = Math.max(2, Math.round(dur / 380));
+  for (let s = 0; s < steps; s++) { audio.footstep(); await sleep(dur / steps); }
+  chefPt = { x: nx, y: ny };
+}
+
+// orthogonal move: at most one corner, hugging the border
+async function walkOrtho(tx, ty, centerX, centerY) {
+  const needCorner = Math.abs(tx - chefPt.x) > 1 && Math.abs(ty - chefPt.y) > 1;
+  if (needCorner) {
+    const nearHorizontalEdge = Math.abs(chefPt.y - centerY) >= Math.abs(chefPt.x - centerX);
+    if (nearHorizontalEdge) { await walkSegment(tx, chefPt.y); await walkSegment(tx, ty); }
+    else { await walkSegment(chefPt.x, ty); await walkSegment(tx, ty); }
+  } else {
+    await walkSegment(tx, ty);
+  }
+}
+
+async function runGatherSequence(dish, minutes) {
   showView('gather');
   const frame = document.getElementById('pantry-gather');
   composeKitchenScene(document.getElementById('gather-scene'));
-  const slots = buildPantry('gather');
-  document.getElementById('basket-count').textContent = '0';
+  buildPantry('gather');
+
+  // mark this dish's ingredients as the shopping list
+  const allSlots = [...frame.querySelectorAll('.pantry-slot')];
+  const needSet = new Set(dish.ingredients);
+  const needed = clockwise(allSlots.filter(s => needSet.has(s.dataset.id)), frame);
+  needed.forEach(s => s.classList.add('needed'));
+
+  const chips = dish.ingredients.map(id => (state.data.foodById[id]?.label || id)).join(' · ');
+  document.getElementById('basket-count').textContent = `0 / ${needed.length}`;
+  gatherLabel(`Gathering for <b>${dish.name}</b> — ${chips}`);
 
   gatherChef = document.getElementById('gather-chef');
-  gatherChef.style.setProperty('--hop', `${HOP_MS}ms`);
-  gatherAnimator = new Animator(gatherChef, state.data.chef.sections);
+  gatherAnimator = new Animator(gatherChef, state.data.chef.states);
 
-  // let layout settle so getBoundingClientRect is correct
   await sleep(60);
-  const c = centerOfFrame(frame);
-  lastChefX = c.x;
-  gatherChef.style.transition = 'none';
-  placeGatherChef(c.x, c.y);
+  const cx = frame.clientWidth / 2, cy = frame.clientHeight / 2;
+  chefPt = { x: cx, y: frame.clientHeight * 0.82 };  // start in the cooking area
+  gatherChef.style.transitionDuration = '0ms';
+  placeGatherChef(chefPt.x, chefPt.y);
   gatherAnimator.play('idle');
-  await sleep(120);
-  gatherChef.style.transition = '';
+  await sleep(150);
 
   audio.ensure();
   if (audio.ctx.state === 'suspended') await audio.ctx.resume();
   audio.startMusic();
 
-  const targets = pickTargets(slots);
-  let collected = 0;
-  gatherLabel('The chef heads out to gather…');
-
-  for (const slot of targets) {
+  let got = 0;
+  for (const slot of needed) {
     const p = slotPoint(frame, slot);
-    gatherChef.classList.add('walking');   // gentle bob while strolling
-    gatherAnimator.play('walking');
-    placeGatherChef(p.x, p.y);
-    // soft, unhurried footsteps across the long hop
-    for (let s = 0; s < 4; s++) { audio.footstep(); await sleep(HOP_MS / 4); }
-    // reach out and pluck the item
+    await walkOrtho(p.x, p.y, cx, cy);
+    // pluck
     gatherChef.classList.remove('walking');
-    gatherAnimator.play('interaction');
+    gatherAnimator.play('idle');
+    slot.classList.remove('needed');
     slot.classList.add('collected');
     audio.pop();
-    collected++;
-    document.getElementById('basket-count').textContent = String(collected);
-    if (collected === Math.ceil(targets.length / 2)) gatherLabel('Basket filling up…');
-    await sleep(GRAB_PAUSE_MS);   // a calm little beat before moving on
+    got++;
+    document.getElementById('basket-count').textContent = `${got} / ${needed.length}`;
+    await sleep(GRAB_PAUSE_MS);
   }
 
   gatherLabel('Back to the kitchen!');
-  gatherChef.classList.add('walking');
-  gatherAnimator.play('walking');
-  placeGatherChef(c.x, c.y);
-  await sleep(HOP_MS);
+  await walkOrtho(cx, frame.clientHeight * 0.82, cx, cy);
   gatherChef.classList.remove('walking');
-  gatherAnimator.play('presenting');
+  gatherAnimator.play('present');
   await sleep(700);
 
-  startCookingSession(minutes);
+  startCookingSession(minutes, dish);
 }
 
 // ---------------------------------------------------------------------------
-// Cooking (compact version of v2's flow)
+// Cooking
 // ---------------------------------------------------------------------------
 
-let cookAnimator = null, cookChefImg = null;
+let cookAnimator = null, timer = { totalMs: 0, endAt: 0, tickHandle: null, introTimers: [], paused: false, remainingAtPauseMs: 0, dish: null };
 
-function formatMs(ms) {
-  const s = Math.max(0, Math.ceil(ms / 1000));
-  return `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`;
-}
+function formatMs(ms) { const s = Math.max(0, Math.ceil(ms / 1000)); return `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`; }
 const RING = 2 * Math.PI * 54;
-function updateRing(frac) { document.getElementById('progress-ring-bar').style.strokeDasharray = `${Math.max(0, Math.min(1, frac)) * RING} ${RING}`; }
-function updateDistillery(frac) { document.getElementById('distillery-fill').style.height = `${Math.max(0, Math.min(1, frac)) * 100}%`; }
+function updateRing(f) { document.getElementById('progress-ring-bar').style.strokeDasharray = `${Math.max(0, Math.min(1, f)) * RING} ${RING}`; }
+function updateDistillery(f) { document.getElementById('distillery-fill').style.height = `${Math.max(0, Math.min(1, f)) * 100}%`; }
 function setPhase(phase) {
   const order = ['gather', 'prep', 'cook', 'present'], idx = order.indexOf(phase);
   document.querySelectorAll('.phase-dot').forEach(d => { const i = order.indexOf(d.dataset.phase); d.classList.toggle('active', i === idx); d.classList.toggle('done', i < idx); });
 }
-function setStage(text) { const l = document.getElementById('countdown-stage'); l.style.opacity = '0'; setTimeout(() => { l.textContent = text; l.style.opacity = '1'; }, 180); }
+function setStage(t) { const l = document.getElementById('countdown-stage'); l.style.opacity = '0'; setTimeout(() => { l.textContent = t; l.style.opacity = '1'; }, 180); }
 
 function setupCookingScene() {
   const scene = document.getElementById('cooking-scene');
   composeKitchenScene(scene);
-  cookChefImg = document.createElement('img');
-  cookChefImg.className = 'chef-sprite scene-layer';
-  Object.assign(cookChefImg.style, { position: 'absolute', left: '12%', top: '50%', width: '88px', height: 'auto', zIndex: 5 });
-  scene.appendChild(cookChefImg);
-  cookAnimator = new Animator(cookChefImg, state.data.chef.sections);
+  const chef = document.createElement('img');
+  chef.className = 'chef-sprite scene-layer';
+  Object.assign(chef.style, { position: 'absolute', left: '12%', top: '50%', width: '88px', height: 'auto', zIndex: 5 });
+  scene.appendChild(chef);
+  cookAnimator = new Animator(chef, state.data.chef.states);
 }
 
 function runCookIntro() {
-  setPhase('prep'); setStage('Chopping ingredients…');
-  cookAnimator.play('chopping');
-  state.timer.introTimers = [ setTimeout(() => { setPhase('cook'); setStage('Cooking in progress…'); cookAnimator.play('stirring'); }, 2600) ];
+  setPhase('prep'); setStage('Chopping ingredients…'); cookAnimator.play('chop');
+  timer.introTimers = [setTimeout(() => { setPhase('cook'); setStage('Cooking in progress…'); cookAnimator.play('stir'); }, 2600)];
 }
-function clearIntroTimers() { state.timer.introTimers.forEach(clearTimeout); state.timer.introTimers = []; }
+function clearIntroTimers() { timer.introTimers.forEach(clearTimeout); timer.introTimers = []; }
 
 function startTicking() {
-  if (state.timer.tickHandle) clearInterval(state.timer.tickHandle);
+  if (timer.tickHandle) clearInterval(timer.tickHandle);
   const tick = () => {
-    const rem = Math.max(0, state.timer.endAt - Date.now());
+    const rem = Math.max(0, timer.endAt - Date.now());
     document.getElementById('countdown-readout').textContent = formatMs(rem);
-    updateRing(rem / state.timer.totalMs);
-    updateDistillery(1 - rem / state.timer.totalMs);
-    if (rem <= 0) { clearInterval(state.timer.tickHandle); clearIntroTimers(); cookAnimator.stop(); finishCooking(); }
+    updateRing(rem / timer.totalMs); updateDistillery(1 - rem / timer.totalMs);
+    if (rem <= 0) { clearInterval(timer.tickHandle); clearIntroTimers(); cookAnimator.stop(); finishCooking(); }
   };
-  tick();
-  state.timer.tickHandle = setInterval(tick, 250);
+  tick(); timer.tickHandle = setInterval(tick, 250);
 }
 
-function startCookingSession(minutes) {
-  state.timer.totalMs = minutes * 60 * 1000;
-  state.timer.endAt = Date.now() + state.timer.totalMs;
-  state.timer.paused = false;
-  setupCookingScene();
-  runCookIntro();
-  startTicking();
+function startCookingSession(minutes, dish) {
+  timer.totalMs = minutes * 60 * 1000; timer.endAt = Date.now() + timer.totalMs; timer.paused = false; timer.dish = dish;
+  setupCookingScene(); runCookIntro(); startTicking();
   document.getElementById('pause-cook-btn').textContent = 'Pause';
   showView('cooking');
 }
 
 function togglePauseCooking() {
-  if (state.timer.paused) {
-    state.timer.endAt = Date.now() + state.timer.remainingAtPauseMs;
-    state.timer.paused = false;
-    document.getElementById('pause-cook-btn').textContent = 'Pause';
-    setStage('Cooking in progress…'); cookAnimator.play('stirring'); audio.startMusic();
-    startTicking();
+  if (timer.paused) {
+    timer.endAt = Date.now() + timer.remainingAtPauseMs; timer.paused = false;
+    document.getElementById('pause-cook-btn').textContent = 'Pause'; setStage('Cooking in progress…'); cookAnimator.play('stir'); audio.startMusic(); startTicking();
   } else {
-    state.timer.remainingAtPauseMs = Math.max(0, state.timer.endAt - Date.now());
-    state.timer.paused = true;
-    clearIntroTimers();
-    if (state.timer.tickHandle) clearInterval(state.timer.tickHandle);
-    cookAnimator.stop(); audio.stopMusic();
+    timer.remainingAtPauseMs = Math.max(0, timer.endAt - Date.now()); timer.paused = true; clearIntroTimers();
+    if (timer.tickHandle) clearInterval(timer.tickHandle); cookAnimator.stop(); audio.stopMusic();
     setStage('Paused'); document.getElementById('pause-cook-btn').textContent = 'Resume';
   }
 }
 
 function cancelCooking() {
-  if (state.timer.tickHandle) clearInterval(state.timer.tickHandle);
-  clearIntroTimers();
-  if (cookAnimator) cookAnimator.stop();
-  audio.stopMusic();
-  state.timer.totalMs = 0;
-  showView('home');
-}
-
-function pickRecipeToReveal() {
-  const all = state.data.recipes.sprites;
-  const locked = all.filter(r => !state.unlocked.has(r.id));
-  const pool = locked.length ? locked : all;
-  const recipe = pool[Math.floor(Math.random() * pool.length)];
-  const isNew = !state.unlocked.has(recipe.id);
-  if (isNew) state.unlocked.add(recipe.id);
-  saveSet(STORAGE_KEY, state.unlocked);
-  return { recipe, isNew };
+  if (timer.tickHandle) clearInterval(timer.tickHandle); clearIntroTimers();
+  if (cookAnimator) cookAnimator.stop(); audio.stopMusic(); timer.totalMs = 0; showView('home');
 }
 
 function finishCooking() {
-  const { recipe, isNew } = pickRecipeToReveal();
-  updateDistillery(1); setPhase('present');
-  audio.stopMusic();
+  const dish = timer.dish;
+  const recipe = recipeById(dish.id) || dish;
+  const isNew = !state.unlocked.has(dish.id);
+  if (isNew) { state.unlocked.add(dish.id); saveSet(STORAGE_KEY, state.unlocked); }
+  updateDistillery(1); setPhase('present'); audio.stopMusic();
   document.getElementById('dish-image').src = asset(recipe.file);
-  document.getElementById('dish-name').textContent = recipe.label;
+  document.getElementById('dish-name').textContent = dish.name;
   document.getElementById('unlock-banner').classList.toggle('hidden', !isNew);
   updateBookBadge();
-  new Animator(document.getElementById('chef-presenting'), state.data.chef.sections).play('presenting');
-  audio.ding();
-  showView('complete');
+  new Animator(document.getElementById('chef-presenting'), state.data.chef.states).play('present');
+  audio.ding(); showView('complete');
 }
 
 function updateBookBadge() { document.getElementById('book-count').textContent = state.unlocked.size; }
 
 function renderRecipeBook() {
-  const grid = document.getElementById('recipe-grid');
-  grid.innerHTML = '';
-  const all = state.data.recipes.sprites;
-  for (const r of all) {
+  const grid = document.getElementById('recipe-grid'); grid.innerHTML = '';
+  for (const r of state.data.recipes.sprites) {
     const unlocked = state.unlocked.has(r.id);
-    const card = document.createElement('div');
-    card.className = 'recipe-card' + (unlocked ? '' : ' locked');
-    const img = document.createElement('img'); img.src = asset(r.file); img.alt = unlocked ? r.label : 'locked recipe';
+    const card = document.createElement('div'); card.className = 'recipe-card' + (unlocked ? '' : ' locked');
+    const img = document.createElement('img'); img.src = asset(r.file); img.alt = unlocked ? r.label : 'locked';
     const name = document.createElement('div'); name.className = 'rname'; name.textContent = unlocked ? r.label : '???';
     card.appendChild(img); card.appendChild(name); grid.appendChild(card);
   }
-  document.getElementById('collection-complete').classList.toggle('hidden', state.unlocked.size < all.length);
+  document.getElementById('collection-complete').classList.toggle('hidden', state.unlocked.size < state.data.recipes.sprites.length);
 }
-
 function resetProgress() { state.unlocked = new Set(); saveSet(STORAGE_KEY, state.unlocked); updateBookBadge(); renderRecipeBook(); }
 
 // ---------------------------------------------------------------------------
@@ -488,17 +452,16 @@ function resetProgress() { state.unlocked = new Set(); saveSet(STORAGE_KEY, stat
 
 let selectedMinutes = 25;
 const DIAL_MAX = 180;
-function tierFor(m) { return m <= 10 ? 'Tier 1 · Quick prep' : m <= 20 ? 'Tier 2 · Light meals' : m <= 35 ? 'Tier 3 · Standard entrées' : 'Tier 4 · Gourmet feasts'; }
+function tierLabel(m) { const t = tierForMinutes(m); return ['', 'Tier 1 · Quick prep', 'Tier 2 · Light meals', 'Tier 3 · Standard entrées', 'Tier 4 · Gourmet feasts'][t]; }
 function setDialMinutes(m, { deselect = false } = {}) {
   selectedMinutes = m;
   document.getElementById('dial-readout').textContent = `${String(m).padStart(2, '0')}:00`;
   document.getElementById('dial-hand').style.transform = `translateX(-50%) rotate(${Math.min(m, DIAL_MAX) / DIAL_MAX * 360}deg)`;
-  document.getElementById('tier-hint').textContent = tierFor(m);
+  document.getElementById('tier-hint').textContent = tierLabel(m);
   if (deselect) document.querySelectorAll('.duration-btn').forEach(b => b.classList.remove('selected'));
 }
 function wireSetup() {
-  const buttons = document.querySelectorAll('.duration-btn');
-  const range = document.getElementById('custom-range');
+  const buttons = document.querySelectorAll('.duration-btn'), range = document.getElementById('custom-range');
   buttons.forEach(btn => btn.addEventListener('click', () => {
     buttons.forEach(b => b.classList.remove('selected')); btn.classList.add('selected');
     if (btn.dataset.min === 'custom') { range.classList.remove('hidden'); setDialMinutes(Number(range.value)); }
@@ -506,14 +469,9 @@ function wireSetup() {
   }));
   range.addEventListener('input', () => setDialMinutes(Number(range.value)));
   const dial = document.getElementById('dial'); let dragging = false;
-  const minutesFromEvent = evt => {
-    const rect = dial.getBoundingClientRect();
-    const dx = evt.clientX - (rect.left + rect.width / 2), dy = evt.clientY - (rect.top + rect.height / 2);
-    let a = Math.atan2(-dx, dy) * 180 / Math.PI; if (a < 0) a += 360;
-    return Math.max(1, Math.round(a / 360 * DIAL_MAX));
-  };
-  dial.addEventListener('pointerdown', e => { dragging = true; dial.setPointerCapture(e.pointerId); range.classList.remove('hidden'); const m = minutesFromEvent(e); range.value = Math.min(m, Number(range.max)); setDialMinutes(m, { deselect: true }); });
-  dial.addEventListener('pointermove', e => { if (!dragging) return; const m = minutesFromEvent(e); range.value = Math.min(m, Number(range.max)); setDialMinutes(m, { deselect: true }); });
+  const mFromEvt = evt => { const r = dial.getBoundingClientRect(); const dx = evt.clientX - (r.left + r.width / 2), dy = evt.clientY - (r.top + r.height / 2); let a = Math.atan2(-dx, dy) * 180 / Math.PI; if (a < 0) a += 360; return Math.max(1, Math.round(a / 360 * DIAL_MAX)); };
+  dial.addEventListener('pointerdown', e => { dragging = true; dial.setPointerCapture(e.pointerId); range.classList.remove('hidden'); const m = mFromEvt(e); range.value = Math.min(m, Number(range.max)); setDialMinutes(m, { deselect: true }); });
+  dial.addEventListener('pointermove', e => { if (!dragging) return; const m = mFromEvt(e); range.value = Math.min(m, Number(range.max)); setDialMinutes(m, { deselect: true }); });
   dial.addEventListener('pointerup', () => { dragging = false; });
   dial.addEventListener('pointercancel', () => { dragging = false; });
 }
@@ -522,23 +480,15 @@ function wireSetup() {
 // Boot
 // ---------------------------------------------------------------------------
 
-function updateAudioButton() {
-  const b = document.getElementById('audio-toggle');
-  b.textContent = audio.muted ? '🔇' : '🔊';
-  b.classList.toggle('muted', audio.muted);
-}
+function updateAudioButton() { const b = document.getElementById('audio-toggle'); b.textContent = audio.muted ? '🔇' : '🔊'; b.classList.toggle('muted', audio.muted); }
 
 async function main() {
   await loadData();
-  initHomeScene();
-  wireSetup();
-  updateBookBadge();
-  updateAudioButton();
-  setDialMinutes(25);
+  initHomeScene(); wireSetup(); updateBookBadge(); updateAudioButton(); setDialMinutes(25);
 
   document.getElementById('start-cooking-btn').addEventListener('click', () => { audio.ensure(); showView('setup'); });
   document.getElementById('back-to-home').addEventListener('click', () => showView('home'));
-  document.getElementById('begin-timer-btn').addEventListener('click', () => runGatherSequence(selectedMinutes));
+  document.getElementById('begin-timer-btn').addEventListener('click', () => runGatherSequence(chooseDish(selectedMinutes), selectedMinutes));
   document.getElementById('pause-cook-btn').addEventListener('click', togglePauseCooking);
   document.getElementById('cancel-cook-btn').addEventListener('click', cancelCooking);
   document.getElementById('done-btn').addEventListener('click', () => showView('home'));

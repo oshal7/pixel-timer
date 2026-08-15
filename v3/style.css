@@ -252,9 +252,17 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .gather-chef {
   position: absolute; width: 78px; height: auto; z-index: 20;
   image-rendering: pixelated; pointer-events: none;
-  transition: left var(--hop, 1.3s) cubic-bezier(.37,0,.29,1),
-              top  var(--hop, 1.3s) cubic-bezier(.37,0,.29,1);
+  /* one axis at a time, steady (linear) pace — set per-segment from JS */
+  transition-property: left, top;
+  transition-timing-function: linear;
+  transition-duration: 600ms;
   filter: drop-shadow(0 5px 3px rgba(0,0,0,0.4));
+}
+/* ingredients this dish needs glow until the chef reaches them */
+.pantry-slot.needed { animation: need-pulse 1.2s ease-in-out infinite; z-index: 3; }
+@keyframes need-pulse {
+  0%, 100% { filter: drop-shadow(0 0 1px rgba(217,123,63,0.5)); transform: scale(1);    }
+  50%      { filter: drop-shadow(0 0 5px rgba(217,123,63,1));   transform: scale(1.18); }
 }
 /* a soft up-down bob only while strolling — reads as cute + calm.
    scaleX(var(--face)) flips the sprite to face the walk direction. */

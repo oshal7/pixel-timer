@@ -1,0 +1,93 @@
+{
+  "_readme": "v3 chef animations. Swap art by replacing frames in assets/chef_v3/<state>/ (named 00.png, 01.png, \u2026) and updating 'count' here. 'flip' mirrors a state horizontally in-game. States are referenced by name from v3/app.js.",
+  "states": {
+    "idle": {
+      "dir": "assets/chef_v3/idle",
+      "count": 10,
+      "frame_ms": 450,
+      "loop": true,
+      "flip": false,
+      "note": "Standing still (home screen)."
+    },
+    "walk_right": {
+      "dir": "assets/chef_v3/walk_right",
+      "count": 12,
+      "frame_ms": 110,
+      "loop": true,
+      "flip": false,
+      "note": "Walking to the right / along a row."
+    },
+    "walk_left": {
+      "dir": "assets/chef_v3/walk_left",
+      "count": 12,
+      "frame_ms": 110,
+      "loop": true,
+      "flip": true,
+      "note": "Walking left \u2014 mirrored from walk_right in-game until dedicated art exists."
+    },
+    "walk_up": {
+      "dir": "assets/chef_v3/walk_up",
+      "count": 12,
+      "frame_ms": 110,
+      "loop": true,
+      "flip": false,
+      "note": "Walking up a column (PLACEHOLDER: reuses side walk; needs real up art)."
+    },
+    "walk_down": {
+      "dir": "assets/chef_v3/walk_down",
+      "count": 12,
+      "frame_ms": 110,
+      "loop": true,
+      "flip": false,
+      "note": "Walking down a column (PLACEHOLDER: reuses side walk; needs real down art)."
+    },
+    "carry": {
+      "dir": "assets/chef_v3/carry",
+      "count": 12,
+      "frame_ms": 130,
+      "loop": true,
+      "flip": false,
+      "note": "Walking while carrying the basket (PLACEHOLDER: reuses walk; needs a basket pose)."
+    },
+    "pick": {
+      "dir": "assets/chef_v3/pick",
+      "count": 8,
+      "frame_ms": 220,
+      "loop": false,
+      "flip": false,
+      "note": "Reaching to pick an item up (PLACEHOLDER: currently the book-read frames; needs a real reach/grab)."
+    },
+    "chop": {
+      "dir": "assets/chef_v3/chop",
+      "count": 6,
+      "frame_ms": 300,
+      "loop": true,
+      "flip": false,
+      "note": "Chopping at the prep counter."
+    },
+    "stir": {
+      "dir": "assets/chef_v3/stir",
+      "count": 6,
+      "frame_ms": 260,
+      "loop": true,
+      "flip": false,
+      "note": "Stirring the pot on the stove."
+    },
+    "present": {
+      "dir": "assets/chef_v3/present",
+      "count": 6,
+      "frame_ms": 500,
+      "loop": false,
+      "flip": false,
+      "note": "Holding up the finished dish."
+    },
+    "read_book": {
+      "dir": "assets/chef_v3/read_book",
+      "count": 8,
+      "frame_ms": 350,
+      "loop": false,
+      "flip": false,
+      "note": "Reading the recipe book (the real meaning of the old 'interaction' frames)."
+    }
+  }
+}
