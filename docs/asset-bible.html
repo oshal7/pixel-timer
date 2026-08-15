@@ -443,26 +443,29 @@ These are OBJECTS, not textures — they do not need to tile. Use the standard s
   </div>
 
   <div class="sheet">
-    <div class="sheet-hd"><span class="sheet-id">SHEET 02</span><span class="sheet-nm">Walls, wainscot &amp; trim</span><span class="sheet-sz">style anchor · layer 10</span></div>
-    <pre class="term" id="p2"><button class="copy" data-t="p2">Copy</button>NOTE: items 1, 2, 9 and 10 are WALL TEXTURES and hit the same problem as
-floors. Run each of those as its own image using the Sheet 01a texture prompt
+    <div class="sheet-hd"><span class="sheet-id">SHEET 02</span><span class="sheet-nm">Walls, trim &amp; staircase banister</span><span class="sheet-sz">style anchor · layer 10</span></div>
+    <p style="margin:0 0 8px; padding:0 16px; font-size:13.5px; color:var(--ink-soft)">
+      Cut from the last version: the peg rail with towels, the plain cream duplicate wall, and the floral
+      wallpaper — none of those matched the reference. The old single valance strip is replaced with a proper
+      <b>3-piece modular banister kit</b> (post → repeating rail → post) so it can actually cover the staircase
+      in Sheet 03, not just hang flat as trim.
+    </p>
+    <pre class="term" id="p2"><button class="copy" data-t="p2">Copy</button>NOTE: items 1 and 2 are WALL TEXTURES and hit the same problem as floors.
+Run each of those as its own image using the Sheet 01a texture prompt
 (swapping the MATERIAL line). Use the grid prompt below only for the trim,
-corner and fixture pieces, items 3 to 8.
+corner and banister pieces, items 3 to 9.
 
-Generate a wall construction sheet containing 10 items in a 5x2 grid:
+Generate a wall construction sheet containing 7 items in a grid, generous spacing, sized to fit their content:
 
-1. Warm wood plank wall section, vertical boards, 32 wide x 48 tall pixels, seamless left-to-right
-2. The same wall but with cream plaster upper half and wood wainscot lower half, seamless left-to-right
-3. Wall top trim / crown moulding strip, carved wood, seamless left-to-right
-4. Wall base skirting board strip, dark walnut, seamless left-to-right
-5. Inner corner piece, left side
-6. Inner corner piece, right side
-7. A decorative carved wood valance / spindle railing strip that hangs below the ceiling, seamless left-to-right
-8. A short wall segment with a wooden peg rail and two hanging cloths
-9. A plain cream plaster wall section, seamless left-to-right
-10. A wall section with faded floral wallpaper, muted rose and cream, seamless left-to-right
+1. Wall top trim / crown moulding strip, carved wood, seamless left-to-right
+2. Wall base skirting board strip, dark walnut, seamless left-to-right
+3. Inner corner piece, left side
+4. Inner corner piece, right side
+5. STAIRCASE BANISTER — BOTTOM POST: a turned wooden newel post at counter height, with the handrail beginning to rise from it at the same upward angle as a staircase
+6. STAIRCASE BANISTER — RAIL SEGMENT: a straight run of turned wood spindles under a handrail, angled to match a staircase rising at roughly 30 degrees, designed to repeat multiple times along the length of the stairs
+7. STAIRCASE BANISTER — TOP POST: a matching newel post where the handrail levels out onto the upper landing, with a short horizontal spindle rail segment attached, ready to butt against a landing wall
 
-The horizontal strips (items 1,2,3,4,7,9,10) must tile seamlessly when repeated side by side. Show a slight top surface edge on the trim pieces so they read as 3/4 perspective, not flat.</pre>
+CRITICAL for items 5-7: same spindle width, same handrail thickness, same wood tone and same rail angle across all three, so bottom post → rail segment (repeated as needed) → top post reads as one continuous banister with no seam. The horizontal strips (items 1, 2) must tile seamlessly when repeated side by side. Show a slight top surface edge on trim pieces so they read as 3/4 perspective, not flat.</pre>
   </div>
 
   <div class="sheet">
@@ -473,7 +476,7 @@ The horizontal strips (items 1,2,3,4,7,9,10) must tile seamlessly when repeated 
 2. The same door but open, showing a dark doorway behind it
 3. A window with four panes and a wooden frame, glowing warm golden evening light coming through, with a small sill
 4. The same window but with three small potted herb plants sitting on the sill
-5. A wooden staircase going up, seen from the front in 3/4 view, warm oak treads with a railing
+5. A wooden staircase going up, seen from the front in 3/4 view, warm oak treads. DO NOT draw a railing or banister on it — the banister is a separate modular piece from Sheet 02 that gets composited on top.
 6. A tall narrow pantry door with a small round window
 7. A wall clock, round face, dark wood case, hanging flat on the wall
 8. A framed chalkboard menu sign hanging on the wall, dark slate with a wooden frame, no readable text — just suggestive scribble marks
@@ -622,19 +625,44 @@ Row 2: bundle of dried spaghetti pasta held with a paper band (NO TEXT on the ba
   </div>
 
   <div class="sheet">
-    <div class="sheet-hd"><span class="sheet-id">SHEET 10</span><span class="sheet-nm">FX &amp; overlays</span><span class="sheet-sz">layer 70 · animation</span></div>
-    <pre class="term" id="p10"><button class="copy" data-t="p10">Copy</button>Generate a visual effects sheet containing 8 effect strips. Each row is a horizontal ANIMATION SEQUENCE of 4 frames showing the effect progressing over time, evenly spaced:
+    <div class="sheet-hd"><span class="sheet-id">SHEET 10</span><span class="sheet-nm">FX &amp; overlays — rebuilt for keying</span><span class="sheet-sz">2 runs · layer 70</span></div>
+    <p style="margin:0 0 8px; padding:0 16px; font-size:13.5px; color:var(--ink-soft)">
+      The first run of this sheet came back as soft gaussian-blur clouds and one row that rendered as a
+      glossy 3D fire <i>emoji</i> instead of pixel art. Both are the wrong tool for a chroma-key pipeline:
+      a soft alpha falloff over flat green either keeps a green fringe or clips into an ugly hard edge —
+      there is no clean key for a gradient. Real pixel-art FX (Stardew, Story of Seasons) never use blur;
+      they fake softness with <b>dithering</b> — hard, opaque pixel clusters in a scatter pattern — which
+      keys perfectly. Run these <b>two prompts separately</b>, and attach a real pixel-art VFX reference
+      sheet if you have one.
+    </p>
+    <pre class="term" id="p10s"><button class="copy" data-t="p10s">Copy — STYLE CLAMP (paste at top of every batch)</button>You are generating pixel art VFX sprites for a cozy 32-bit farm-life sim, in the exact hard-edged pixel style of Stardew Valley's and Story of Seasons' animation effects — NOT a soft airbrushed look, NOT a smooth 3D-rendered icon, NOT an emoji.
 
-Row 1: a wisp of white steam rising and dissipating, 4 frames
-Row 2: a puff of white flour dust, 4 frames
-Row 3: a small orange cooking flame flickering, 4 frames
-Row 4: a golden sparkle burst for a completed dish, 4 frames
-Row 5: bubbles rising in a simmering liquid, 4 frames
-Row 6: a soft warm amber light glow pool, growing brighter over 4 frames
-Row 7: a small grey smoke puff for a burnt dish, 4 frames
-Row 8: an oval soft dark contact shadow, from small to large over 4 frames
+HARD RULES — these must key cleanly off a flat green background:
+- Every edge is a HARD, BINARY pixel edge. NO gaussian blur. NO soft feathering. NO radial gradient falloff. NO glow bloom.
+- Fake softness and transparency the way real pixel art does: with DITHERING — alternating single pixels of the effect colour and gaps, in a checkerboard or scatter pattern — never with alpha blending or blur.
+- Each effect is built from small OPAQUE pixel clusters with visible stepped edges, in 2-3 flat tones only, no smooth colour ramps.
+- Effects must look hand-drawn and chunky up close, like a game sprite — never glossy, never photorealistic, never emoji-style.
+- Each row is one continuous 4-frame animation read left to right, all 4 frames the SAME size and canvas position, showing real progression (appearing → developing → dissipating). Frames must clearly differ from each other — do not repeat the same frame four times.
+- BACKGROUND MUST BE PURE FLAT CHROMA GREEN #00FF00, uniform edge to edge. NO drop shadows onto the green.
+- NO text, NO labels, NO watermarks.
+- Colour palette limited to: white, pale blue-grey, warm amber, orange, light grey.</pre>
 
-CRITICAL: each row must be one continuous animation read left to right, with the 4 frames clearly separated and the same size. Effects should be soft, semi-transparent-looking and simple. Use only white, warm amber, orange and light grey. Keep them subtle — these overlay on top of the scene.</pre>
+    <pre class="term" id="p10a"><button class="copy" data-t="p10a">Copy — batch 1/2 · STEAM &amp; SMOKE</button>Following the style clamp above, generate 3 effect rows, 4 frames each, in a 4x3 grid:
+
+Row 1: a wisp of white cooking steam rising and curling — dithered pixel clusters that get sparser frame to frame as it dissipates
+Row 2: a puff of white flour dust bursting outward — dithered pixel clusters expanding and thinning
+Row 3: a puff of grey smoke for a burnt dish — dithered pixel clusters rising and fading, using light and mid grey only</pre>
+
+    <pre class="term" id="p10b"><button class="copy" data-t="p10b">Copy — batch 2/2 · FIRE, SPARKLE &amp; BUBBLES</button>Following the style clamp above, generate 3 effect rows, 4 frames each, in a 4x3 grid:
+
+Row 1: a small pixel-art cooking flame flickering between two hand-drawn poses — chunky orange and yellow pixel clusters with a visibly stepped silhouette, like a hand-drawn sprite, NOT a smooth glossy flame icon
+Row 2: a golden sparkle burst for a completed dish — hard-edged 4-point pixel stars that appear and multiply frame to frame, then vanish cleanly on frame 4 (not faded to invisible dots)
+Row 3: bubbles rising in a simmering liquid — solid pale circles with a single hard white pixel highlight each, increasing in count frame to frame</pre>
+
+    <div class="call">
+      <b>Glow pool &amp; contact shadow are cut from this sheet</b>
+      <p>Those two are pure radial gradients by definition — there's no way to draw one with hard pixel edges without it looking wrong, and no way to draw one with soft edges without it keying badly. Both get generated directly as real RGBA PNGs in the pipeline script instead: true alpha, no green screen, no keying step needed. Nothing for you to run for these two.</p>
+    </div>
   </div>
 </section>
 
@@ -650,7 +678,7 @@ CRITICAL: each row must be one continuous animation read left to right, with the
         <tr><td><code>sheet02_walls.png</code></td><td><code>assets/env_v3/wall/*.png</code></td></tr>
         <tr><td><code>sheet05_counters.png</code></td><td><code>assets/env_v3/counter/*.png</code></td></tr>
         <tr><td><code>sheet09_ingredients.png</code></td><td><code>assets/food_v3/*.png</code> <span style="font-size:11.5px;color:var(--ink-faint)">(drop-in over current)</span></td></tr>
-        <tr><td><code>sheet10_fx.png</code></td><td><code>assets/fx_v3/&lt;effect&gt;/00–03.png</code></td></tr>
+        <tr><td><code>sheet10a_fx_smoke.png</code><br><code>sheet10b_fx_fire.png</code></td><td><code>assets/fx_v3/&lt;effect&gt;/00–03.png</code> <span style="font-size:11.5px;color:var(--ink-faint)">(glow + shadow generated separately, not from a sheet)</span></td></tr>
       </tbody>
     </table>
   </div>
