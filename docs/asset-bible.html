@@ -384,7 +384,22 @@
   <h3>Style preamble — prepend to all ten</h3>
   <div class="sheet">
     <div class="sheet-hd"><span class="sheet-id">PREAMBLE</span><span class="sheet-nm">Shared style block</span><span class="sheet-sz">use every time</span></div>
-    <pre class="term" id="p0"><button class="copy" data-t="p0">Copy</button>A 32-bit cozy pixel art game asset sheet, top-down 3/4 orthographic perspective, in the style of Stardew Valley and classic 16-bit JRPG interiors.
+    <pre class="term" id="p0"><button class="copy" data-clip="A 32-bit cozy pixel art game asset sheet, top-down 3/4 orthographic perspective, in the style of Stardew Valley and classic 16-bit JRPG interiors.
+
+STYLE RULES:
+- Warm rustic farmhouse kitchen theme.
+- Palette: walnut brown #4A2C11, warm oak #8B5E34, cream tile #F2E3D5, terracotta #B86536, brushed steel #8C969E, soft amber lamplight.
+- Single consistent light source from the upper left. Soft warm highlights, gentle cool shadows.
+- Crisp pixel edges, clean readable pixel clusters, no blur, no anti-aliasing haze, no gradients wider than a few pixels.
+- Every object drawn to the SAME scale, where one floor tile equals 32x32 pixels.
+- Objects must show BOTH their front face and their top surface (3/4 view). No pure side-on profiles, no flat overhead views.
+
+SHEET RULES:
+- BACKGROUND MUST BE PURE FLAT CHROMA GREEN #00FF00, completely uniform across the whole image.
+- Objects laid out in a clean grid with generous even spacing. Nothing overlapping, nothing touching.
+- NO drop shadows cast onto the green background.
+- NO text, NO labels, NO captions, NO numbers, NO watermarks, NO UI frames, NO borders.
+- Fill the canvas edge to edge with the grid of objects.">Copy</button>A 32-bit cozy pixel art game asset sheet, top-down 3/4 orthographic perspective, in the style of Stardew Valley and classic 16-bit JRPG interiors.
 
 STYLE RULES:
 - Warm rustic farmhouse kitchen theme.
@@ -404,7 +419,28 @@ SHEET RULES:
 
   <div class="sheet">
     <div class="sheet-hd"><span class="sheet-id">SHEET 01a</span><span class="sheet-nm">Floor texture — one run per material</span><span class="sheet-sz">seamless · layer 00</span></div>
-    <pre class="term" id="p1"><button class="copy" data-t="p1">Copy</button>DO NOT use the standard style preamble for this one. Use exactly this:
+    <pre class="term" id="p1"><button class="copy" data-clip="DO NOT use the standard style preamble for this one. Use exactly this:
+
+A seamless repeating pixel art floor texture, 32-bit cozy game art, top-down view, for a warm rustic farmhouse kitchen.
+
+MATERIAL: cream ceramic kitchen tile, warm off-white with subtle darker grout lines between square tiles.
+
+CRITICAL RULES:
+- The texture must FILL THE ENTIRE IMAGE completely, edge to edge, corner to corner.
+- It must be PERFECTLY SEAMLESS AND TILEABLE: the pattern running off the left edge must continue exactly onto the right edge, and the pattern running off the top edge must continue exactly onto the bottom edge.
+- PERFECTLY FLAT, EVEN, UNIFORM LIGHTING across the whole image. NO light source. NO shadows. NO vignette. NO darkened corners. NO bright spot or glow in the centre. Every part of the image must be the same brightness.
+- NO border, NO outline, NO frame, NO edge highlight, NO drop shadow, NO rounded corners. The texture is not an object sitting on a background — it IS the whole image.
+- NO green background, NO background of any kind — the texture covers everything.
+- Low contrast and subtle, so it does not distract when repeated across a large floor.
+- Crisp pixel art, clean pixel clusters, no blur.
+- NO text, NO labels, NO watermarks, NO sparkles, NO decorative marks.
+
+Repeat this prompt once per material, swapping the MATERIAL line:
+  - terracotta clay floor tile, warm orange-brown
+  - checkerboard floor, alternating cream and soft taupe squares
+  - warm oak wood plank flooring, horizontal boards
+  - dark walnut wood plank flooring, horizontal boards
+  - worn grey-brown stone flagstone floor, irregular slabs">Copy</button>DO NOT use the standard style preamble for this one. Use exactly this:
 
 A seamless repeating pixel art floor texture, 32-bit cozy game art, top-down view, for a warm rustic farmhouse kitchen.
 
@@ -430,7 +466,16 @@ Repeat this prompt once per material, swapping the MATERIAL line:
 
   <div class="sheet">
     <div class="sheet-hd"><span class="sheet-id">SHEET 01b</span><span class="sheet-nm">Rugs &amp; floor objects</span><span class="sheet-sz">grid is fine · layer 00</span></div>
-    <pre class="term" id="p1b"><button class="copy" data-t="p1b">Copy</button>Generate a floor object sheet containing 6 items in a 3x2 grid:
+    <pre class="term" id="p1b"><button class="copy" data-clip="Generate a floor object sheet containing 6 items in a 3x2 grid:
+
+1. A small rectangular woven rug, warm red and cream stripes, with fringed ends at both short sides
+2. A round braided rug, concentric rings of warm brown and cream
+3. An oval rag rug, muted sage green and cream
+4. A long thin runner rug, warm terracotta with a simple geometric border pattern
+5. A square doormat, coarse brown fibre
+6. A small sheepskin-style soft rug, cream and off-white
+
+These are OBJECTS, not textures — they do not need to tile. Use the standard style preamble for this one (green background, grid layout, upper-left light). Show them lying flat on the floor seen from 3/4 above, with a soft suggestion of thickness at the edges so they read as sitting on top of the floor.">Copy</button>Generate a floor object sheet containing 6 items in a 3x2 grid:
 
 1. A small rectangular woven rug, warm red and cream stripes, with fringed ends at both short sides
 2. A round braided rug, concentric rings of warm brown and cream
@@ -450,7 +495,22 @@ These are OBJECTS, not textures — they do not need to tile. Use the standard s
       <b>3-piece modular banister kit</b> (post → repeating rail → post) so it can actually cover the staircase
       in Sheet 03, not just hang flat as trim.
     </p>
-    <pre class="term" id="p2"><button class="copy" data-t="p2">Copy</button>NOTE: items 1 and 2 are WALL TEXTURES and hit the same problem as floors.
+    <pre class="term" id="p2"><button class="copy" data-clip="NOTE: items 1 and 2 are WALL TEXTURES and hit the same problem as floors.
+Run each of those as its own image using the Sheet 01a texture prompt
+(swapping the MATERIAL line). Use the grid prompt below only for the trim,
+corner and banister pieces, items 3 to 9.
+
+Generate a wall construction sheet containing 7 items in a grid, generous spacing, sized to fit their content:
+
+1. Wall top trim / crown moulding strip, carved wood, seamless left-to-right
+2. Wall base skirting board strip, dark walnut, seamless left-to-right
+3. Inner corner piece, left side
+4. Inner corner piece, right side
+5. STAIRCASE BANISTER — BOTTOM POST: a turned wooden newel post at counter height, with the handrail beginning to rise from it at the same upward angle as a staircase
+6. STAIRCASE BANISTER — RAIL SEGMENT: a straight run of turned wood spindles under a handrail, angled to match a staircase rising at roughly 30 degrees, designed to repeat multiple times along the length of the stairs
+7. STAIRCASE BANISTER — TOP POST: a matching newel post where the handrail levels out onto the upper landing, with a short horizontal spindle rail segment attached, ready to butt against a landing wall
+
+CRITICAL for items 5-7: same spindle width, same handrail thickness, same wood tone and same rail angle across all three, so bottom post → rail segment (repeated as needed) → top post reads as one continuous banister with no seam. The horizontal strips (items 1, 2) must tile seamlessly when repeated side by side. Show a slight top surface edge on trim pieces so they read as 3/4 perspective, not flat.">Copy</button>NOTE: items 1 and 2 are WALL TEXTURES and hit the same problem as floors.
 Run each of those as its own image using the Sheet 01a texture prompt
 (swapping the MATERIAL line). Use the grid prompt below only for the trim,
 corner and banister pieces, items 3 to 9.
@@ -470,7 +530,18 @@ CRITICAL for items 5-7: same spindle width, same handrail thickness, same wood t
 
   <div class="sheet">
     <div class="sheet-hd"><span class="sheet-id">SHEET 03</span><span class="sheet-nm">Doors, windows &amp; stairs</span><span class="sheet-sz">layer 20</span></div>
-    <pre class="term" id="p3"><button class="copy" data-t="p3">Copy</button>Generate an architectural fixtures sheet containing 8 items in a 4x2 grid:
+    <pre class="term" id="p3"><button class="copy" data-clip="Generate an architectural fixtures sheet containing 8 items in a 4x2 grid:
+
+1. A closed wooden door with a brass knob, warm oak, set in a carved frame, 32 wide x 64 tall pixels
+2. The same door but open, showing a dark doorway behind it
+3. A window with four panes and a wooden frame, glowing warm golden evening light coming through, with a small sill
+4. The same window but with three small potted herb plants sitting on the sill
+5. A wooden staircase going up, seen from the front in 3/4 view, warm oak treads. DO NOT draw a railing or banister on it — the banister is a separate modular piece from Sheet 02 that gets composited on top.
+6. A tall narrow pantry door with a small round window
+7. A wall clock, round face, dark wood case, hanging flat on the wall
+8. A framed chalkboard menu sign hanging on the wall, dark slate with a wooden frame, no readable text — just suggestive scribble marks
+
+These all mount flat against a back wall, so keep them front-facing with only a slight top edge of depth. The window light should look warm and inviting.">Copy</button>Generate an architectural fixtures sheet containing 8 items in a 4x2 grid:
 
 1. A closed wooden door with a brass knob, warm oak, set in a carved frame, 32 wide x 64 tall pixels
 2. The same door but open, showing a dark doorway behind it
@@ -486,7 +557,19 @@ These all mount flat against a back wall, so keep them front-facing with only a 
 
   <div class="sheet">
     <div class="sheet-hd"><span class="sheet-id">SHEET 04</span><span class="sheet-nm">Pantry storage</span><span class="sheet-sz">layer 30</span></div>
-    <pre class="term" id="p4"><button class="copy" data-t="p4">Copy</button>Generate a pantry storage furniture sheet containing 9 items in a 3x3 grid:
+    <pre class="term" id="p4"><button class="copy" data-clip="Generate a pantry storage furniture sheet containing 9 items in a 3x3 grid:
+
+1. A tall retro refrigerator, brushed steel with rounded corners and a chrome handle, 32 wide x 64 tall pixels
+2. A tall open pantry shelving unit filled with glass jars of preserves in amber, red and green
+3. A tall wooden bookcase filled with recipe books, warm leather spines in red, green and brown
+4. A medium wooden shelf unit holding stacked ceramic bowls and folded linens
+5. A wall-mounted spice rack with two rows of small labelled-looking spice jars (no readable text, just colour bands)
+6. A wooden dresser / sideboard with drawers and a cream stone top, with two large ceramic crocks on top
+7. A hanging wooden shelf with three glass bottles of oil and vinegar
+8. A small wooden crate stack, two crates, one holding potatoes and onions
+9. A tall wicker basket of bread loaves and rolls
+
+All of these stand flush against a back wall, so show the front face prominently with a small visible top surface. Rich warm wood tones with visible grain. Cluttered and cozy but readable at small size.">Copy</button>Generate a pantry storage furniture sheet containing 9 items in a 3x3 grid:
 
 1. A tall retro refrigerator, brushed steel with rounded corners and a chrome handle, 32 wide x 64 tall pixels
 2. A tall open pantry shelving unit filled with glass jars of preserves in amber, red and green
@@ -503,7 +586,19 @@ All of these stand flush against a back wall, so show the front face prominently
 
   <div class="sheet">
     <div class="sheet-hd"><span class="sheet-id">SHEET 05</span><span class="sheet-nm">Modular island &amp; counters</span><span class="sheet-sz">layer 40 · modular</span></div>
-    <pre class="term" id="p5"><button class="copy" data-t="p5">Copy</button>Generate a MODULAR kitchen counter sheet containing 9 pieces in a 3x3 grid. These pieces must connect seamlessly side by side to build a long kitchen island:
+    <pre class="term" id="p5"><button class="copy" data-clip="Generate a MODULAR kitchen counter sheet containing 9 pieces in a 3x3 grid. These pieces must connect seamlessly side by side to build a long kitchen island:
+
+1. Counter LEFT END CAP — cream stone top, warm wood cabinet base with a panelled door
+2. Counter MIDDLE SECTION — plain, cream stone top, wood cabinet base with two doors (must tile seamlessly left and right)
+3. Counter RIGHT END CAP — mirror of the left end cap
+4. Counter middle with a butcher-block wooden chopping top instead of stone
+5. Counter middle with three drawers instead of doors
+6. Counter middle with an open shelf underneath holding stacked plates
+7. Counter CORNER piece, turning 90 degrees
+8. A freestanding wooden kitchen cart on small wheels, two shelves holding bottles and jars
+9. A small square wooden prep table with a cream top
+
+CRITICAL: the counter tops must all sit at exactly the SAME height in the image so the pieces line up perfectly when placed side by side. Each counter unit is 32 pixels wide and about 40 pixels tall including the front face. Show the top surface and the front face clearly.">Copy</button>Generate a MODULAR kitchen counter sheet containing 9 pieces in a 3x3 grid. These pieces must connect seamlessly side by side to build a long kitchen island:
 
 1. Counter LEFT END CAP — cream stone top, warm wood cabinet base with a panelled door
 2. Counter MIDDLE SECTION — plain, cream stone top, wood cabinet base with two doors (must tile seamlessly left and right)
@@ -520,7 +615,18 @@ CRITICAL: the counter tops must all sit at exactly the SAME height in the image 
 
   <div class="sheet">
     <div class="sheet-hd"><span class="sheet-id">SHEET 06</span><span class="sheet-nm">Appliances</span><span class="sheet-sz">layer 40 · aligns to sheet 05</span></div>
-    <pre class="term" id="p6"><button class="copy" data-t="p6">Copy</button>Generate a kitchen appliance sheet containing 8 items in a 4x2 grid. These must match the height and style of a modular counter run so they can slot into it:
+    <pre class="term" id="p6"><button class="copy" data-clip="Generate a kitchen appliance sheet containing 8 items in a 4x2 grid. These must match the height and style of a modular counter run so they can slot into it:
+
+1. A gas stove range top with four black burners set into a steel surface, with front control knobs and an oven door below
+2. The same stove but with a burner lit, small orange flame visible
+3. A deep farmhouse apron sink in brushed steel with a tall curved chrome tap
+4. A double basin sink set into a cream counter top
+5. A built-in oven with a glass door showing a warm glow inside
+6. A dishwasher front panel in brushed steel with a control strip
+7. An extractor hood, steel trapezoid shape, meant to mount on a wall above a stove
+8. A vintage cast iron cooking stove, black with brass trim and a small chimney pipe
+
+CRITICAL: items 1 through 6 must be exactly the same total height as a standard counter unit (about 40 pixels tall, 32 or 64 wide) with their top surface at the same level, so they slot into a counter run seamlessly. Brushed steel should read clearly against warm wood.">Copy</button>Generate a kitchen appliance sheet containing 8 items in a 4x2 grid. These must match the height and style of a modular counter run so they can slot into it:
 
 1. A gas stove range top with four black burners set into a steel surface, with front control knobs and an oven door below
 2. The same stove but with a burner lit, small orange flame visible
@@ -536,7 +642,18 @@ CRITICAL: items 1 through 6 must be exactly the same total height as a standard 
 
   <div class="sheet">
     <div class="sheet-hd"><span class="sheet-id">SHEET 07</span><span class="sheet-nm">Cozy reading nook</span><span class="sheet-sz">layer 40</span></div>
-    <pre class="term" id="p7"><button class="copy" data-t="p7">Copy</button>Generate a cozy furniture sheet containing 8 items in a 4x2 grid:
+    <pre class="term" id="p7"><button class="copy" data-clip="Generate a cozy furniture sheet containing 8 items in a 4x2 grid:
+
+1. A plush overstuffed armchair in warm tan leather, seen in 3/4 view facing right, with a small embroidered cushion
+2. The same armchair facing left
+3. A small round wooden side table with three legs
+4. The same round table with an open book and a steaming teacup on top
+5. A tall standing floor lamp with a warm amber fabric shade, glowing softly
+6. A large potted fiddle-leaf plant in a terracotta pot
+7. A small potted herb plant in a clay pot
+8. A wooden footstool with a woven cushion top
+
+These are freestanding floor objects seen from 3/4 above, so show the top and the front, and make the base clearly readable so it looks planted on the floor. Warm, soft, inviting — this is the relaxing corner of the room.">Copy</button>Generate a cozy furniture sheet containing 8 items in a 4x2 grid:
 
 1. A plush overstuffed armchair in warm tan leather, seen in 3/4 view facing right, with a small embroidered cushion
 2. The same armchair facing left
@@ -552,7 +669,26 @@ These are freestanding floor objects seen from 3/4 above, so show the top and th
 
   <div class="sheet">
     <div class="sheet-hd"><span class="sheet-id">SHEET 08</span><span class="sheet-nm">Surface props</span><span class="sheet-sz">layer 60 · small</span></div>
-    <pre class="term" id="p8"><button class="copy" data-t="p8">Copy</button>Generate a small kitchen prop sheet containing 16 items in a 4x4 grid. Each object is small, roughly 16x16 pixels, designed to sit ON TOP of a counter:
+    <pre class="term" id="p8"><button class="copy" data-clip="Generate a small kitchen prop sheet containing 16 items in a 4x4 grid. Each object is small, roughly 16x16 pixels, designed to sit ON TOP of a counter:
+
+1. A large steel cooking pot with a lid
+2. The same pot without a lid, filled with orange stew
+3. A cast iron frying pan seen from above at an angle
+4. A wooden chopping board with a knife and chopped green herbs
+5. A stack of three ceramic plates
+6. An open recipe book
+7. A ceramic teapot and one cup
+8. A wooden pepper grinder and a small salt cellar
+9. A glass jar of golden honey
+10. A bowl of mixed fruit
+11. A rolling pin and a mound of dough
+12. A woven basket with a cloth in it
+13. A mortar and pestle
+14. A bundle of dried herbs tied with string
+15. A small chalk-labelled tin canister
+16. A pitcher of milk
+
+Keep every one of these SMALL and simple with strong readable silhouettes, since they will be displayed at roughly 16 pixels. Seen from 3/4 above so the top of each object is visible.">Copy</button>Generate a small kitchen prop sheet containing 16 items in a 4x4 grid. Each object is small, roughly 16x16 pixels, designed to sit ON TOP of a counter:
 
 1. A large steel cooking pot with a lid
 2. The same pot without a lid, filled with orange stew
@@ -581,7 +717,22 @@ Keep every one of these SMALL and simple with strong readable silhouettes, since
       breaks style consistency. <b>Attach your best previous ingredient sheet as a reference image
       to every run</b> — that's what locks the style.
     </p>
-    <pre class="term" id="p9"><button class="copy" data-t="p9">Copy — STYLE CLAMP (paste at top of every batch)</button>You are generating pixel art food icons for a cozy farming / life sim, in the exact chunky pixel style of Stardew Valley and Story of Seasons inventory icons.
+    <pre class="term" id="p9"><button class="copy" data-clip="You are generating pixel art food icons for a cozy farming / life sim, in the exact chunky pixel style of Stardew Valley and Story of Seasons inventory icons.
+
+MATCH THIS QUALITY BAR (attach the reference image above):
+- Every icon at the SAME pixel density — one consistent chunky pixel size across the whole sheet.
+- Thick 2-3 pixel dark outlines on every icon so silhouettes read at small size.
+- Slight 3/4 top-down tilt so a little of the top of each item is visible, never flat overhead or pure side view.
+- Consistent light source from the upper left with warm highlights and cool shadows — same on every item.
+- Warm rich colour palette: saturated but not neon, gentle dimensional shading with 3-4 tones per colour.
+
+HARD RULES:
+- BACKGROUND MUST BE PURE FLAT CHROMA GREEN #00FF00, uniform edge to edge.
+- ABSOLUTELY NO text on the icons. NO labels. NO letters. NO numbers. NO words on jars, bags, bottles or cartons. NO watermarks. NO signatures. NO captions.
+- NO drop shadows onto the green background.
+- NO plates, NO bowls, NO trays under the items unless the item itself is a bowl/plate/tray.
+- Each icon is a SINGLE object, centred in its own cell of the grid, with generous even spacing around it. Nothing overlapping. Nothing touching.
+- Fill the canvas with the grid — no border around the whole sheet.">Copy — STYLE CLAMP (paste at top of every batch)</button>You are generating pixel art food icons for a cozy farming / life sim, in the exact chunky pixel style of Stardew Valley and Story of Seasons inventory icons.
 
 MATCH THIS QUALITY BAR (attach the reference image above):
 - Every icon at the SAME pixel density — one consistent chunky pixel size across the whole sheet.
@@ -598,27 +749,42 @@ HARD RULES:
 - Each icon is a SINGLE object, centred in its own cell of the grid, with generous even spacing around it. Nothing overlapping. Nothing touching.
 - Fill the canvas with the grid — no border around the whole sheet.</pre>
 
-    <pre class="term" id="p9a"><button class="copy" data-t="p9a">Copy — batch 1/5 · PRODUCE</button>Following the style clamp above, generate exactly 10 food icons in a 5x2 grid. Each is a single item, centred in its cell:
+    <pre class="term" id="p9a"><button class="copy" data-clip="Following the style clamp above, generate exactly 10 food icons in a 5x2 grid. Each is a single item, centred in its cell:
+
+Row 1: tomato, onion bulb with papery skin, garlic bulb, orange carrot with green top, brown potato
+Row 2: green bell pepper, red chilli pepper, brown mushroom, ear of corn in yellow with green husk, green lettuce head">Copy — batch 1/5 · PRODUCE</button>Following the style clamp above, generate exactly 10 food icons in a 5x2 grid. Each is a single item, centred in its cell:
 
 Row 1: tomato, onion bulb with papery skin, garlic bulb, orange carrot with green top, brown potato
 Row 2: green bell pepper, red chilli pepper, brown mushroom, ear of corn in yellow with green husk, green lettuce head</pre>
 
-    <pre class="term" id="p9b"><button class="copy" data-t="p9b">Copy — batch 2/5 · HERBS &amp; CITRUS</button>Following the style clamp above, generate exactly 10 food icons in a 5x2 grid. Each is a single item, centred in its cell:
+    <pre class="term" id="p9b"><button class="copy" data-clip="Following the style clamp above, generate exactly 10 food icons in a 5x2 grid. Each is a single item, centred in its cell:
+
+Row 1: sprig of basil leaves, sprig of parsley, sprig of rosemary needles, sprig of thyme, sprig of oregano
+Row 2: single dry bay leaf, knob of ginger root, whole yellow lemon, whole green lime, whole orange">Copy — batch 2/5 · HERBS &amp; CITRUS</button>Following the style clamp above, generate exactly 10 food icons in a 5x2 grid. Each is a single item, centred in its cell:
 
 Row 1: sprig of basil leaves, sprig of parsley, sprig of rosemary needles, sprig of thyme, sprig of oregano
 Row 2: single dry bay leaf, knob of ginger root, whole yellow lemon, whole green lime, whole orange</pre>
 
-    <pre class="term" id="p9c"><button class="copy" data-t="p9c">Copy — batch 3/5 · FRUIT, DAIRY &amp; EGGS</button>Following the style clamp above, generate exactly 10 food icons in a 5x2 grid. Each is a single item, centred in its cell:
+    <pre class="term" id="p9c"><button class="copy" data-clip="Following the style clamp above, generate exactly 10 food icons in a 5x2 grid. Each is a single item, centred in its cell:
+
+Row 1: red apple with a stem and leaf, yellow banana, red strawberry, three blueberries clustered, bunch of purple grapes
+Row 2: single brown egg, plain milk bottle (NO LABEL), yellow butter stick (NO WRAPPER TEXT), wedge of yellow cheese with holes, plain yoghurt pot (NO LABEL)">Copy — batch 3/5 · FRUIT, DAIRY &amp; EGGS</button>Following the style clamp above, generate exactly 10 food icons in a 5x2 grid. Each is a single item, centred in its cell:
 
 Row 1: red apple with a stem and leaf, yellow banana, red strawberry, three blueberries clustered, bunch of purple grapes
 Row 2: single brown egg, plain milk bottle (NO LABEL), yellow butter stick (NO WRAPPER TEXT), wedge of yellow cheese with holes, plain yoghurt pot (NO LABEL)</pre>
 
-    <pre class="term" id="p9d"><button class="copy" data-t="p9d">Copy — batch 4/5 · PROTEIN &amp; STAPLES</button>Following the style clamp above, generate exactly 10 food icons in a 5x2 grid. Each is a single item, centred in its cell:
+    <pre class="term" id="p9d"><button class="copy" data-clip="Following the style clamp above, generate exactly 10 food icons in a 5x2 grid. Each is a single item, centred in its cell:
+
+Row 1: raw pink chicken breast fillet, red steak, pale pink raw pork chop with bone, three strips of raw bacon, cluster of pink sausage links
+Row 2: raw salmon fillet, single pink prawn, plain brown sack tied at the top (NO TEXT on the sack), open sugar bowl with white sugar inside, plain glass salt shaker (NO LABEL, NO LETTERS on it)">Copy — batch 4/5 · PROTEIN &amp; STAPLES</button>Following the style clamp above, generate exactly 10 food icons in a 5x2 grid. Each is a single item, centred in its cell:
 
 Row 1: raw pink chicken breast fillet, red steak, pale pink raw pork chop with bone, three strips of raw bacon, cluster of pink sausage links
 Row 2: raw salmon fillet, single pink prawn, plain brown sack tied at the top (NO TEXT on the sack), open sugar bowl with white sugar inside, plain glass salt shaker (NO LABEL, NO LETTERS on it)</pre>
 
-    <pre class="term" id="p9e"><button class="copy" data-t="p9e">Copy — batch 5/5 · SEASONINGS &amp; PANTRY</button>Following the style clamp above, generate exactly 10 food icons in a 5x2 grid. Each is a single item, centred in its cell:
+    <pre class="term" id="p9e"><button class="copy" data-clip="Following the style clamp above, generate exactly 10 food icons in a 5x2 grid. Each is a single item, centred in its cell:
+
+Row 1: pile of black peppercorns, olive oil bottle with green oil (NO LABEL), soy sauce bottle with dark liquid (NO LABEL), vinegar bottle with amber liquid (NO LABEL), bowl of white rice
+Row 2: bundle of dried spaghetti pasta held with a paper band (NO TEXT on the band), whole rustic bread loaf, ball of pale dough on a wooden surface, glass honey jar with amber honey (NO LABEL), single vanilla pod">Copy — batch 5/5 · SEASONINGS &amp; PANTRY</button>Following the style clamp above, generate exactly 10 food icons in a 5x2 grid. Each is a single item, centred in its cell:
 
 Row 1: pile of black peppercorns, olive oil bottle with green oil (NO LABEL), soy sauce bottle with dark liquid (NO LABEL), vinegar bottle with amber liquid (NO LABEL), bowl of white rice
 Row 2: bundle of dried spaghetti pasta held with a paper band (NO TEXT on the band), whole rustic bread loaf, ball of pale dough on a wooden surface, glass honey jar with amber honey (NO LABEL), single vanilla pod</pre>
@@ -635,7 +801,17 @@ Row 2: bundle of dried spaghetti pasta held with a paper band (NO TEXT on the ba
       keys perfectly. Run these <b>two prompts separately</b>, and attach a real pixel-art VFX reference
       sheet if you have one.
     </p>
-    <pre class="term" id="p10s"><button class="copy" data-t="p10s">Copy — STYLE CLAMP (paste at top of every batch)</button>You are generating pixel art VFX sprites for a cozy 32-bit farm-life sim, in the exact hard-edged pixel style of Stardew Valley's and Story of Seasons' animation effects — NOT a soft airbrushed look, NOT a smooth 3D-rendered icon, NOT an emoji.
+    <pre class="term" id="p10s"><button class="copy" data-clip="You are generating pixel art VFX sprites for a cozy 32-bit farm-life sim, in the exact hard-edged pixel style of Stardew Valley's and Story of Seasons' animation effects — NOT a soft airbrushed look, NOT a smooth 3D-rendered icon, NOT an emoji.
+
+HARD RULES — these must key cleanly off a flat green background:
+- Every edge is a HARD, BINARY pixel edge. NO gaussian blur. NO soft feathering. NO radial gradient falloff. NO glow bloom.
+- Fake softness and transparency the way real pixel art does: with DITHERING — alternating single pixels of the effect colour and gaps, in a checkerboard or scatter pattern — never with alpha blending or blur.
+- Each effect is built from small OPAQUE pixel clusters with visible stepped edges, in 2-3 flat tones only, no smooth colour ramps.
+- Effects must look hand-drawn and chunky up close, like a game sprite — never glossy, never photorealistic, never emoji-style.
+- Each row is one continuous 4-frame animation read left to right, all 4 frames the SAME size and canvas position, showing real progression (appearing → developing → dissipating). Frames must clearly differ from each other — do not repeat the same frame four times.
+- BACKGROUND MUST BE PURE FLAT CHROMA GREEN #00FF00, uniform edge to edge. NO drop shadows onto the green.
+- NO text, NO labels, NO watermarks.
+- Colour palette limited to: white, pale blue-grey, warm amber, orange, light grey.">Copy — STYLE CLAMP (paste at top of every batch)</button>You are generating pixel art VFX sprites for a cozy 32-bit farm-life sim, in the exact hard-edged pixel style of Stardew Valley's and Story of Seasons' animation effects — NOT a soft airbrushed look, NOT a smooth 3D-rendered icon, NOT an emoji.
 
 HARD RULES — these must key cleanly off a flat green background:
 - Every edge is a HARD, BINARY pixel edge. NO gaussian blur. NO soft feathering. NO radial gradient falloff. NO glow bloom.
@@ -647,13 +823,21 @@ HARD RULES — these must key cleanly off a flat green background:
 - NO text, NO labels, NO watermarks.
 - Colour palette limited to: white, pale blue-grey, warm amber, orange, light grey.</pre>
 
-    <pre class="term" id="p10a"><button class="copy" data-t="p10a">Copy — batch 1/2 · STEAM &amp; SMOKE</button>Following the style clamp above, generate 3 effect rows, 4 frames each, in a 4x3 grid:
+    <pre class="term" id="p10a"><button class="copy" data-clip="Following the style clamp above, generate 3 effect rows, 4 frames each, in a 4x3 grid:
+
+Row 1: a wisp of white cooking steam rising and curling — dithered pixel clusters that get sparser frame to frame as it dissipates
+Row 2: a puff of white flour dust bursting outward — dithered pixel clusters expanding and thinning
+Row 3: a puff of grey smoke for a burnt dish — dithered pixel clusters rising and fading, using light and mid grey only">Copy — batch 1/2 · STEAM &amp; SMOKE</button>Following the style clamp above, generate 3 effect rows, 4 frames each, in a 4x3 grid:
 
 Row 1: a wisp of white cooking steam rising and curling — dithered pixel clusters that get sparser frame to frame as it dissipates
 Row 2: a puff of white flour dust bursting outward — dithered pixel clusters expanding and thinning
 Row 3: a puff of grey smoke for a burnt dish — dithered pixel clusters rising and fading, using light and mid grey only</pre>
 
-    <pre class="term" id="p10b"><button class="copy" data-t="p10b">Copy — batch 2/2 · FIRE, SPARKLE &amp; BUBBLES</button>Following the style clamp above, generate 3 effect rows, 4 frames each, in a 4x3 grid:
+    <pre class="term" id="p10b"><button class="copy" data-clip="Following the style clamp above, generate 3 effect rows, 4 frames each, in a 4x3 grid:
+
+Row 1: a small pixel-art cooking flame flickering between two hand-drawn poses — chunky orange and yellow pixel clusters with a visibly stepped silhouette, like a hand-drawn sprite, NOT a smooth glossy flame icon
+Row 2: a golden sparkle burst for a completed dish — hard-edged 4-point pixel stars that appear and multiply frame to frame, then vanish cleanly on frame 4 (not faded to invisible dots)
+Row 3: bubbles rising in a simmering liquid — solid pale circles with a single hard white pixel highlight each, increasing in count frame to frame">Copy — batch 2/2 · FIRE, SPARKLE &amp; BUBBLES</button>Following the style clamp above, generate 3 effect rows, 4 frames each, in a 4x3 grid:
 
 Row 1: a small pixel-art cooking flame flickering between two hand-drawn poses — chunky orange and yellow pixel clusters with a visibly stepped silhouette, like a hand-drawn sprite, NOT a smooth glossy flame icon
 Row 2: a golden sparkle burst for a completed dish — hard-edged 4-point pixel stars that appear and multiply frame to frame, then vanish cleanly on frame 4 (not faded to invisible dots)
@@ -717,11 +901,7 @@ Row 3: bubbles rising in a simmering liquid — solid pale circles with a single
 <script>
   document.querySelectorAll('.copy').forEach(function (btn) {
     btn.addEventListener('click', function () {
-      var pre = document.getElementById(btn.dataset.t);
-      var text = Array.from(pre.childNodes)
-        .filter(function (n) { return n.nodeType === 3; })
-        .map(function (n) { return n.textContent; })
-        .join('').trim();
+      var text = btn.dataset.clip || '';
       var done = function () {
         btn.textContent = 'Copied';
         btn.classList.add('done');
