@@ -1,0 +1,47 @@
+{
+  "_readme": "v3 FX overlays. Each effect is a 4-frame one-shot or loop, keyed from magenta (#FF00FF) source sheets via tools/key_and_slice.py --key magenta. Frame files are 00.png..03.png in assets/fx_v3/<effect>/.",
+  "effects": {
+    "steam": {
+      "dir": "assets/fx_v3/steam",
+      "count": 4,
+      "frame_ms": 220,
+      "loop": true,
+      "note": "rising cooking steam, dissipating"
+    },
+    "flour_dust": {
+      "dir": "assets/fx_v3/flour_dust",
+      "count": 4,
+      "frame_ms": 150,
+      "loop": false,
+      "note": "one-shot puff on chop/prep actions"
+    },
+    "burnt_smoke": {
+      "dir": "assets/fx_v3/burnt_smoke",
+      "count": 4,
+      "frame_ms": 220,
+      "loop": true,
+      "note": "burnt dish overlay"
+    },
+    "flame": {
+      "dir": "assets/fx_v3/flame",
+      "count": 4,
+      "frame_ms": 180,
+      "loop": true,
+      "note": "stove burner flame flicker"
+    },
+    "sparkle": {
+      "dir": "assets/fx_v3/sparkle",
+      "count": 4,
+      "frame_ms": 150,
+      "loop": false,
+      "note": "dish-complete celebration burst"
+    },
+    "bubbles": {
+      "dir": "assets/fx_v3/bubbles",
+      "count": 4,
+      "frame_ms": 260,
+      "loop": true,
+      "note": "simmering pot overlay"
+    }
+  }
+}

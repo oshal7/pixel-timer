@@ -21,32 +21,49 @@ from collections import deque
 import numpy as np
 from PIL import Image
 
-GREEN = np.array([0, 255, 0], dtype=np.int32)
+KEY_COLORS = {
+    "green":   np.array([0, 255, 0], dtype=np.int32),
+    "magenta": np.array([255, 0, 255], dtype=np.int32),
+}
 
 
-def key_green(img, tol=110):
-    """RGB-distance key. Returns RGBA array with background alpha=0."""
+def key_bg(img, key="green", tol=110):
+    """RGB-distance key against the given key color. Returns RGBA array with
+    background alpha=0. Some batches come back on magenta instead of the
+    requested green -- pass --key magenta for those instead of re-requesting."""
+    target = KEY_COLORS[key]
     rgb = np.array(img.convert("RGB"), dtype=np.int32)
-    dist = np.sqrt(((rgb - GREEN) ** 2).sum(axis=2))
+    dist = np.sqrt(((rgb - target) ** 2).sum(axis=2))
     bg = dist < tol
-    # also catch 'greenish' pixels: green channel dominates both others strongly
     r, g, b = rgb[..., 0], rgb[..., 1], rgb[..., 2]
-    greenish = (g > r + 60) & (g > b + 60)
-    bg |= greenish
+    if key == "green":
+        # also catch 'greenish' pixels: green channel dominates both others strongly
+        bg |= (g > r + 60) & (g > b + 60)
+    elif key == "magenta":
+        # also catch 'magenta-ish' pixels: red and blue both dominate green strongly
+        bg |= (r > g + 60) & (b > g + 60)
 
     out = np.dstack([rgb.astype(np.uint8), np.where(bg, 0, 255).astype(np.uint8)])
     return out, bg
 
 
-def despill(rgba):
-    """Clamp green channel on kept pixels so edges don't glow green."""
+def despill(rgba, key="green"):
+    """Clamp the key channel on kept pixels so edges don't glow the key color."""
     a = rgba[..., 3] > 0
     r = rgba[..., 0].astype(np.int16)
     g = rgba[..., 1].astype(np.int16)
     b = rgba[..., 2].astype(np.int16)
-    cap = np.maximum(r, b) + 12
-    newg = np.where(a & (g > cap), cap, g)
-    rgba[..., 1] = np.clip(newg, 0, 255).astype(np.uint8)
+    if key == "green":
+        cap = np.maximum(r, b) + 12
+        newg = np.where(a & (g > cap), cap, g)
+        rgba[..., 1] = np.clip(newg, 0, 255).astype(np.uint8)
+    elif key == "magenta":
+        # despill red and blue toward green's level so no magenta fringe survives
+        cap = g + 12
+        newr = np.where(a & (r > cap), cap, r)
+        newb = np.where(a & (b > cap), cap, b)
+        rgba[..., 0] = np.clip(newr, 0, 255).astype(np.uint8)
+        rgba[..., 2] = np.clip(newb, 0, 255).astype(np.uint8)
     return rgba
 
 
@@ -107,14 +124,16 @@ def main():
     ap.add_argument("sheet")
     ap.add_argument("--out", required=True)
     ap.add_argument("--prefix", default="item")
+    ap.add_argument("--key", choices=sorted(KEY_COLORS), default="green",
+                     help="background color to key out (default green; use magenta for batches that came back on #FF00FF)")
     ap.add_argument("--tol", type=int, default=110)
     ap.add_argument("--min-px", type=int, default=400)
     ap.add_argument("--tile", action="store_true", help="run seamless/vignette checks")
     args = ap.parse_args()
 
     img = Image.open(args.sheet)
-    rgba, bg = key_green(img, args.tol)
-    rgba = despill(rgba)
+    rgba, bg = key_bg(img, args.key, args.tol)
+    rgba = despill(rgba, args.key)
     obj = ~bg
 
     boxes = label_components(obj, args.min_px)

@@ -1,0 +1,513 @@
+{
+  "_readme": "v3 environment assets, generated from assets_src/raw_sheets via tools/key_and_slice.py. Swap art by replacing the PNG and updating footprint/anchorY here. anchorY is the fraction (0-1) down the sprite where its base touches the floor, used for Y-sorting against the chef on layer 40/50 per docs/asset-bible.html section 02.",
+  "assets": {
+    "floor_checkerboard": {
+      "file": "assets/env_v3/floor/checkerboard.png",
+      "category": "floor",
+      "layer": 0,
+      "w": 136,
+      "h": 136,
+      "anchorY": 1.0,
+      "note": "seamless texture, tile across the whole floor zone, not a placed object"
+    },
+    "floor_cream_tile": {
+      "file": "assets/env_v3/floor/cream_tile.png",
+      "category": "floor",
+      "layer": 0,
+      "w": 453,
+      "h": 368,
+      "anchorY": 1.0,
+      "note": "seamless texture, tile across the whole floor zone, not a placed object"
+    },
+    "floor_oak_plank": {
+      "file": "assets/env_v3/floor/oak_plank.png",
+      "category": "floor",
+      "layer": 0,
+      "w": 453,
+      "h": 368,
+      "anchorY": 1.0,
+      "note": "seamless texture, tile across the whole floor zone, not a placed object"
+    },
+    "floor_stone_flagstone": {
+      "file": "assets/env_v3/floor/stone_flagstone.png",
+      "category": "floor",
+      "layer": 0,
+      "w": 454,
+      "h": 368,
+      "anchorY": 1.0,
+      "note": "seamless texture, tile across the whole floor zone, not a placed object"
+    },
+    "floor_terracotta_tile": {
+      "file": "assets/env_v3/floor/terracotta_tile.png",
+      "category": "floor",
+      "layer": 0,
+      "w": 453,
+      "h": 368,
+      "anchorY": 1.0,
+      "note": "seamless texture, tile across the whole floor zone, not a placed object"
+    },
+    "floor_walnut_plank": {
+      "file": "assets/env_v3/floor/walnut_plank.png",
+      "category": "floor",
+      "layer": 0,
+      "w": 453,
+      "h": 368,
+      "anchorY": 1.0,
+      "note": "seamless texture, tile across the whole floor zone, not a placed object"
+    },
+    "wall_banister_run_flat": {
+      "file": "assets/env_v3/wall/banister_run_flat.png",
+      "category": "wall",
+      "layer": 10,
+      "w": 635,
+      "h": 123,
+      "anchorY": 1.0,
+      "note": "back wall trim -- banister_run_flat is a flat decorative rail, NOT angled to a staircase; still need a real diagonal banister sheet"
+    },
+    "wall_corner_a": {
+      "file": "assets/env_v3/wall/corner_a.png",
+      "category": "wall",
+      "layer": 10,
+      "w": 210,
+      "h": 276,
+      "anchorY": 1.0,
+      "note": "back wall trim -- banister_run_flat is a flat decorative rail, NOT angled to a staircase; still need a real diagonal banister sheet"
+    },
+    "wall_corner_b": {
+      "file": "assets/env_v3/wall/corner_b.png",
+      "category": "wall",
+      "layer": 10,
+      "w": 201,
+      "h": 265,
+      "anchorY": 1.0,
+      "note": "back wall trim -- banister_run_flat is a flat decorative rail, NOT angled to a staircase; still need a real diagonal banister sheet"
+    },
+    "wall_crown_moulding": {
+      "file": "assets/env_v3/wall/crown_moulding.png",
+      "category": "wall",
+      "layer": 10,
+      "w": 210,
+      "h": 82,
+      "anchorY": 1.0,
+      "note": "back wall trim -- banister_run_flat is a flat decorative rail, NOT angled to a staircase; still need a real diagonal banister sheet"
+    },
+    "wall_skirting_board": {
+      "file": "assets/env_v3/wall/skirting_board.png",
+      "category": "wall",
+      "layer": 10,
+      "w": 209,
+      "h": 60,
+      "anchorY": 1.0,
+      "note": "back wall trim -- banister_run_flat is a flat decorative rail, NOT angled to a staircase; still need a real diagonal banister sheet"
+    },
+    "fixture_chalkboard_menu": {
+      "file": "assets/env_v3/fixture/chalkboard_menu.png",
+      "category": "fixture",
+      "layer": 20,
+      "w": 149,
+      "h": 214,
+      "anchorY": 1.0
+    },
+    "fixture_door_closed": {
+      "file": "assets/env_v3/fixture/door_closed.png",
+      "category": "fixture",
+      "layer": 20,
+      "w": 169,
+      "h": 316,
+      "anchorY": 1.0
+    },
+    "fixture_door_open": {
+      "file": "assets/env_v3/fixture/door_open.png",
+      "category": "fixture",
+      "layer": 20,
+      "w": 174,
+      "h": 352,
+      "anchorY": 1.0
+    },
+    "fixture_pantry_door": {
+      "file": "assets/env_v3/fixture/pantry_door.png",
+      "category": "fixture",
+      "layer": 20,
+      "w": 158,
+      "h": 353,
+      "anchorY": 1.0
+    },
+    "fixture_stairs": {
+      "file": "assets/env_v3/fixture/stairs.png",
+      "category": "fixture",
+      "layer": 20,
+      "w": 184,
+      "h": 348,
+      "anchorY": 1.0
+    },
+    "fixture_wall_clock": {
+      "file": "assets/env_v3/fixture/wall_clock.png",
+      "category": "fixture",
+      "layer": 20,
+      "w": 112,
+      "h": 174,
+      "anchorY": 1.0
+    },
+    "fixture_window_herbs": {
+      "file": "assets/env_v3/fixture/window_herbs.png",
+      "category": "fixture",
+      "layer": 20,
+      "w": 154,
+      "h": 215,
+      "anchorY": 1.0
+    },
+    "fixture_window_plain": {
+      "file": "assets/env_v3/fixture/window_plain.png",
+      "category": "fixture",
+      "layer": 20,
+      "w": 154,
+      "h": 215,
+      "anchorY": 1.0
+    },
+    "counter_cabinet_book": {
+      "file": "assets/env_v3/counter/cabinet_book.png",
+      "category": "counter",
+      "layer": 40,
+      "w": 273,
+      "h": 216,
+      "anchorY": 0.9
+    },
+    "counter_cabinet_dishes": {
+      "file": "assets/env_v3/counter/cabinet_dishes.png",
+      "category": "counter",
+      "layer": 40,
+      "w": 191,
+      "h": 196,
+      "anchorY": 0.9
+    },
+    "counter_drawer_unit": {
+      "file": "assets/env_v3/counter/drawer_unit.png",
+      "category": "counter",
+      "layer": 40,
+      "w": 165,
+      "h": 217,
+      "anchorY": 0.9
+    },
+    "counter_sink_unit": {
+      "file": "assets/env_v3/counter/sink_unit.png",
+      "category": "counter",
+      "layer": 40,
+      "w": 308,
+      "h": 238,
+      "anchorY": 0.9
+    },
+    "counter_stove": {
+      "file": "assets/env_v3/counter/stove.png",
+      "category": "counter",
+      "layer": 40,
+      "w": 177,
+      "h": 226,
+      "anchorY": 0.9
+    },
+    "counter_undercounter_fridge": {
+      "file": "assets/env_v3/counter/undercounter_fridge.png",
+      "category": "counter",
+      "layer": 40,
+      "w": 252,
+      "h": 220,
+      "anchorY": 0.9
+    },
+    "appliance_cabinet_book": {
+      "file": "assets/env_v3/appliance/cabinet_book.png",
+      "category": "appliance",
+      "layer": 40,
+      "w": 270,
+      "h": 218,
+      "anchorY": 0.9
+    },
+    "appliance_cabinet_dishes": {
+      "file": "assets/env_v3/appliance/cabinet_dishes.png",
+      "category": "appliance",
+      "layer": 40,
+      "w": 227,
+      "h": 219,
+      "anchorY": 0.9
+    },
+    "appliance_farmhouse_sink": {
+      "file": "assets/env_v3/appliance/farmhouse_sink.png",
+      "category": "appliance",
+      "layer": 40,
+      "w": 184,
+      "h": 267,
+      "anchorY": 0.9
+    },
+    "appliance_gas_stove_oven": {
+      "file": "assets/env_v3/appliance/gas_stove_oven.png",
+      "category": "appliance",
+      "layer": 40,
+      "w": 180,
+      "h": 243,
+      "anchorY": 0.9
+    },
+    "appliance_spice_cart": {
+      "file": "assets/env_v3/appliance/spice_cart.png",
+      "category": "appliance",
+      "layer": 40,
+      "w": 150,
+      "h": 221,
+      "anchorY": 0.9
+    },
+    "appliance_tall_fridge": {
+      "file": "assets/env_v3/appliance/tall_fridge.png",
+      "category": "appliance",
+      "layer": 40,
+      "w": 285,
+      "h": 238,
+      "anchorY": 0.9
+    },
+    "nook_item_00": {
+      "file": "assets/env_v3/nook/item_00.png",
+      "category": "nook",
+      "layer": 40,
+      "w": 216,
+      "h": 225,
+      "anchorY": 0.9
+    },
+    "nook_item_01": {
+      "file": "assets/env_v3/nook/item_01.png",
+      "category": "nook",
+      "layer": 40,
+      "w": 174,
+      "h": 225,
+      "anchorY": 0.9
+    },
+    "nook_item_02": {
+      "file": "assets/env_v3/nook/item_02.png",
+      "category": "nook",
+      "layer": 40,
+      "w": 172,
+      "h": 192,
+      "anchorY": 0.9
+    },
+    "nook_item_03": {
+      "file": "assets/env_v3/nook/item_03.png",
+      "category": "nook",
+      "layer": 40,
+      "w": 173,
+      "h": 199,
+      "anchorY": 0.9
+    },
+    "nook_item_04": {
+      "file": "assets/env_v3/nook/item_04.png",
+      "category": "nook",
+      "layer": 40,
+      "w": 94,
+      "h": 248,
+      "anchorY": 0.9
+    },
+    "nook_item_05": {
+      "file": "assets/env_v3/nook/item_05.png",
+      "category": "nook",
+      "layer": 40,
+      "w": 129,
+      "h": 253,
+      "anchorY": 0.9
+    },
+    "nook_item_06": {
+      "file": "assets/env_v3/nook/item_06.png",
+      "category": "nook",
+      "layer": 40,
+      "w": 81,
+      "h": 144,
+      "anchorY": 0.9
+    },
+    "nook_item_07": {
+      "file": "assets/env_v3/nook/item_07.png",
+      "category": "nook",
+      "layer": 40,
+      "w": 147,
+      "h": 134,
+      "anchorY": 0.9
+    },
+    "nook_item_08": {
+      "file": "assets/env_v3/nook/item_08.png",
+      "category": "nook",
+      "layer": 40,
+      "w": 146,
+      "h": 186,
+      "anchorY": 0.9
+    },
+    "nook_item_09": {
+      "file": "assets/env_v3/nook/item_09.png",
+      "category": "nook",
+      "layer": 40,
+      "w": 138,
+      "h": 187,
+      "anchorY": 0.9
+    },
+    "nook_item_10": {
+      "file": "assets/env_v3/nook/item_10.png",
+      "category": "nook",
+      "layer": 40,
+      "w": 164,
+      "h": 179,
+      "anchorY": 0.9
+    },
+    "nook_item_11": {
+      "file": "assets/env_v3/nook/item_11.png",
+      "category": "nook",
+      "layer": 40,
+      "w": 160,
+      "h": 186,
+      "anchorY": 0.9
+    },
+    "prop_item_00": {
+      "file": "assets/env_v3/prop/item_00.png",
+      "category": "prop",
+      "layer": 60,
+      "w": 186,
+      "h": 171,
+      "anchorY": 1.0,
+      "note": "drawn on top of a host counter/table, not floor-anchored"
+    },
+    "prop_item_01": {
+      "file": "assets/env_v3/prop/item_01.png",
+      "category": "prop",
+      "layer": 60,
+      "w": 185,
+      "h": 171,
+      "anchorY": 1.0,
+      "note": "drawn on top of a host counter/table, not floor-anchored"
+    },
+    "prop_item_02": {
+      "file": "assets/env_v3/prop/item_02.png",
+      "category": "prop",
+      "layer": 60,
+      "w": 180,
+      "h": 131,
+      "anchorY": 1.0,
+      "note": "drawn on top of a host counter/table, not floor-anchored"
+    },
+    "prop_item_03": {
+      "file": "assets/env_v3/prop/item_03.png",
+      "category": "prop",
+      "layer": 60,
+      "w": 200,
+      "h": 95,
+      "anchorY": 1.0,
+      "note": "drawn on top of a host counter/table, not floor-anchored"
+    },
+    "prop_item_04": {
+      "file": "assets/env_v3/prop/item_04.png",
+      "category": "prop",
+      "layer": 60,
+      "w": 138,
+      "h": 122,
+      "anchorY": 1.0,
+      "note": "drawn on top of a host counter/table, not floor-anchored"
+    },
+    "prop_item_05": {
+      "file": "assets/env_v3/prop/item_05.png",
+      "category": "prop",
+      "layer": 60,
+      "w": 193,
+      "h": 123,
+      "anchorY": 1.0,
+      "note": "drawn on top of a host counter/table, not floor-anchored"
+    },
+    "prop_item_06": {
+      "file": "assets/env_v3/prop/item_06.png",
+      "category": "prop",
+      "layer": 60,
+      "w": 194,
+      "h": 151,
+      "anchorY": 1.0,
+      "note": "drawn on top of a host counter/table, not floor-anchored"
+    },
+    "prop_item_07": {
+      "file": "assets/env_v3/prop/item_07.png",
+      "category": "prop",
+      "layer": 60,
+      "w": 66,
+      "h": 146,
+      "anchorY": 1.0,
+      "note": "drawn on top of a host counter/table, not floor-anchored"
+    },
+    "prop_item_08": {
+      "file": "assets/env_v3/prop/item_08.png",
+      "category": "prop",
+      "layer": 60,
+      "w": 61,
+      "h": 67,
+      "anchorY": 1.0,
+      "note": "drawn on top of a host counter/table, not floor-anchored"
+    },
+    "prop_item_09": {
+      "file": "assets/env_v3/prop/item_09.png",
+      "category": "prop",
+      "layer": 60,
+      "w": 101,
+      "h": 150,
+      "anchorY": 1.0,
+      "note": "drawn on top of a host counter/table, not floor-anchored"
+    },
+    "prop_item_10": {
+      "file": "assets/env_v3/prop/item_10.png",
+      "category": "prop",
+      "layer": 60,
+      "w": 150,
+      "h": 125,
+      "anchorY": 1.0,
+      "note": "drawn on top of a host counter/table, not floor-anchored"
+    },
+    "prop_item_11": {
+      "file": "assets/env_v3/prop/item_11.png",
+      "category": "prop",
+      "layer": 60,
+      "w": 181,
+      "h": 136,
+      "anchorY": 1.0,
+      "note": "drawn on top of a host counter/table, not floor-anchored"
+    },
+    "prop_item_12": {
+      "file": "assets/env_v3/prop/item_12.png",
+      "category": "prop",
+      "layer": 60,
+      "w": 177,
+      "h": 140,
+      "anchorY": 1.0,
+      "note": "drawn on top of a host counter/table, not floor-anchored"
+    },
+    "prop_item_13": {
+      "file": "assets/env_v3/prop/item_13.png",
+      "category": "prop",
+      "layer": 60,
+      "w": 128,
+      "h": 155,
+      "anchorY": 1.0,
+      "note": "drawn on top of a host counter/table, not floor-anchored"
+    },
+    "prop_item_14": {
+      "file": "assets/env_v3/prop/item_14.png",
+      "category": "prop",
+      "layer": 60,
+      "w": 149,
+      "h": 148,
+      "anchorY": 1.0,
+      "note": "drawn on top of a host counter/table, not floor-anchored"
+    },
+    "prop_item_15": {
+      "file": "assets/env_v3/prop/item_15.png",
+      "category": "prop",
+      "layer": 60,
+      "w": 91,
+      "h": 147,
+      "anchorY": 1.0,
+      "note": "drawn on top of a host counter/table, not floor-anchored"
+    },
+    "prop_item_16": {
+      "file": "assets/env_v3/prop/item_16.png",
+      "category": "prop",
+      "layer": 60,
+      "w": 140,
+      "h": 159,
+      "anchorY": 1.0,
+      "note": "drawn on top of a host counter/table, not floor-anchored"
+    }
+  }
+}
