@@ -1,0 +1,635 @@
+<title>Focus Kitchen Asset Bible</title>
+<style>
+  :root {
+    --ground:      #f6efe4;
+    --panel:       #fffaf2;
+    --panel-2:     #efe4d3;
+    --ink:         #2a1d12;
+    --ink-soft:    #6b5744;
+    --ink-faint:   #97836c;
+    --rule:        #ddcdb6;
+    --accent:      #b5601f;
+    --accent-soft: #f0d9c2;
+    --key:         #2f7d4f;
+    --key-soft:    #dcefe0;
+    --warn:        #a8401f;
+    --warn-soft:   #f6ddd2;
+    --term-bg:     #241a12;
+    --term-ink:    #f0e2cd;
+    --term-dim:    #a08c72;
+    --term-accent: #e29a5a;
+    --shadow: 0 1px 2px rgba(42,29,18,.06), 0 8px 24px -12px rgba(42,29,18,.18);
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  :root:not([data-theme="light"]) { }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:      #191309;
+      --panel:       #221a10;
+      --panel-2:     #2c2216;
+      --ink:         #f4e9d8;
+      --ink-soft:    #c2ae94;
+      --ink-faint:   #92806a;
+      --rule:        #3b2e1f;
+      --accent:      #e0954f;
+      --accent-soft: #3a2716;
+      --key:         #77c48d;
+      --key-soft:    #1d2f22;
+      --warn:        #e08056;
+      --warn-soft:   #3a2015;
+      --term-bg:     #120d07;
+      --term-ink:    #f0e2cd;
+      --term-dim:    #8d7a62;
+      --term-accent: #e29a5a;
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.7);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground:      #191309;
+    --panel:       #221a10;
+    --panel-2:     #2c2216;
+    --ink:         #f4e9d8;
+    --ink-soft:    #c2ae94;
+    --ink-faint:   #92806a;
+    --rule:        #3b2e1f;
+    --accent:      #e0954f;
+    --accent-soft: #3a2716;
+    --key:         #77c48d;
+    --key-soft:    #1d2f22;
+    --warn:        #e08056;
+    --warn-soft:   #3a2015;
+    --term-bg:     #120d07;
+    --term-ink:    #f0e2cd;
+    --term-dim:    #8d7a62;
+    --term-accent: #e29a5a;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.7);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 940px; margin: 0 auto; padding: 0 24px 96px; }
+
+  /* ---- masthead ---- */
+  .mast {
+    border-bottom: 3px solid var(--ink);
+    padding: 56px 0 20px;
+    margin-bottom: 40px;
+  }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 14px;
+  }
+  h1 {
+    font-family: var(--mono);
+    font-size: clamp(30px, 6vw, 52px);
+    line-height: 1.02;
+    letter-spacing: -.02em;
+    font-weight: 700;
+    margin: 0 0 16px;
+    text-wrap: balance;
+  }
+  .standfirst {
+    font-size: 17px; color: var(--ink-soft);
+    max-width: 62ch; margin: 0;
+  }
+  .mast-meta {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px;
+    font-family: var(--mono); font-size: 11px;
+  }
+  .chip {
+    background: var(--panel-2); border: 1px solid var(--rule);
+    padding: 4px 10px; border-radius: 100px; color: var(--ink-soft);
+    letter-spacing: .04em;
+  }
+  .chip b { color: var(--ink); font-weight: 600; }
+
+  /* ---- sections ---- */
+  section { margin: 0 0 56px; scroll-margin-top: 20px; }
+  h2 {
+    font-family: var(--mono);
+    font-size: 13px; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 6px; padding-bottom: 10px;
+    border-bottom: 1px solid var(--rule);
+    display: flex; align-items: baseline; gap: 10px;
+  }
+  h2 .num { color: var(--ink-faint); font-weight: 400; }
+  .lede { font-size: 16px; color: var(--ink-soft); margin: 16px 0 24px; max-width: 66ch; }
+  h3 {
+    font-size: 17px; margin: 32px 0 8px; letter-spacing: -.01em;
+  }
+  p { margin: 0 0 14px; max-width: 68ch; }
+  a { color: var(--accent); }
+
+  /* ---- layer stack diagram ---- */
+  .stack { display: flex; flex-direction: column-reverse; gap: 5px; margin: 24px 0; }
+  .layer {
+    display: grid; grid-template-columns: 46px 1fr auto; align-items: center; gap: 14px;
+    background: var(--panel); border: 1px solid var(--rule);
+    border-left: 4px solid var(--accent);
+    border-radius: 7px; padding: 11px 14px; box-shadow: var(--shadow);
+  }
+  .layer .z {
+    font-family: var(--mono); font-size: 12px; font-weight: 700;
+    color: var(--accent); background: var(--accent-soft);
+    border-radius: 5px; text-align: center; padding: 3px 0;
+  }
+  .layer .nm { font-weight: 650; font-size: 14.5px; }
+  .layer .ds { font-size: 13px; color: var(--ink-soft); }
+  .layer .tag {
+    font-family: var(--mono); font-size: 10.5px; color: var(--ink-faint);
+    letter-spacing: .04em; white-space: nowrap;
+  }
+  .layer.ui { border-left-color: var(--key); }
+  .layer.ui .z { color: var(--key); background: var(--key-soft); }
+  .layer.sorted { border-left-color: var(--warn); }
+  .layer.sorted .z { color: var(--warn); background: var(--warn-soft); }
+
+  /* ---- tables ---- */
+  .tw { overflow-x: auto; margin: 20px 0; border: 1px solid var(--rule); border-radius: 8px; background: var(--panel); }
+  table { border-collapse: collapse; width: 100%; font-size: 13.5px; min-width: 560px; }
+  th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  th {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--ink-faint); font-weight: 600;
+    background: var(--panel-2);
+  }
+  tr:last-child td { border-bottom: none; }
+  td code, .ic {
+    font-family: var(--mono); font-size: 12.5px;
+    background: var(--panel-2); padding: 1.5px 6px; border-radius: 4px;
+    color: var(--ink); white-space: nowrap;
+  }
+  .num-col { font-variant-numeric: tabular-nums; }
+
+  /* ---- prompt cards ---- */
+  .sheet {
+    background: var(--panel); border: 1px solid var(--rule);
+    border-radius: 10px; margin: 0 0 18px; overflow: hidden; box-shadow: var(--shadow);
+  }
+  .sheet-hd {
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    padding: 13px 16px; background: var(--panel-2);
+    border-bottom: 1px solid var(--rule);
+  }
+  .sheet-id {
+    font-family: var(--mono); font-size: 11px; font-weight: 700;
+    color: var(--accent); letter-spacing: .1em;
+  }
+  .sheet-nm { font-weight: 650; font-size: 15px; flex: 1; min-width: 180px; }
+  .sheet-sz { font-family: var(--mono); font-size: 11px; color: var(--ink-faint); }
+  .term {
+    position: relative; background: var(--term-bg); color: var(--term-ink);
+    font-family: var(--mono); font-size: 12.5px; line-height: 1.62;
+    padding: 16px 16px 16px; margin: 0;
+    white-space: pre-wrap; word-break: break-word;
+    max-height: 300px; overflow-y: auto;
+  }
+  .copy {
+    position: absolute; top: 10px; right: 10px;
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em;
+    text-transform: uppercase; cursor: pointer;
+    background: var(--term-accent); color: #201509; border: none;
+    padding: 6px 11px; border-radius: 5px; font-weight: 700;
+    transition: transform .12s ease, opacity .12s ease;
+  }
+  .copy:hover { transform: translateY(-1px); }
+  .copy:focus-visible { outline: 2px solid var(--term-ink); outline-offset: 2px; }
+  .copy.done { background: var(--key); color: #fff; }
+
+  /* ---- callouts ---- */
+  .call {
+    border-left: 4px solid var(--key); background: var(--key-soft);
+    padding: 14px 16px; border-radius: 0 8px 8px 0; margin: 20px 0;
+    font-size: 14.5px;
+  }
+  .call.warn { border-left-color: var(--warn); background: var(--warn-soft); }
+  .call b { display: block; margin-bottom: 3px; font-size: 13px; letter-spacing: .02em; }
+  .call p { margin: 0; max-width: none; }
+
+  /* ---- steps ---- */
+  ol.steps { counter-reset: s; list-style: none; padding: 0; margin: 24px 0; }
+  ol.steps > li {
+    counter-increment: s; position: relative; padding: 0 0 20px 46px;
+    border-left: 1px dashed var(--rule); margin-left: 14px;
+  }
+  ol.steps > li:last-child { border-left-color: transparent; padding-bottom: 0; }
+  ol.steps > li::before {
+    content: counter(s, decimal-leading-zero);
+    position: absolute; left: -14px; top: 0;
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--accent); color: var(--ground);
+    font-family: var(--mono); font-size: 11px; font-weight: 700;
+    display: grid; place-items: center;
+  }
+  ol.steps h4 { margin: 3px 0 5px; font-size: 15px; }
+  ol.steps p { margin: 0; font-size: 14px; color: var(--ink-soft); }
+
+  ul.tight { margin: 12px 0; padding-left: 20px; }
+  ul.tight li { margin-bottom: 7px; font-size: 14.5px; }
+
+  /* ---- room map ---- */
+  .map {
+    border: 1px solid var(--rule); border-radius: 10px; overflow: hidden;
+    background: var(--panel); box-shadow: var(--shadow); margin: 22px 0;
+  }
+  .map svg { display: block; width: 100%; height: auto; }
+  .map-cap {
+    font-size: 12.5px; color: var(--ink-soft); padding: 11px 15px;
+    border-top: 1px solid var(--rule); background: var(--panel-2);
+  }
+  .footer {
+    border-top: 3px solid var(--ink); padding-top: 20px; margin-top: 20px;
+    font-size: 14px; color: var(--ink-soft);
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+
+<div class="wrap">
+
+<header class="mast">
+  <p class="eyebrow">Focus Kitchen · Production Bible</p>
+  <h1>Focus Kitchen<br>Asset Bible</h1>
+  <p class="standfirst">Everything needed to generate, key, slice, and wire the v3 environment — a layering model that keeps overlaps correct, hard specs so every sheet matches, and ten ready-to-paste prompts for Nano Banana.</p>
+  <div class="mast-meta">
+    <span class="chip">Base tile <b>32 × 32 px</b></span>
+    <span class="chip">Perspective <b>3/4 top-down</b></span>
+    <span class="chip">Key color <b>#00FF00</b></span>
+    <span class="chip">Sheets <b>10</b></span>
+  </div>
+</header>
+
+<section id="stage">
+  <h2><span class="num">01</span> The stage</h2>
+  <p class="lede">Your reference splits cleanly into two playable zones inside a fixed ingredient frame. Locking these coordinates now means every asset is generated to fit a known slot instead of being resized later.</p>
+
+  <div class="map">
+    <svg viewBox="0 0 800 440" role="img" aria-label="Room map: pantry wall along the top, open kitchen floor below, ingredient border around the outside">
+      <rect x="0" y="0" width="800" height="440" fill="#3a2a1c"/>
+      <rect x="8" y="8" width="784" height="424" fill="#54402c"/>
+      <text x="400" y="30" text-anchor="middle" fill="#e8d5b8" font-family="ui-monospace,monospace" font-size="13" letter-spacing="2">INGREDIENT BORDER — UI FRAME (not walkable)</text>
+      <rect x="54" y="44" width="692" height="352" fill="#e8cfa8"/>
+      <rect x="54" y="44" width="692" height="118" fill="#6b4a2f"/>
+      <text x="70" y="70" fill="#f3e2c8" font-family="ui-monospace,monospace" font-size="13" font-weight="700">ZONE A · PANTRY WALL</text>
+      <text x="70" y="90" fill="#d8bf9c" font-family="ui-monospace,monospace" font-size="11">fridge · shelving · jars · window · door · bookcase</text>
+      <text x="70" y="110" fill="#d8bf9c" font-family="ui-monospace,monospace" font-size="11">back row — never occluded by the chef</text>
+      <rect x="54" y="162" width="692" height="4" fill="#8a6440"/>
+      <text x="70" y="200" fill="#5d4227" font-family="ui-monospace,monospace" font-size="13" font-weight="700">ZONE B · KITCHEN FLOOR</text>
+      <text x="70" y="220" fill="#7d5c39" font-family="ui-monospace,monospace" font-size="11">walkable — chef Y-sorts against every object here</text>
+      <rect x="360" y="250" width="330" height="70" rx="4" fill="#9a9ea6"/>
+      <rect x="360" y="250" width="120" height="70" rx="4" fill="#8b5e34"/>
+      <text x="378" y="292" fill="#f3e2c8" font-family="ui-monospace,monospace" font-size="11">ISLAND · prep → sink → stove</text>
+      <rect x="100" y="285" width="86" height="66" rx="8" fill="#b4794a"/>
+      <text x="104" y="372" fill="#5d4227" font-family="ui-monospace,monospace" font-size="11">NOOK</text>
+      <circle cx="228" cy="330" r="20" fill="#c89a68"/>
+      <rect x="286" y="250" width="52" height="72" rx="3" fill="#8b5e34"/>
+      <text x="276" y="340" fill="#7d5c39" font-family="ui-monospace,monospace" font-size="10">CART</text>
+    </svg>
+    <p class="map-cap"><b>Zone A</b> is a fixed back wall — assets there sit flush and never need depth sorting. <b>Zone B</b> is open floor where the chef walks, so every object needs a defined footprint and anchor. The border is pure UI: it holds the 50 ingredient icons and is never walked on.</p>
+  </div>
+</section>
+
+<section id="layers">
+  <h2><span class="num">02</span> Layer stack</h2>
+  <p class="lede">Read bottom-up. This is the z-order the renderer will use — getting it right is what makes overlaps read correctly instead of the chef floating over a counter he should be standing behind.</p>
+
+  <div class="stack">
+    <div class="layer"><span class="z">00</span><span><span class="nm">Floor</span><br><span class="ds">Seamless tile fill, plus rugs</span></span><span class="tag">sheet 01</span></div>
+    <div class="layer"><span class="z">10</span><span><span class="nm">Wall</span><br><span class="ds">Back wall, wainscot, skirting, corners</span></span><span class="tag">sheet 02</span></div>
+    <div class="layer"><span class="z">20</span><span><span class="nm">Wall fixtures</span><br><span class="ds">Window, door, stairs, hanging shelves</span></span><span class="tag">sheet 03</span></div>
+    <div class="layer"><span class="z">30</span><span><span class="nm">Back furniture</span><br><span class="ds">Fridge, pantry shelving, bookcase — flush to wall</span></span><span class="tag">sheet 04</span></div>
+    <div class="layer sorted"><span class="z">40</span><span><span class="nm">Floor furniture</span><br><span class="ds">Island, counters, cart, armchair, table</span></span><span class="tag">sheets 05–07</span></div>
+    <div class="layer sorted"><span class="z">50</span><span><span class="nm">Chef</span><br><span class="ds">Y-sorted against layer 40 by foot position</span></span><span class="tag">character</span></div>
+    <div class="layer"><span class="z">60</span><span><span class="nm">Surface props</span><br><span class="ds">Pots, board, books, teacup — drawn on top of their host</span></span><span class="tag">sheet 08</span></div>
+    <div class="layer"><span class="z">70</span><span><span class="nm">FX overlay</span><br><span class="ds">Steam, sparkle, lamp glow, contact shadows</span></span><span class="tag">sheet 10</span></div>
+    <div class="layer ui"><span class="z">80</span><span><span class="nm">Border pantry</span><br><span class="ds">50 ingredient icons + walnut frame</span></span><span class="tag">sheet 09</span></div>
+    <div class="layer ui"><span class="z">90</span><span><span class="nm">HUD</span><br><span class="ds">Timer ring, basket count, phase track</span></span><span class="tag">CSS</span></div>
+  </div>
+
+  <div class="call">
+    <b>The one rule that matters</b>
+    <p>Layers 40 and 50 are the only ones that sort dynamically. Everything else is painted in fixed order. Each floor object therefore needs an <span class="ic">anchorY</span> — the screen row where its base touches the floor. Chef in front when <span class="ic">chef.anchorY &gt; object.anchorY</span>, behind otherwise.</p>
+  </div>
+</section>
+
+<section id="specs">
+  <h2><span class="num">03</span> Hard specs</h2>
+  <p class="lede">Every sheet obeys these, or pieces won't line up when composited. Give the model the same numbers each time.</p>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>Spec</th><th>Value</th><th>Why it matters</th></tr></thead>
+      <tbody>
+        <tr><td>Base tile</td><td class="num-col"><code>32 × 32 px</code></td><td>One floor square. All footprints are multiples of this.</td></tr>
+        <tr><td>Generate at</td><td class="num-col"><code>4× (128 px/tile)</code></td><td>Downscale with nearest-neighbour for crisp pixels.</td></tr>
+        <tr><td>Perspective</td><td><code>3/4 top-down</code></td><td>Front face + top surface both visible. No pure side profiles.</td></tr>
+        <tr><td>Light source</td><td><code>upper-left</code></td><td>Mismatched lighting is the #1 tell that assets came from different runs.</td></tr>
+        <tr><td>Background</td><td><code>#00FF00</code></td><td>Flat chroma green → clean alpha. Never ask for "transparent".</td></tr>
+        <tr><td>Counter unit</td><td class="num-col"><code>32 × 40 px</code></td><td>32 wide footprint, 8 px of front-face height above it.</td></tr>
+        <tr><td>Tall unit</td><td class="num-col"><code>32 × 64 px</code></td><td>Fridge, bookcase, shelving.</td></tr>
+        <tr><td>Ingredient icon</td><td class="num-col"><code>16 × 16 px</code></td><td>Border frame slots.</td></tr>
+        <tr><td>Chef</td><td class="num-col"><code>32 × 48 px</code></td><td>1 tile wide, 1.5 tall — matches your reference sheet.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="call warn">
+    <b>Do not ask for transparent backgrounds</b>
+    <p>Image models fake transparency with checkerboard pixels baked into the image, which is unusable. Flat green keys out perfectly and your chef sheet already proves the workflow. Also forbid drop shadows onto the green — they turn into dark halos after keying.</p>
+  </div>
+</section>
+
+<section id="pipeline">
+  <h2><span class="num">04</span> Pipeline</h2>
+  <p class="lede">From prompt to something the game actually loads. Steps 3–5 are scripted — send me the raw sheets and I'll run them.</p>
+
+  <ol class="steps">
+    <li><h4>Lock a style anchor</h4><p>Generate <b>Sheet 02 (walls &amp; floor)</b> first. Whichever result you like becomes the anchor image you attach to every later prompt — say "match the style, palette and lighting of the attached reference." This is what keeps ten sheets looking like one game.</p></li>
+    <li><h4>Generate one category per run</h4><p>Never ask for the whole kitchen at once. Models lose coherence past ~12 objects and start blending them. One sheet = one category = one prompt below.</p></li>
+    <li><h4>Key out the green</h4><p>Chroma-key <code>#00FF00</code> to alpha with a tolerance pass and a 1 px despill to remove green fringing from edges.</p></li>
+    <li><h4>Slice to individual PNGs</h4><p>Connected-component detection finds each object's true bounding box — the same method that produced the current tileset — then trims and writes one PNG per asset.</p></li>
+    <li><h4>Emit a manifest</h4><p>Each sheet writes a JSON entry with <code>id</code>, <code>file</code>, <code>footprint</code>, <code>anchorY</code>, and <code>layer</code>. The game reads only the manifest, so swapping art later never touches code.</p></li>
+  </ol>
+</section>
+
+<section id="prompts">
+  <h2><span class="num">05</span> The prompts</h2>
+  <p class="lede">Paste the style preamble first, then one sheet block. Attach your style anchor to every run after the first.</p>
+
+  <h3>Style preamble — prepend to all ten</h3>
+  <div class="sheet">
+    <div class="sheet-hd"><span class="sheet-id">PREAMBLE</span><span class="sheet-nm">Shared style block</span><span class="sheet-sz">use every time</span></div>
+    <pre class="term" id="p0"><button class="copy" data-t="p0">Copy</button>A 32-bit cozy pixel art game asset sheet, top-down 3/4 orthographic perspective, in the style of Stardew Valley and classic 16-bit JRPG interiors.
+
+STYLE RULES:
+- Warm rustic farmhouse kitchen theme.
+- Palette: walnut brown #4A2C11, warm oak #8B5E34, cream tile #F2E3D5, terracotta #B86536, brushed steel #8C969E, soft amber lamplight.
+- Single consistent light source from the upper left. Soft warm highlights, gentle cool shadows.
+- Crisp pixel edges, clean readable pixel clusters, no blur, no anti-aliasing haze, no gradients wider than a few pixels.
+- Every object drawn to the SAME scale, where one floor tile equals 32x32 pixels.
+- Objects must show BOTH their front face and their top surface (3/4 view). No pure side-on profiles, no flat overhead views.
+
+SHEET RULES:
+- BACKGROUND MUST BE PURE FLAT CHROMA GREEN #00FF00, completely uniform across the whole image.
+- Objects laid out in a clean grid with generous even spacing. Nothing overlapping, nothing touching.
+- NO drop shadows cast onto the green background.
+- NO text, NO labels, NO captions, NO numbers, NO watermarks, NO UI frames, NO borders.
+- Fill the canvas edge to edge with the grid of objects.</pre>
+  </div>
+
+  <div class="sheet">
+    <div class="sheet-hd"><span class="sheet-id">SHEET 01</span><span class="sheet-nm">Floors &amp; rugs</span><span class="sheet-sz">seamless · layer 00</span></div>
+    <pre class="term" id="p1"><button class="copy" data-t="p1">Copy</button>Generate a floor tile sheet containing 8 items in a 4x2 grid:
+
+1. Cream ceramic kitchen tile, warm off-white with subtle grout lines
+2. Terracotta clay floor tile, warm orange-brown
+3. Checkerboard tile, alternating cream and soft taupe
+4. Warm oak wood plank flooring, horizontal boards
+5. Dark walnut wood plank flooring
+6. Worn stone flagstone floor, grey-brown irregular slabs
+7. A small rectangular woven rug, warm red and cream stripes, with fringed ends
+8. A round braided rug, concentric warm brown and cream rings
+
+CRITICAL: items 1 through 6 must be PERFECTLY SEAMLESS AND TILEABLE — the left edge must continue into the right edge, and the top edge into the bottom edge, with no visible seam when repeated. Each tileable square is 32x32 pixels. Keep the pattern subtle and low contrast so it does not distract when tiled across a large floor. The two rugs are single objects, not tileable.</pre>
+  </div>
+
+  <div class="sheet">
+    <div class="sheet-hd"><span class="sheet-id">SHEET 02</span><span class="sheet-nm">Walls, wainscot &amp; trim</span><span class="sheet-sz">style anchor · layer 10</span></div>
+    <pre class="term" id="p2"><button class="copy" data-t="p2">Copy</button>Generate a wall construction sheet containing 10 items in a 5x2 grid:
+
+1. Warm wood plank wall section, vertical boards, 32 wide x 48 tall pixels, seamless left-to-right
+2. The same wall but with cream plaster upper half and wood wainscot lower half, seamless left-to-right
+3. Wall top trim / crown moulding strip, carved wood, seamless left-to-right
+4. Wall base skirting board strip, dark walnut, seamless left-to-right
+5. Inner corner piece, left side
+6. Inner corner piece, right side
+7. A decorative carved wood valance / spindle railing strip that hangs below the ceiling, seamless left-to-right
+8. A short wall segment with a wooden peg rail and two hanging cloths
+9. A plain cream plaster wall section, seamless left-to-right
+10. A wall section with faded floral wallpaper, muted rose and cream, seamless left-to-right
+
+The horizontal strips (items 1,2,3,4,7,9,10) must tile seamlessly when repeated side by side. Show a slight top surface edge on the trim pieces so they read as 3/4 perspective, not flat.</pre>
+  </div>
+
+  <div class="sheet">
+    <div class="sheet-hd"><span class="sheet-id">SHEET 03</span><span class="sheet-nm">Doors, windows &amp; stairs</span><span class="sheet-sz">layer 20</span></div>
+    <pre class="term" id="p3"><button class="copy" data-t="p3">Copy</button>Generate an architectural fixtures sheet containing 8 items in a 4x2 grid:
+
+1. A closed wooden door with a brass knob, warm oak, set in a carved frame, 32 wide x 64 tall pixels
+2. The same door but open, showing a dark doorway behind it
+3. A window with four panes and a wooden frame, glowing warm golden evening light coming through, with a small sill
+4. The same window but with three small potted herb plants sitting on the sill
+5. A wooden staircase going up, seen from the front in 3/4 view, warm oak treads with a railing
+6. A tall narrow pantry door with a small round window
+7. A wall clock, round face, dark wood case, hanging flat on the wall
+8. A framed chalkboard menu sign hanging on the wall, dark slate with a wooden frame, no readable text — just suggestive scribble marks
+
+These all mount flat against a back wall, so keep them front-facing with only a slight top edge of depth. The window light should look warm and inviting.</pre>
+  </div>
+
+  <div class="sheet">
+    <div class="sheet-hd"><span class="sheet-id">SHEET 04</span><span class="sheet-nm">Pantry storage</span><span class="sheet-sz">layer 30</span></div>
+    <pre class="term" id="p4"><button class="copy" data-t="p4">Copy</button>Generate a pantry storage furniture sheet containing 9 items in a 3x3 grid:
+
+1. A tall retro refrigerator, brushed steel with rounded corners and a chrome handle, 32 wide x 64 tall pixels
+2. A tall open pantry shelving unit filled with glass jars of preserves in amber, red and green
+3. A tall wooden bookcase filled with recipe books, warm leather spines in red, green and brown
+4. A medium wooden shelf unit holding stacked ceramic bowls and folded linens
+5. A wall-mounted spice rack with two rows of small labelled-looking spice jars (no readable text, just colour bands)
+6. A wooden dresser / sideboard with drawers and a cream stone top, with two large ceramic crocks on top
+7. A hanging wooden shelf with three glass bottles of oil and vinegar
+8. A small wooden crate stack, two crates, one holding potatoes and onions
+9. A tall wicker basket of bread loaves and rolls
+
+All of these stand flush against a back wall, so show the front face prominently with a small visible top surface. Rich warm wood tones with visible grain. Cluttered and cozy but readable at small size.</pre>
+  </div>
+
+  <div class="sheet">
+    <div class="sheet-hd"><span class="sheet-id">SHEET 05</span><span class="sheet-nm">Modular island &amp; counters</span><span class="sheet-sz">layer 40 · modular</span></div>
+    <pre class="term" id="p5"><button class="copy" data-t="p5">Copy</button>Generate a MODULAR kitchen counter sheet containing 9 pieces in a 3x3 grid. These pieces must connect seamlessly side by side to build a long kitchen island:
+
+1. Counter LEFT END CAP — cream stone top, warm wood cabinet base with a panelled door
+2. Counter MIDDLE SECTION — plain, cream stone top, wood cabinet base with two doors (must tile seamlessly left and right)
+3. Counter RIGHT END CAP — mirror of the left end cap
+4. Counter middle with a butcher-block wooden chopping top instead of stone
+5. Counter middle with three drawers instead of doors
+6. Counter middle with an open shelf underneath holding stacked plates
+7. Counter CORNER piece, turning 90 degrees
+8. A freestanding wooden kitchen cart on small wheels, two shelves holding bottles and jars
+9. A small square wooden prep table with a cream top
+
+CRITICAL: the counter tops must all sit at exactly the SAME height in the image so the pieces line up perfectly when placed side by side. Each counter unit is 32 pixels wide and about 40 pixels tall including the front face. Show the top surface and the front face clearly.</pre>
+  </div>
+
+  <div class="sheet">
+    <div class="sheet-hd"><span class="sheet-id">SHEET 06</span><span class="sheet-nm">Appliances</span><span class="sheet-sz">layer 40 · aligns to sheet 05</span></div>
+    <pre class="term" id="p6"><button class="copy" data-t="p6">Copy</button>Generate a kitchen appliance sheet containing 8 items in a 4x2 grid. These must match the height and style of a modular counter run so they can slot into it:
+
+1. A gas stove range top with four black burners set into a steel surface, with front control knobs and an oven door below
+2. The same stove but with a burner lit, small orange flame visible
+3. A deep farmhouse apron sink in brushed steel with a tall curved chrome tap
+4. A double basin sink set into a cream counter top
+5. A built-in oven with a glass door showing a warm glow inside
+6. A dishwasher front panel in brushed steel with a control strip
+7. An extractor hood, steel trapezoid shape, meant to mount on a wall above a stove
+8. A vintage cast iron cooking stove, black with brass trim and a small chimney pipe
+
+CRITICAL: items 1 through 6 must be exactly the same total height as a standard counter unit (about 40 pixels tall, 32 or 64 wide) with their top surface at the same level, so they slot into a counter run seamlessly. Brushed steel should read clearly against warm wood.</pre>
+  </div>
+
+  <div class="sheet">
+    <div class="sheet-hd"><span class="sheet-id">SHEET 07</span><span class="sheet-nm">Cozy reading nook</span><span class="sheet-sz">layer 40</span></div>
+    <pre class="term" id="p7"><button class="copy" data-t="p7">Copy</button>Generate a cozy furniture sheet containing 8 items in a 4x2 grid:
+
+1. A plush overstuffed armchair in warm tan leather, seen in 3/4 view facing right, with a small embroidered cushion
+2. The same armchair facing left
+3. A small round wooden side table with three legs
+4. The same round table with an open book and a steaming teacup on top
+5. A tall standing floor lamp with a warm amber fabric shade, glowing softly
+6. A large potted fiddle-leaf plant in a terracotta pot
+7. A small potted herb plant in a clay pot
+8. A wooden footstool with a woven cushion top
+
+These are freestanding floor objects seen from 3/4 above, so show the top and the front, and make the base clearly readable so it looks planted on the floor. Warm, soft, inviting — this is the relaxing corner of the room.</pre>
+  </div>
+
+  <div class="sheet">
+    <div class="sheet-hd"><span class="sheet-id">SHEET 08</span><span class="sheet-nm">Surface props</span><span class="sheet-sz">layer 60 · small</span></div>
+    <pre class="term" id="p8"><button class="copy" data-t="p8">Copy</button>Generate a small kitchen prop sheet containing 16 items in a 4x4 grid. Each object is small, roughly 16x16 pixels, designed to sit ON TOP of a counter:
+
+1. A large steel cooking pot with a lid
+2. The same pot without a lid, filled with orange stew
+3. A cast iron frying pan seen from above at an angle
+4. A wooden chopping board with a knife and chopped green herbs
+5. A stack of three ceramic plates
+6. An open recipe book
+7. A ceramic teapot and one cup
+8. A wooden pepper grinder and a small salt cellar
+9. A glass jar of golden honey
+10. A bowl of mixed fruit
+11. A rolling pin and a mound of dough
+12. A woven basket with a cloth in it
+13. A mortar and pestle
+14. A bundle of dried herbs tied with string
+15. A small chalk-labelled tin canister
+16. A pitcher of milk
+
+Keep every one of these SMALL and simple with strong readable silhouettes, since they will be displayed at roughly 16 pixels. Seen from 3/4 above so the top of each object is visible.</pre>
+  </div>
+
+  <div class="sheet">
+    <div class="sheet-hd"><span class="sheet-id">SHEET 09</span><span class="sheet-nm">Ingredient border icons</span><span class="sheet-sz">layer 80 · 16 px</span></div>
+    <pre class="term" id="p9"><button class="copy" data-t="p9">Copy</button>Generate an ingredient icon sheet containing exactly 50 food items in a 10x5 grid. Each icon is a single food item, roughly 16x16 pixels, centred in its own cell with even spacing:
+
+Row 1: tomato, onion, garlic, carrot, potato, bell pepper, chilli pepper, mushroom, corn, lettuce
+Row 2: basil, parsley, rosemary, thyme, oregano, bay leaf, ginger, lemon, lime, orange
+Row 3: apple, banana, strawberry, blueberry, grapes, egg, milk bottle, butter block, cheese wedge, yoghurt pot
+Row 4: raw chicken, steak, pork chop, bacon strips, sausage links, whole fish, prawn, flour sack, sugar bowl, salt cellar
+Row 5: black peppercorns, olive oil bottle, soy sauce bottle, vinegar bottle, rice bowl, dried pasta, bread loaf, dough ball, honey jar, vanilla pod
+
+CRITICAL: these are ICONS, not scenes. Each one is a single clean object, centred, with a bold readable silhouette and strong colour identity so it is instantly recognisable at 16 pixels. Slight 3/4 tilt so a little of the top of each item shows. Consistent chunky pixel style across all 50. Do not add plates, bowls, backgrounds or containers unless the item itself is a container.</pre>
+  </div>
+
+  <div class="sheet">
+    <div class="sheet-hd"><span class="sheet-id">SHEET 10</span><span class="sheet-nm">FX &amp; overlays</span><span class="sheet-sz">layer 70 · animation</span></div>
+    <pre class="term" id="p10"><button class="copy" data-t="p10">Copy</button>Generate a visual effects sheet containing 8 effect strips. Each row is a horizontal ANIMATION SEQUENCE of 4 frames showing the effect progressing over time, evenly spaced:
+
+Row 1: a wisp of white steam rising and dissipating, 4 frames
+Row 2: a puff of white flour dust, 4 frames
+Row 3: a small orange cooking flame flickering, 4 frames
+Row 4: a golden sparkle burst for a completed dish, 4 frames
+Row 5: bubbles rising in a simmering liquid, 4 frames
+Row 6: a soft warm amber light glow pool, growing brighter over 4 frames
+Row 7: a small grey smoke puff for a burnt dish, 4 frames
+Row 8: an oval soft dark contact shadow, from small to large over 4 frames
+
+CRITICAL: each row must be one continuous animation read left to right, with the 4 frames clearly separated and the same size. Effects should be soft, semi-transparent-looking and simple. Use only white, warm amber, orange and light grey. Keep them subtle — these overlay on top of the scene.</pre>
+  </div>
+</section>
+
+<section id="naming">
+  <h2><span class="num">06</span> What to send back</h2>
+  <p class="lede">Raw sheets straight from Nano Banana are fine — green background and all. I handle keying, slicing and wiring.</p>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>Send as</th><th>Becomes</th><th>Manifest</th></tr></thead>
+      <tbody>
+        <tr><td><code>sheet01_floors.png</code></td><td><code>assets/env_v3/floor/*.png</code></td><td rowspan="5" style="vertical-align:middle"><code>data/env_v3.json</code><br><span style="font-size:12px;color:var(--ink-faint)">one entry per asset with footprint, anchorY, layer</span></td></tr>
+        <tr><td><code>sheet02_walls.png</code></td><td><code>assets/env_v3/wall/*.png</code></td></tr>
+        <tr><td><code>sheet05_counters.png</code></td><td><code>assets/env_v3/counter/*.png</code></td></tr>
+        <tr><td><code>sheet09_ingredients.png</code></td><td><code>assets/food_v3/*.png</code> <span style="font-size:11.5px;color:var(--ink-faint)">(drop-in over current)</span></td></tr>
+        <tr><td><code>sheet10_fx.png</code></td><td><code>assets/fx_v3/&lt;effect&gt;/00–03.png</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="call">
+    <b>Sheet 09 is the quickest win</b>
+    <p>The ingredient icons drop straight into the existing <span class="ic">assets/food_v3/</span> folder by filename — the pantry border, the gather sequence and all 109 dish recipes already read from that manifest, so better icons appear everywhere the moment you send that one sheet.</p>
+  </div>
+</section>
+
+<section id="roadmap">
+  <h2><span class="num">07</span> Build order</h2>
+  <p class="lede">Environment first, character second — as you asked. Each phase is independently shippable.</p>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>Phase</th><th>Work</th><th>Needs</th></tr></thead>
+      <tbody>
+        <tr><td><b>P1</b> Foundation</td><td>Keying + slicing scripts, <code>env_v3.json</code> schema, tile-grid renderer replacing the current percentage layout</td><td>Sheets 01–02</td></tr>
+        <tr><td><b>P2</b> Room build</td><td>Assemble Zone A wall and Zone B floor from real modular pieces; place island, nook, cart</td><td>Sheets 03–07</td></tr>
+        <tr><td><b>P3</b> Depth</td><td>Y-sort layer 40 vs the chef; footprints and anchors so he walks behind the island and in front of the counter</td><td>P2</td></tr>
+        <tr><td><b>P4</b> Dressing</td><td>Surface props on counters, FX overlays — steam on the pot, sparkle on completion, lamp glow</td><td>Sheets 08, 10</td></tr>
+        <tr><td><b>P5</b> Border</td><td>Swap in the 50 new ingredient icons; frame art</td><td>Sheet 09</td></tr>
+        <tr><td><b>P6</b> Character</td><td>4-direction walk, idle, carry-walk wired to the existing state manifest; grid pathing along the perimeter</td><td>Chef sheet</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p style="margin-top:20px">Your chef reference already matches the state system in <span class="ic">data/chef_v3.json</span> — idle, walk and carry-walk across four directions is exactly the set it expects, so P6 is mostly slicing and naming rather than new engine work.</p>
+</section>
+
+<p class="footer">Send sheets in any order. Sheet 02 first is worth it — it becomes the style anchor that keeps the other nine consistent.</p>
+
+</div>
+
+<script>
+  document.querySelectorAll('.copy').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var pre = document.getElementById(btn.dataset.t);
+      var text = Array.from(pre.childNodes)
+        .filter(function (n) { return n.nodeType === 3; })
+        .map(function (n) { return n.textContent; })
+        .join('').trim();
+      var done = function () {
+        btn.textContent = 'Copied';
+        btn.classList.add('done');
+        setTimeout(function () { btn.textContent = 'Copy'; btn.classList.remove('done'); }, 1600);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, function () { fallback(text, done); });
+      } else { fallback(text, done); }
+    });
+  });
+  function fallback(text, done) {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); done(); } catch (e) {}
+    document.body.removeChild(ta);
+  }
+</script>
