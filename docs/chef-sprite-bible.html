@@ -175,6 +175,11 @@
     <b>When mirroring breaks</b>
     <p>A flipped sprite reads wrong if anything on the character is asymmetric in a way that matters — a hand held out to one specific side, an object passed hand-to-hand. Chopping, stirring, presenting and the packet actions below are all front-facing at a fixed counter, so they're exempt from this rule entirely: generate them once, no mirroring involved.</p>
   </div>
+
+  <div class="call">
+    <b>"Right" and "Left" mean screen direction, not the character's own</b>
+    <p>Image models frequently flip this — asking for "the character's right side" is exactly the ambiguity that produces an inconsistent or mirrored result. Every prompt below is written as <b>"toward the right edge of the frame"</b> / <b>"toward the left edge of the frame"</b> instead. Keep that phrasing if you tweak anything — it's what actually locks the direction down.</p>
+  </div>
 </section>
 
 <section id="style">
@@ -197,7 +202,7 @@ STYLE:
 ANIMATION RULES (critical — this is what makes frames playable, not just a nice picture):
 - All frames of one sequence are the SAME canvas size, and the character's feet stay glued to the SAME baseline row in every single frame. Only the pose changes — no vertical or horizontal drift frame to frame, or the animation will jitter in-game.
 - Frames are laid out in a single horizontal row, left to right, evenly spaced, in the exact order they play back.
-- Each frame must be a genuinely different pose along the motion, not a near-duplicate — show real progression.
+- Follow the frame-by-frame pose list given in each prompt EXACTLY, one listed pose per frame, in order. Do not default to a single pose repeated with only cosmetic differences (a blink, a tiny sway) when the prompt calls for a walk, climb or carry cycle — those need the leg and arm positions to actually change frame to frame, matching the listed pose for each numbered frame.
 
 SHEET RULES:
 - BACKGROUND MUST BE PURE FLAT CHROMA GREEN #00FF00, uniform edge to edge.
@@ -215,13 +220,13 @@ SHEET RULES:
       <thead><tr><th>#</th><th>State</th><th>Directions</th><th>Frames</th><th>Loop</th><th></th></tr></thead>
       <tbody>
         <tr><td>1</td><td class="ic">idle_down / up / right</td><td>3 + mirror</td><td class="num-col">6</td><td>loop</td><td><span class="status new">new</span></td></tr>
-        <tr><td>2</td><td class="ic">walk_down / up / right</td><td>3 + mirror</td><td class="num-col">8</td><td>loop</td><td><span class="status new">new</span></td></tr>
+        <tr><td>2</td><td class="ic">walk_down / up / right</td><td>3 + mirror</td><td class="num-col">6</td><td>loop</td><td><span class="status new">new</span></td></tr>
         <tr><td>3</td><td class="ic">door_in / door_out</td><td>1 each</td><td class="num-col">6</td><td>one-shot</td><td><span class="status new">new</span></td></tr>
-        <tr><td>4</td><td class="ic">stairs_up / stairs_down</td><td>1 each</td><td class="num-col">8</td><td>loop</td><td><span class="status new">new</span></td></tr>
-        <tr><td>5</td><td class="ic">carry_empty_right</td><td>1 + mirror</td><td class="num-col">8</td><td>loop</td><td><span class="status new">new</span></td></tr>
-        <tr><td>6</td><td class="ic">carry_full_right</td><td>1 + mirror</td><td class="num-col">8</td><td>loop</td><td><span class="status new">new</span> (replaces the <code>carry</code> placeholder)</td></tr>
-        <tr><td>7</td><td class="ic">stairs_up_empty</td><td>1</td><td class="num-col">8</td><td>loop</td><td><span class="status new">new</span></td></tr>
-        <tr><td>8</td><td class="ic">stairs_down_full</td><td>1</td><td class="num-col">8</td><td>loop</td><td><span class="status new">new</span></td></tr>
+        <tr><td>4</td><td class="ic">stairs_up / stairs_down</td><td>1 each</td><td class="num-col">6</td><td>loop</td><td><span class="status new">new</span></td></tr>
+        <tr><td>5</td><td class="ic">carry_empty_right</td><td>1 + mirror</td><td class="num-col">6</td><td>loop</td><td><span class="status new">new</span></td></tr>
+        <tr><td>6</td><td class="ic">carry_full_right</td><td>1 + mirror</td><td class="num-col">6</td><td>loop</td><td><span class="status new">new</span> (replaces the <code>carry</code> placeholder)</td></tr>
+        <tr><td>7</td><td class="ic">stairs_up_empty</td><td>1</td><td class="num-col">6</td><td>loop</td><td><span class="status new">new</span></td></tr>
+        <tr><td>8</td><td class="ic">stairs_down_full</td><td>1</td><td class="num-col">6</td><td>loop</td><td><span class="status new">new</span></td></tr>
         <tr><td>9</td><td class="ic">sit_down / sit_idle</td><td>1 (matches nook armchair)</td><td class="num-col">4 / 6</td><td>one-shot / loop</td><td><span class="status new">new</span></td></tr>
         <tr><td>10</td><td class="ic">celebrate</td><td>1 (front-facing)</td><td class="num-col">8</td><td>one-shot</td><td><span class="status new">new</span></td></tr>
         <tr><td>11</td><td class="ic">chop</td><td>1 (front-facing)</td><td class="num-col">6</td><td>loop</td><td><span class="status existing">existing</span></td></tr>
@@ -231,6 +236,11 @@ SHEET RULES:
         <tr><td>15</td><td class="ic">packet_cut / packet_pour</td><td>1 each (front-facing)</td><td class="num-col">6</td><td>one-shot</td><td><span class="status new">new</span></td></tr>
       </tbody>
     </table>
+  </div>
+
+  <div class="call warn">
+    <b>Frame counts dropped from 8 to 6 for every movement state</b>
+    <p>The first pass came back with 6 frames per sheet instead of the requested 8, and — more important — the poses barely differed frame to frame, reading as a static idle rather than a walk. Six explicit, individually-described keyframes render far more reliably than eight vague ones. The prompts in section 05 now spell out exactly what changes in each numbered frame instead of trusting the model to invent a cycle.</p>
   </div>
 
   <div class="call">
@@ -282,24 +292,43 @@ Same subtle breathing/settling loop. Mustache and hat profile should stay perfec
   </div>
 
   <h3 id="c02">02 · Walk — 3 directions</h3>
-  <p>Replaces the current up/down walk placeholders (which just reuse the side-walk art) and gives a real 8-frame cycle for a smoother loop than the existing 12-frame one.</p>
+  <p>Replaces the current up/down walk placeholders (which just reuse the side-walk art). Each frame below is described individually on purpose — a vague "show a walk cycle" instruction is what produced six near-identical standing poses last time.</p>
   <div class="sheet">
-    <div class="sheet-hd"><span class="sheet-id">CH02a</span><span class="sheet-nm">Walk — Down</span><span class="sheet-sz">8 frames · loop</span></div>
-    <pre class="term" id="c02a"><button class="copy" data-t="c02a">Copy</button>Following the character style clamp above, generate an 8-frame walk cycle, character walking DOWN toward the viewer (front-facing).
+    <div class="sheet-hd"><span class="sheet-id">CH02a</span><span class="sheet-nm">Walk — Down</span><span class="sheet-sz">6 frames · loop</span></div>
+    <pre class="term" id="c02a"><button class="copy" data-t="c02a">Copy</button>Following the character style clamp above, generate a 6-frame walk cycle, character facing the viewer (front-facing), walking toward the BOTTOM of the frame. Render each of these 6 frames as a DISTINCTLY different leg and arm pose — do not repeat the same standing pose with only a blink or sway between frames:
 
-A full walk cycle: alternating leading leg, natural arm swing opposite the leading leg, a slight up-down bob of the whole body on each step. Frame 1 and frame 8 must connect seamlessly so the cycle loops without a visible pop. Keep the hat and mustache silhouette steady — only the body below the neck should really move.</pre>
+Frame 1 — Neutral contact: feet nearly together, weight centred, standing at the tallest point of the walk bob, arms relaxed at the sides.
+Frame 2 — Left foot steps forward and down (visibly ahead and to the left of centre), right foot lifts onto its toe behind, torso dips slightly, right arm swings forward and left arm swings back.
+Frame 3 — Passing position: feet cross near the centreline, body at the LOWEST point of the bob, arms passing back through neutral.
+Frame 4 — Right foot steps forward and down (mirrors frame 2 with feet swapped), torso dips slightly, left arm swings forward and right arm swings back.
+Frame 5 — Passing position: mirrors frame 3, feet crossing again, body at its lowest point.
+Frame 6 — Returns toward the neutral contact pose of frame 1, ready to loop back to frame 1 seamlessly.
+
+Keep the hat and mustache silhouette steady — only the body from the shoulders down moves.</pre>
   </div>
   <div class="sheet">
-    <div class="sheet-hd"><span class="sheet-id">CH02b</span><span class="sheet-nm">Walk — Up</span><span class="sheet-sz">8 frames · loop</span></div>
-    <pre class="term" id="c02b"><button class="copy" data-t="c02b">Copy</button>Following the character style clamp above, generate an 8-frame walk cycle, character walking UP, away from the viewer (back-facing).
+    <div class="sheet-hd"><span class="sheet-id">CH02b</span><span class="sheet-nm">Walk — Up</span><span class="sheet-sz">6 frames · loop</span></div>
+    <pre class="term" id="c02b"><button class="copy" data-t="c02b">Copy</button>Following the character style clamp above, generate a 6-frame walk cycle, character facing away from the viewer (back-facing — hat, shoulders and the back of the jacket visible, no face), walking toward the TOP of the frame. Render each of these 6 frames as a DISTINCTLY different leg and shoulder pose — do not repeat the same standing pose with only a tiny sway between frames:
 
-Same full walk cycle as the down-facing version — alternating leading leg visible from behind, arm swing, slight body bob — but seen from behind. Frame 1 and frame 8 must connect seamlessly to loop.</pre>
+Frame 1 — Neutral contact: feet nearly together, weight centred, standing at the tallest point of the walk bob.
+Frame 2 — Left foot (from the character's own perspective, doesn't matter which side reads as which on screen since this is a back view — just make it visibly asymmetric) steps forward and down, the other foot lifts onto its toe behind, torso dips slightly, shoulders rotate opposite the stepping leg.
+Frame 3 — Passing position: feet cross near the centreline, body at the LOWEST point of the bob.
+Frame 4 — Opposite foot steps forward and down (mirrors frame 2 with feet swapped), torso dips slightly, shoulders rotate the other way.
+Frame 5 — Passing position: mirrors frame 3, feet crossing again, body at its lowest point.
+Frame 6 — Returns toward the neutral contact pose of frame 1, ready to loop back to frame 1 seamlessly.</pre>
   </div>
   <div class="sheet">
-    <div class="sheet-hd"><span class="sheet-id">CH02c</span><span class="sheet-nm">Walk — Right</span><span class="sheet-sz">8 frames · loop</span></div>
-    <pre class="term" id="c02c"><button class="copy" data-t="c02c">Copy</button>Following the character style clamp above, generate an 8-frame walk cycle, character walking RIGHT in profile.
+    <div class="sheet-hd"><span class="sheet-id">CH02c</span><span class="sheet-nm">Walk — Right</span><span class="sheet-sz">6 frames · loop</span></div>
+    <pre class="term" id="c02c"><button class="copy" data-t="c02c">Copy</button>Following the character style clamp above, generate a 6-frame walk cycle, character in full side profile, body oriented and walking toward the RIGHT edge of the frame (this is screen-right — the character's face and chest point toward the right side of the canvas). Render each of these 6 frames as a DISTINCTLY different leg and arm pose — do not repeat the same standing profile pose with only tiny differences:
 
-Classic side walk cycle: full leg-and-arm stride visible in profile, slight body bob. Frame 1 and frame 8 must connect seamlessly to loop. (Left-facing walk is this sheet mirrored — do not generate it separately; this replaces the current placeholder art.)</pre>
+Frame 1 — Contact: the leg closer to the direction of travel is stretched forward with its heel touching the ground, the other leg extends back on its toe, the forward arm swings back and the back arm swings forward (arms opposite the legs).
+Frame 2 — Down/recoil: the forward leg bends and takes the character's weight, body dips to the LOWEST point of the bob, the back leg swings forward beneath the body.
+Frame 3 — Passing: both legs cross directly under the body, feet momentarily close together, body at the HIGHEST point of the bob, arms pass through neutral near the sides.
+Frame 4 — Contact opposite: the leg that was trailing in frame 1 is now stretched forward with its heel down, the other leg extends back on its toe, arms swap sides from frame 1.
+Frame 5 — Down/recoil opposite: mirrors frame 2 with the legs swapped, body at its lowest point again.
+Frame 6 — Passing opposite: mirrors frame 3, returning toward frame 1's setup so the loop connects seamlessly.
+
+(Left-facing walk is this sheet mirrored horizontally — do not generate it separately; this replaces the current placeholder art.)</pre>
   </div>
 
   <h3 id="c03">03 · Door in / out</h3>
@@ -323,48 +352,72 @@ Frames 1-3: normal upward walking stride, approaching the doorway. Frames 4-5: r
   <h3 id="c04">04 · Stairs up / down</h3>
   <p>The staircase asset (environment Sheet 03) is a single fixed-angle object, so unlike walking there's only one direction to generate for each — no left/right variant needed.</p>
   <div class="sheet">
-    <div class="sheet-hd"><span class="sheet-id">CH04a</span><span class="sheet-nm">Stairs — Ascending</span><span class="sheet-sz">8 frames · loop</span></div>
-    <pre class="term" id="c04a"><button class="copy" data-t="c04a">Copy</button>Following the character style clamp above, generate an 8-frame walk cycle: the chef climbing a staircase, facing UP and slightly angled as if stepping onto rising steps.
+    <div class="sheet-hd"><span class="sheet-id">CH04a</span><span class="sheet-nm">Stairs — Ascending</span><span class="sheet-sz">6 frames · loop</span></div>
+    <pre class="term" id="c04a"><button class="copy" data-t="c04a">Copy</button>Following the character style clamp above, generate a 6-frame walk cycle: the chef climbing a staircase, facing away from the viewer and slightly angled as if stepping up onto rising steps. Render each frame as a DISTINCTLY different pose, with an exaggerated knee lift compared to a flat walk — the leading leg visibly rises higher before planting on the next step, torso leaned forward into the climb:
 
-Exaggerate the knee lift on each step compared to a flat walk cycle — the leading leg should visibly rise higher before planting on the next step, and the torso leans forward slightly into the climb. The character's baseline row should still be consistent frame to frame (the illusion of climbing height comes from the pose, not from moving the character up the canvas — height changes are handled by the game, not the art). Frame 1 and frame 8 connect seamlessly to loop.</pre>
+Frame 1 — Contact: the trailing leg is planted on a lower step, the leading leg is lifted HIGH with an exaggerated knee bend, about to plant on the next step up.
+Frame 2 — Push: the leading leg plants on the higher step and takes the weight, the trailing leg begins lifting off the lower step.
+Frame 3 — Passing: the trailing leg swings through close to the body with a high knee lift, torso momentarily more upright at the top of the push.
+Frame 4 — Contact opposite: the leg that was trailing is now the leading leg, planting on the next step up with the same exaggerated lift; the other leg extends back on the lower step.
+Frame 5 — Push opposite: mirrors frame 2 with the legs swapped.
+Frame 6 — Passing opposite: mirrors frame 3, returning toward frame 1's setup so the loop connects seamlessly.
+
+The character's baseline row stays consistent frame to frame — the illusion of climbing comes from the pose, not from moving the character up the canvas; height change is handled by the game, not the art.</pre>
   </div>
   <div class="sheet">
-    <div class="sheet-hd"><span class="sheet-id">CH04b</span><span class="sheet-nm">Stairs — Descending</span><span class="sheet-sz">8 frames · loop</span></div>
-    <pre class="term" id="c04b"><button class="copy" data-t="c04b">Copy</button>Following the character style clamp above, generate an 8-frame walk cycle: the chef descending a staircase, facing DOWN and slightly angled as if stepping down onto lower steps.
+    <div class="sheet-hd"><span class="sheet-id">CH04b</span><span class="sheet-nm">Stairs — Descending</span><span class="sheet-sz">6 frames · loop</span></div>
+    <pre class="term" id="c04b"><button class="copy" data-t="c04b">Copy</button>Following the character style clamp above, generate a 6-frame walk cycle: the chef descending a staircase, facing the viewer and slightly angled as if stepping down onto lower steps. Render each frame as a DISTINCTLY different pose, with an exaggerated knee lift and a very slight forward-leaning caution compared to a flat walk:
 
-Exaggerate the knee lift and add a very slight forward-leaning caution to the pose compared to a flat walk cycle. Same baseline-row rule as the ascending sheet — the art shows the pose, not a vertical position change. Frame 1 and frame 8 connect seamlessly to loop.</pre>
+Frame 1 — Contact: the trailing leg is planted on a higher step, the leading leg reaches DOWN and forward with an exaggerated stretch, about to plant on the next step down.
+Frame 2 — Push: the leading leg plants on the lower step and takes the weight, the trailing leg begins lifting off the higher step.
+Frame 3 — Passing: the trailing leg swings through close to the body, torso momentarily more upright.
+Frame 4 — Contact opposite: the leg that was trailing is now the leading leg, reaching down to plant on the next step down; the other leg extends back on the higher step.
+Frame 5 — Push opposite: mirrors frame 2 with the legs swapped.
+Frame 6 — Passing opposite: mirrors frame 3, returning toward frame 1's setup so the loop connects seamlessly.
+
+Same baseline-row rule as the ascending sheet — the art shows the pose, not a vertical position change.</pre>
   </div>
 
   <h3 id="c05">05 · Carry, empty basket — walking left/right</h3>
   <div class="sheet">
-    <div class="sheet-hd"><span class="sheet-id">CH05</span><span class="sheet-nm">Carry empty — Right</span><span class="sheet-sz">8 frames · loop</span></div>
-    <pre class="term" id="c05"><button class="copy" data-t="c05">Copy</button>Following the character style clamp above, generate an 8-frame walk cycle, character walking RIGHT in profile, holding an EMPTY woven wicker gathering basket in both arms against their chest/waist.
+    <div class="sheet-hd"><span class="sheet-id">CH05</span><span class="sheet-nm">Carry empty — Right</span><span class="sheet-sz">6 frames · loop</span></div>
+    <pre class="term" id="c05"><button class="copy" data-t="c05">Copy</button>Following the character style clamp above, generate a 6-frame walk cycle, character in full side profile, body oriented and walking toward the RIGHT edge of the frame, holding an EMPTY woven wicker gathering basket in both arms cradled against the chest/waist (visible empty interior, no ingredients). The basket does NOT swing — arms stay bent holding it steady and level in every frame, only a very slight vertical bob passes through as the body bobs. Only the LEGS drive the visible motion. Render each frame as a DISTINCTLY different leg pose, matching the standard walk-right leg cycle:
 
-The basket is plainly empty — visible interior, no ingredients inside. Arms are bent to cradle the basket so they don't swing freely like a normal walk cycle; the walking motion comes mainly from the legs and a slight body bob, with the basket staying steady and level (not bouncing) across all frames. Frame 1 and frame 8 connect seamlessly to loop. (Left-facing is this sheet mirrored — do not generate it separately.)</pre>
+Frame 1 — Contact: the leg closer to the direction of travel is stretched forward with its heel touching the ground, the other leg extends back on its toe.
+Frame 2 — Down/recoil: the forward leg bends and takes the weight, body dips to the LOWEST point of the bob, the back leg swings forward beneath the body.
+Frame 3 — Passing: both legs cross directly under the body, feet momentarily close together, body at the HIGHEST point of the bob.
+Frame 4 — Contact opposite: the leg that was trailing in frame 1 is now stretched forward with its heel down, the other leg extends back on its toe.
+Frame 5 — Down/recoil opposite: mirrors frame 2 with the legs swapped.
+Frame 6 — Passing opposite: mirrors frame 3, returning toward frame 1's setup so the loop connects seamlessly.
+
+(Left-facing is this sheet mirrored — do not generate it separately.)</pre>
   </div>
 
   <h3 id="c06">06 · Carry, full basket — walking left/right</h3>
   <div class="sheet">
-    <div class="sheet-hd"><span class="sheet-id">CH06</span><span class="sheet-nm">Carry full — Right</span><span class="sheet-sz">8 frames · loop</span></div>
-    <pre class="term" id="c06"><button class="copy" data-t="c06">Copy</button>Following the character style clamp above, generate an 8-frame walk cycle, character walking RIGHT in profile, holding the SAME woven wicker gathering basket now FULL of colourful mixed vegetables (tomato, carrot, a leafy green) piled visibly above the rim.
+    <div class="sheet-hd"><span class="sheet-id">CH06</span><span class="sheet-nm">Carry full — Right</span><span class="sheet-sz">6 frames · loop</span></div>
+    <pre class="term" id="c06"><button class="copy" data-t="c06">Copy</button>Following the character style clamp above, generate a 6-frame walk cycle, character in full side profile, body oriented and walking toward the RIGHT edge of the frame, holding the SAME woven wicker gathering basket now FULL of colourful mixed vegetables (tomato, carrot, a leafy green) piled visibly above the rim. Same cradle-hold as the empty-basket sheet — arms bent, basket held steady and level, no swinging. Use the IDENTICAL leg-cycle frame breakdown as CH05 (contact → down/recoil → passing → contact opposite → down/recoil opposite → passing opposite), just with the full basket instead of empty:
 
-Same cradle-hold as the empty-basket sheet — arms bent, basket held steady and level, walking motion from the legs and a slight body bob. Frame 1 and frame 8 connect seamlessly to loop. (Left-facing is this sheet mirrored — do not generate it separately. This replaces the current <code>carry</code> placeholder in the manifest.)</pre>
+Frame 1 — Contact: leading leg stretched forward, heel down, trailing leg back on its toe.
+Frame 2 — Down/recoil: forward leg bends and takes the weight, body at its lowest point.
+Frame 3 — Passing: legs cross under the body, body at its highest point.
+Frame 4 — Contact opposite: legs swap from frame 1.
+Frame 5 — Down/recoil opposite: mirrors frame 2.
+Frame 6 — Passing opposite: mirrors frame 3, loop connects back to frame 1.
+
+(Left-facing is this sheet mirrored — do not generate it separately. This replaces the current <code>carry</code> placeholder in the manifest.)</pre>
   </div>
 
   <h3 id="c07">07 · Stairs up, empty basket</h3>
   <div class="sheet">
-    <div class="sheet-hd"><span class="sheet-id">CH07</span><span class="sheet-nm">Stairs ascending — empty basket</span><span class="sheet-sz">8 frames · loop</span></div>
-    <pre class="term" id="c07"><button class="copy" data-t="c07">Copy</button>Following the character style clamp above, generate an 8-frame walk cycle: the chef climbing a staircase (facing UP, exaggerated knee lift, same pose logic as the plain stairs-ascending sheet), while holding an EMPTY woven wicker basket cradled against the chest with both arms.
-
-Basket stays level and steady while the legs do the exaggerated stair-climb motion. Same baseline-row rule as the other stairs sheets. Frame 1 and frame 8 connect seamlessly to loop.</pre>
+    <div class="sheet-hd"><span class="sheet-id">CH07</span><span class="sheet-nm">Stairs ascending — empty basket</span><span class="sheet-sz">6 frames · loop</span></div>
+    <pre class="term" id="c07"><button class="copy" data-t="c07">Copy</button>Following the character style clamp above, generate a 6-frame walk cycle: the chef climbing a staircase (facing away from the viewer, exaggerated knee lift, same pose logic as CH04a) while holding an EMPTY woven wicker basket cradled steady against the chest with both arms — arms do not swing, only the legs drive the motion. Use the IDENTICAL leg-cycle breakdown as CH04a (contact/high-knee → push → passing → contact opposite → push opposite → passing opposite), basket staying level throughout.</pre>
   </div>
 
   <h3 id="c08">08 · Stairs down, full basket</h3>
   <div class="sheet">
-    <div class="sheet-hd"><span class="sheet-id">CH08</span><span class="sheet-nm">Stairs descending — full basket</span><span class="sheet-sz">8 frames · loop</span></div>
-    <pre class="term" id="c08"><button class="copy" data-t="c08">Copy</button>Following the character style clamp above, generate an 8-frame walk cycle: the chef descending a staircase (facing DOWN, exaggerated knee lift and slight forward-leaning caution, same pose logic as the plain stairs-descending sheet), while holding the SAME basket now FULL of colourful mixed vegetables piled above the rim.
-
-Basket stays level and steady, held a little more carefully/cautiously than the empty-basket versions since it's heavier — a subtle difference in arm tension, not a different hold. Same baseline-row rule as the other stairs sheets. Frame 1 and frame 8 connect seamlessly to loop.</pre>
+    <div class="sheet-hd"><span class="sheet-id">CH08</span><span class="sheet-nm">Stairs descending — full basket</span><span class="sheet-sz">6 frames · loop</span></div>
+    <pre class="term" id="c08"><button class="copy" data-t="c08">Copy</button>Following the character style clamp above, generate a 6-frame walk cycle: the chef descending a staircase (facing the viewer, exaggerated knee lift and slight forward-leaning caution, same pose logic as CH04b) while holding the SAME basket now FULL of colourful mixed vegetables piled above the rim. Use the IDENTICAL leg-cycle breakdown as CH04b (contact/reach-down → push → passing → contact opposite → push opposite → passing opposite). Basket stays level and steady, held with slightly more visible arm tension than the empty version since it's heavier — that's the only difference from CH07's hold.</pre>
   </div>
 
   <h3 id="c09">09 · Sit &amp; chill on the couch</h3>
