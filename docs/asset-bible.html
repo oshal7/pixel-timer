@@ -349,6 +349,19 @@
     <b>Do not ask for transparent backgrounds</b>
     <p>Image models fake transparency with checkerboard pixels baked into the image, which is unusable. Flat green keys out perfectly and your chef sheet already proves the workflow. Also forbid drop shadows onto the green — they turn into dark halos after keying.</p>
   </div>
+
+  <h3>Tileable textures are the exception</h3>
+  <p>Floors and walls break two of the rules above, and the first run of Sheet 01 proved it. Two corrections:</p>
+  <ul class="tight">
+    <li><b>No directional light on a flat texture.</b> The preamble's "light from the upper left" makes the model add a centre bloom or corner shading. Tiled across a floor, that repeats as a grid of bright blobs. Textures need <b>perfectly flat, uniform lighting</b> — the preamble's lighting line must be explicitly overridden.</li>
+    <li><b>One texture per image, filling the canvas.</b> Asked for in a grid, the model draws each texture as a little <i>card</i> with an outline, a bevelled edge and a drop shadow — which is exactly what makes it not tile. A texture that fills the whole canvas edge-to-edge has no border to draw.</li>
+  </ul>
+  <p>Everything that is an <i>object</i> (rugs, furniture, props, icons) is fine in a grid — only seamless textures need the one-per-image treatment.</p>
+
+  <div class="call">
+    <b>Verify before wiring</b>
+    <p>Run <span class="ic">python3 tools/key_and_slice.py SHEET.png --out DIR --tile</span>. It keys the green, slices every object, and scores each one: <b>seam</b> above 18 means visible grid lines when tiled, <b>hotspot</b> above 12 means repeating bright blobs. Anything flagged gets regenerated, not shipped.</p>
+  </div>
 </section>
 
 <section id="pipeline">
@@ -390,24 +403,53 @@ SHEET RULES:
   </div>
 
   <div class="sheet">
-    <div class="sheet-hd"><span class="sheet-id">SHEET 01</span><span class="sheet-nm">Floors &amp; rugs</span><span class="sheet-sz">seamless · layer 00</span></div>
-    <pre class="term" id="p1"><button class="copy" data-t="p1">Copy</button>Generate a floor tile sheet containing 8 items in a 4x2 grid:
+    <div class="sheet-hd"><span class="sheet-id">SHEET 01a</span><span class="sheet-nm">Floor texture — one run per material</span><span class="sheet-sz">seamless · layer 00</span></div>
+    <pre class="term" id="p1"><button class="copy" data-t="p1">Copy</button>DO NOT use the standard style preamble for this one. Use exactly this:
 
-1. Cream ceramic kitchen tile, warm off-white with subtle grout lines
-2. Terracotta clay floor tile, warm orange-brown
-3. Checkerboard tile, alternating cream and soft taupe
-4. Warm oak wood plank flooring, horizontal boards
-5. Dark walnut wood plank flooring
-6. Worn stone flagstone floor, grey-brown irregular slabs
-7. A small rectangular woven rug, warm red and cream stripes, with fringed ends
-8. A round braided rug, concentric warm brown and cream rings
+A seamless repeating pixel art floor texture, 32-bit cozy game art, top-down view, for a warm rustic farmhouse kitchen.
 
-CRITICAL: items 1 through 6 must be PERFECTLY SEAMLESS AND TILEABLE — the left edge must continue into the right edge, and the top edge into the bottom edge, with no visible seam when repeated. Each tileable square is 32x32 pixels. Keep the pattern subtle and low contrast so it does not distract when tiled across a large floor. The two rugs are single objects, not tileable.</pre>
+MATERIAL: cream ceramic kitchen tile, warm off-white with subtle darker grout lines between square tiles.
+
+CRITICAL RULES:
+- The texture must FILL THE ENTIRE IMAGE completely, edge to edge, corner to corner.
+- It must be PERFECTLY SEAMLESS AND TILEABLE: the pattern running off the left edge must continue exactly onto the right edge, and the pattern running off the top edge must continue exactly onto the bottom edge.
+- PERFECTLY FLAT, EVEN, UNIFORM LIGHTING across the whole image. NO light source. NO shadows. NO vignette. NO darkened corners. NO bright spot or glow in the centre. Every part of the image must be the same brightness.
+- NO border, NO outline, NO frame, NO edge highlight, NO drop shadow, NO rounded corners. The texture is not an object sitting on a background — it IS the whole image.
+- NO green background, NO background of any kind — the texture covers everything.
+- Low contrast and subtle, so it does not distract when repeated across a large floor.
+- Crisp pixel art, clean pixel clusters, no blur.
+- NO text, NO labels, NO watermarks, NO sparkles, NO decorative marks.
+
+Repeat this prompt once per material, swapping the MATERIAL line:
+  - terracotta clay floor tile, warm orange-brown
+  - checkerboard floor, alternating cream and soft taupe squares
+  - warm oak wood plank flooring, horizontal boards
+  - dark walnut wood plank flooring, horizontal boards
+  - worn grey-brown stone flagstone floor, irregular slabs</pre>
+  </div>
+
+  <div class="sheet">
+    <div class="sheet-hd"><span class="sheet-id">SHEET 01b</span><span class="sheet-nm">Rugs &amp; floor objects</span><span class="sheet-sz">grid is fine · layer 00</span></div>
+    <pre class="term" id="p1b"><button class="copy" data-t="p1b">Copy</button>Generate a floor object sheet containing 6 items in a 3x2 grid:
+
+1. A small rectangular woven rug, warm red and cream stripes, with fringed ends at both short sides
+2. A round braided rug, concentric rings of warm brown and cream
+3. An oval rag rug, muted sage green and cream
+4. A long thin runner rug, warm terracotta with a simple geometric border pattern
+5. A square doormat, coarse brown fibre
+6. A small sheepskin-style soft rug, cream and off-white
+
+These are OBJECTS, not textures — they do not need to tile. Use the standard style preamble for this one (green background, grid layout, upper-left light). Show them lying flat on the floor seen from 3/4 above, with a soft suggestion of thickness at the edges so they read as sitting on top of the floor.</pre>
   </div>
 
   <div class="sheet">
     <div class="sheet-hd"><span class="sheet-id">SHEET 02</span><span class="sheet-nm">Walls, wainscot &amp; trim</span><span class="sheet-sz">style anchor · layer 10</span></div>
-    <pre class="term" id="p2"><button class="copy" data-t="p2">Copy</button>Generate a wall construction sheet containing 10 items in a 5x2 grid:
+    <pre class="term" id="p2"><button class="copy" data-t="p2">Copy</button>NOTE: items 1, 2, 9 and 10 are WALL TEXTURES and hit the same problem as
+floors. Run each of those as its own image using the Sheet 01a texture prompt
+(swapping the MATERIAL line). Use the grid prompt below only for the trim,
+corner and fixture pieces, items 3 to 8.
+
+Generate a wall construction sheet containing 10 items in a 5x2 grid:
 
 1. Warm wood plank wall section, vertical boards, 32 wide x 48 tall pixels, seamless left-to-right
 2. The same wall but with cream plaster upper half and wood wainscot lower half, seamless left-to-right
