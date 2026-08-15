@@ -140,7 +140,8 @@
   <p class="standfirst">Companion to the environment asset bible — every prompt needed to build out the chef's full animation set from your character reference sheet, organised the same way: a style clamp you paste every time, a fixed direction convention, and one prompt per action.</p>
   <div class="mast-meta">
     <span class="chip">Character frame <b>~32 × 48 px tile</b></span>
-    <span class="chip">Perspective <b>3/4 top-down</b></span>
+    <span class="chip">Camera <b>elevated top-down</b></span>
+    <span class="chip">Facing <b>strict cardinal only</b></span>
     <span class="chip">Key color <b>#00FF00</b></span>
     <span class="chip">Real directions <b>Down · Up · Right</b> (Left = mirror)</span>
   </div>
@@ -180,6 +181,11 @@
     <b>"Right" and "Left" mean screen direction, not the character's own</b>
     <p>Image models frequently flip this — asking for "the character's right side" is exactly the ambiguity that produces an inconsistent or mirrored result. Every prompt below is written as <b>"toward the right edge of the frame"</b> / <b>"toward the left edge of the frame"</b> instead. Keep that phrasing if you tweak anything — it's what actually locks the direction down.</p>
   </div>
+
+  <div class="call warn">
+    <b>Only 4 valid facings — never diagonal</b>
+    <p>If a batch comes back with the chef angled toward a corner (walking SW, SE, NW, NE instead of straight S, W, E, N) the model has confused two different meanings of "3/4 view": for the environment sheets it correctly means <i>camera angle</i> (looking down at a slight tilt); for a character it can also mean a classic <i>3/4 portrait turn</i> — body rotated 45° between front-on and profile, which is a diagonal pose. That second meaning is wrong here. Down/Up/Right/Left are the only 4 valid facings, each exactly 90° apart, body square to the direction — never a blend of two. This is now spelled out explicitly in the style clamp above; if a regeneration still drifts diagonal, add <code>NOT a diagonal 3/4-turned pose, strictly [direction]-facing only</code> directly into that specific prompt.</p>
+  </div>
 </section>
 
 <section id="style">
@@ -192,8 +198,12 @@
 
 CHARACTER: a cheerful middle-aged male chef. Tan skin, thick brown mustache, warm friendly expression. Tall white pleated chef's toque. Red bandana knotted at the neck. White double-breasted chef's jacket with a row of small buttons down the front. Red sash/belt at the waist. Grey trousers. Brown leather shoes.
 
+CAMERA (this is the viewing angle only — it has nothing to do with which way the character is walking): a gentle elevated top-down camera, tilted just enough to see a little of the top of the hat and shoulders in every single frame regardless of which way the character faces. Never a flat side-on silhouette with zero top visible, never a flat overhead view looking straight down. This camera angle is IDENTICAL across every direction sheet — only the character's pose changes, not the camera.
+
+CHARACTER FACING — STRICT CARDINAL ONLY, NEVER DIAGONAL: whatever direction a prompt below asks for, the character's shoulders and hips are SQUARE to that exact direction — straight toward the bottom edge of the frame, straight toward the top edge, or straight toward the right/left edge. Do NOT draw a "3/4 turned" pose the way a portrait artist would turn a head 45° between front-on and profile — that produces a character who looks like they're walking toward a corner of the room (diagonally, e.g. toward the bottom-right or top-left), which is wrong for this game. There are only 4 valid facings, each 90° apart, never a blend of two.
+
 STYLE:
-- 32-bit cozy pixel art, in the style of Stardew Valley character sprites, 3/4 top-down perspective — face and body read clearly with a hint of the top of the hat/shoulders, never a flat side profile and never a flat overhead view.
+- 32-bit cozy pixel art, in the style of Stardew Valley character sprites — Stardew's own characters are a good reference for this exact rule: strictly cardinal facings, never diagonal, always the same slightly-elevated camera.
 - Bold, clean, consistent 2px dark outline around the ENTIRE silhouette and major interior seams (hat brim, jacket lapel, sash, shoe tops). This is what keys cleanly off the green — keep it identical weight on every frame.
 - Crisp flat pixel shading, 3-4 tones per colour, no gradients wider than a couple of pixels, no blur, no soft anti-aliasing haze.
 - Single light source from the upper-left, soft warm highlight, gentle cool shadow — matches the kitchen environment sheets.
@@ -274,19 +284,19 @@ SHEET RULES:
   <p>Your reference shows one static pose per direction. For an actual idle loop, each direction needs a subtle breathing/blink cycle — small enough that it reads as "standing still," not a new pose.</p>
   <div class="sheet">
     <div class="sheet-hd"><span class="sheet-id">CH01a</span><span class="sheet-nm">Idle — Down (facing player)</span><span class="sheet-sz">6 frames · loop</span></div>
-    <pre class="term" id="c01a"><button class="copy" data-t="c01a">Copy</button>Following the character style clamp above, generate a 6-frame idle animation strip, character facing DOWN toward the viewer (front-facing), standing still.
+    <pre class="term" id="c01a"><button class="copy" data-t="c01a">Copy</button>Following the character style clamp above, generate a 6-frame idle animation strip, character facing STRICTLY DOWN toward the viewer, shoulders and hips square to the camera (front-facing, NOT a diagonal 3/4-turned pose), standing still.
 
 The motion is a SUBTLE breathing/settling loop only: chest rising and falling very slightly, one small blink somewhere in the middle frames, maybe a faint sway. The character's feet and overall pose barely change — this must read as "standing still," not walking or gesturing. Frame 1 and frame 6 should be similar enough to loop seamlessly back to frame 1.</pre>
   </div>
   <div class="sheet">
     <div class="sheet-hd"><span class="sheet-id">CH01b</span><span class="sheet-nm">Idle — Up (back to player)</span><span class="sheet-sz">6 frames · loop</span></div>
-    <pre class="term" id="c01b"><button class="copy" data-t="c01b">Copy</button>Following the character style clamp above, generate a 6-frame idle animation strip, character facing UP, away from the viewer (back-facing — hat and shoulders visible, back of the jacket), standing still.
+    <pre class="term" id="c01b"><button class="copy" data-t="c01b">Copy</button>Following the character style clamp above, generate a 6-frame idle animation strip, character facing STRICTLY UP, away from the viewer, shoulders and hips square to the camera (back-facing — hat and shoulders visible, back of the jacket, NOT a diagonal 3/4-turned pose), standing still.
 
 Same subtle breathing/settling loop as a front-facing idle — shoulders rising and falling very slightly. No blink needed since the face isn't visible; instead let the hat sway a tiny amount. Must loop seamlessly.</pre>
   </div>
   <div class="sheet">
     <div class="sheet-hd"><span class="sheet-id">CH01c</span><span class="sheet-nm">Idle — Right (side-facing)</span><span class="sheet-sz">6 frames · loop</span></div>
-    <pre class="term" id="c01c"><button class="copy" data-t="c01c">Copy</button>Following the character style clamp above, generate a 6-frame idle animation strip, character facing RIGHT in profile, standing still.
+    <pre class="term" id="c01c"><button class="copy" data-t="c01c">Copy</button>Following the character style clamp above, generate a 6-frame idle animation strip, character facing STRICTLY toward the RIGHT edge of the frame in full side profile (a strict 90° profile, not a diagonal 3/4-turned pose), standing still.
 
 Same subtle breathing/settling loop. Mustache and hat profile should stay perfectly consistent in silhouette across all 6 frames — only the chest/shoulder rise-and-fall changes. Must loop seamlessly. (Left-facing idle is this sheet mirrored — do not generate it separately.)</pre>
   </div>
@@ -295,7 +305,7 @@ Same subtle breathing/settling loop. Mustache and hat profile should stay perfec
   <p>Replaces the current up/down walk placeholders (which just reuse the side-walk art). Each frame below is described individually on purpose — a vague "show a walk cycle" instruction is what produced six near-identical standing poses last time.</p>
   <div class="sheet">
     <div class="sheet-hd"><span class="sheet-id">CH02a</span><span class="sheet-nm">Walk — Down</span><span class="sheet-sz">6 frames · loop</span></div>
-    <pre class="term" id="c02a"><button class="copy" data-t="c02a">Copy</button>Following the character style clamp above, generate a 6-frame walk cycle, character facing the viewer (front-facing), walking toward the BOTTOM of the frame. Render each of these 6 frames as a DISTINCTLY different leg and arm pose — do not repeat the same standing pose with only a blink or sway between frames:
+    <pre class="term" id="c02a"><button class="copy" data-t="c02a">Copy</button>Following the character style clamp above, generate a 6-frame walk cycle, character facing STRICTLY toward the viewer (front-facing, shoulders and hips square to the camera), walking STRAIGHT toward the BOTTOM of the frame — NOT diagonally toward a bottom corner, NOT a 3/4-turned pose. Render each of these 6 frames as a DISTINCTLY different leg and arm pose — do not repeat the same standing pose with only a blink or sway between frames:
 
 Frame 1 — Neutral contact: feet nearly together, weight centred, standing at the tallest point of the walk bob, arms relaxed at the sides.
 Frame 2 — Left foot steps forward and down (visibly ahead and to the left of centre), right foot lifts onto its toe behind, torso dips slightly, right arm swings forward and left arm swings back.
@@ -308,7 +318,7 @@ Keep the hat and mustache silhouette steady — only the body from the shoulders
   </div>
   <div class="sheet">
     <div class="sheet-hd"><span class="sheet-id">CH02b</span><span class="sheet-nm">Walk — Up</span><span class="sheet-sz">6 frames · loop</span></div>
-    <pre class="term" id="c02b"><button class="copy" data-t="c02b">Copy</button>Following the character style clamp above, generate a 6-frame walk cycle, character facing away from the viewer (back-facing — hat, shoulders and the back of the jacket visible, no face), walking toward the TOP of the frame. Render each of these 6 frames as a DISTINCTLY different leg and shoulder pose — do not repeat the same standing pose with only a tiny sway between frames:
+    <pre class="term" id="c02b"><button class="copy" data-t="c02b">Copy</button>Following the character style clamp above, generate a 6-frame walk cycle, character facing STRICTLY away from the viewer (back-facing — hat, shoulders and the back of the jacket visible, no face, shoulders and hips square to the camera), walking STRAIGHT toward the TOP of the frame — NOT diagonally toward a top corner, NOT a 3/4-turned pose. Render each of these 6 frames as a DISTINCTLY different leg and shoulder pose — do not repeat the same standing pose with only a tiny sway between frames:
 
 Frame 1 — Neutral contact: feet nearly together, weight centred, standing at the tallest point of the walk bob.
 Frame 2 — Left foot (from the character's own perspective, doesn't matter which side reads as which on screen since this is a back view — just make it visibly asymmetric) steps forward and down, the other foot lifts onto its toe behind, torso dips slightly, shoulders rotate opposite the stepping leg.
@@ -319,7 +329,7 @@ Frame 6 — Returns toward the neutral contact pose of frame 1, ready to loop ba
   </div>
   <div class="sheet">
     <div class="sheet-hd"><span class="sheet-id">CH02c</span><span class="sheet-nm">Walk — Right</span><span class="sheet-sz">6 frames · loop</span></div>
-    <pre class="term" id="c02c"><button class="copy" data-t="c02c">Copy</button>Following the character style clamp above, generate a 6-frame walk cycle, character in full side profile, body oriented and walking toward the RIGHT edge of the frame (this is screen-right — the character's face and chest point toward the right side of the canvas). Render each of these 6 frames as a DISTINCTLY different leg and arm pose — do not repeat the same standing profile pose with only tiny differences:
+    <pre class="term" id="c02c"><button class="copy" data-t="c02c">Copy</button>Following the character style clamp above, generate a 6-frame walk cycle, character in full side profile (a strict 90° profile, not a 3/4-turned angle), walking STRAIGHT toward the RIGHT edge of the frame (this is screen-right — the character's face and chest point exactly horizontally toward the right side of the canvas, NOT diagonally toward a top or bottom corner). Render each of these 6 frames as a DISTINCTLY different leg and arm pose — do not repeat the same standing profile pose with only tiny differences:
 
 Frame 1 — Contact: the leg closer to the direction of travel is stretched forward with its heel touching the ground, the other leg extends back on its toe, the forward arm swings back and the back arm swings forward (arms opposite the legs).
 Frame 2 — Down/recoil: the forward leg bends and takes the character's weight, body dips to the LOWEST point of the bob, the back leg swings forward beneath the body.
@@ -338,13 +348,13 @@ Frame 6 — Passing opposite: mirrors frame 3, returning toward frame 1's setup 
   </div>
   <div class="sheet">
     <div class="sheet-hd"><span class="sheet-id">CH03a</span><span class="sheet-nm">Door — Entering (threshold beat)</span><span class="sheet-sz">6 frames · one-shot</span></div>
-    <pre class="term" id="c03a"><button class="copy" data-t="c03a">Copy</button>Following the character style clamp above, generate a 6-frame one-shot animation: the chef stepping IN through a doorway, facing DOWN toward the viewer (walking out of the doorway into the room).
+    <pre class="term" id="c03a"><button class="copy" data-t="c03a">Copy</button>Following the character style clamp above, generate a 6-frame one-shot animation: the chef stepping IN through a doorway, facing STRICTLY DOWN toward the viewer (walking out of the doorway into the room, straight down, not diagonally, not a 3/4-turned pose).
 
 Frame 1: character mostly in silhouette/shadow, just inside the doorway, one hand still touching a doorknob at their side. Frames 2-4: stepping forward and down into full light, hand leaving the doorknob. Frames 5-6: settles into a normal downward walking stride, fully in the room. This is a ONE-SHOT transition, not a loop — after frame 6 the regular walk_down cycle takes over.</pre>
   </div>
   <div class="sheet">
     <div class="sheet-hd"><span class="sheet-id">CH03b</span><span class="sheet-nm">Door — Exiting (threshold beat)</span><span class="sheet-sz">6 frames · one-shot</span></div>
-    <pre class="term" id="c03b"><button class="copy" data-t="c03b">Copy</button>Following the character style clamp above, generate a 6-frame one-shot animation: the chef stepping OUT through a doorway, facing UP away from the viewer (walking toward the doorway and through it).
+    <pre class="term" id="c03b"><button class="copy" data-t="c03b">Copy</button>Following the character style clamp above, generate a 6-frame one-shot animation: the chef stepping OUT through a doorway, facing STRICTLY UP away from the viewer (walking toward the doorway and through it, straight up, not diagonally, not a 3/4-turned pose).
 
 Frames 1-3: normal upward walking stride, approaching the doorway. Frames 4-5: reaching a hand toward a doorknob, stepping into the doorway opening. Frame 6: mostly in silhouette/shadow, stepped through, about to leave frame. This is a ONE-SHOT transition, not a loop.</pre>
   </div>
@@ -353,7 +363,7 @@ Frames 1-3: normal upward walking stride, approaching the doorway. Frames 4-5: r
   <p>The staircase asset (environment Sheet 03) is a single fixed-angle object, so unlike walking there's only one direction to generate for each — no left/right variant needed.</p>
   <div class="sheet">
     <div class="sheet-hd"><span class="sheet-id">CH04a</span><span class="sheet-nm">Stairs — Ascending</span><span class="sheet-sz">6 frames · loop</span></div>
-    <pre class="term" id="c04a"><button class="copy" data-t="c04a">Copy</button>Following the character style clamp above, generate a 6-frame walk cycle: the chef climbing a staircase, facing away from the viewer and slightly angled as if stepping up onto rising steps. Render each frame as a DISTINCTLY different pose, with an exaggerated knee lift compared to a flat walk — the leading leg visibly rises higher before planting on the next step, torso leaned forward into the climb:
+    <pre class="term" id="c04a"><button class="copy" data-t="c04a">Copy</button>Following the character style clamp above, generate a 6-frame walk cycle: the chef climbing a staircase, facing STRICTLY away from the viewer (straight up, shoulders and hips square to the camera — the forward LEAN into the climb is a torso tilt, not a change of facing direction; the character is still walking straight up, not diagonally toward a corner). Render each frame as a DISTINCTLY different pose, with an exaggerated knee lift compared to a flat walk — the leading leg visibly rises higher before planting on the next step:
 
 Frame 1 — Contact: the trailing leg is planted on a lower step, the leading leg is lifted HIGH with an exaggerated knee bend, about to plant on the next step up.
 Frame 2 — Push: the leading leg plants on the higher step and takes the weight, the trailing leg begins lifting off the lower step.
@@ -366,7 +376,7 @@ The character's baseline row stays consistent frame to frame — the illusion of
   </div>
   <div class="sheet">
     <div class="sheet-hd"><span class="sheet-id">CH04b</span><span class="sheet-nm">Stairs — Descending</span><span class="sheet-sz">6 frames · loop</span></div>
-    <pre class="term" id="c04b"><button class="copy" data-t="c04b">Copy</button>Following the character style clamp above, generate a 6-frame walk cycle: the chef descending a staircase, facing the viewer and slightly angled as if stepping down onto lower steps. Render each frame as a DISTINCTLY different pose, with an exaggerated knee lift and a very slight forward-leaning caution compared to a flat walk:
+    <pre class="term" id="c04b"><button class="copy" data-t="c04b">Copy</button>Following the character style clamp above, generate a 6-frame walk cycle: the chef descending a staircase, facing STRICTLY the viewer (straight down, shoulders and hips square to the camera — the cautious lean is a torso tilt, not a change of facing direction; the character is still walking straight down, not diagonally toward a corner). Render each frame as a DISTINCTLY different pose, with an exaggerated knee lift compared to a flat walk:
 
 Frame 1 — Contact: the trailing leg is planted on a higher step, the leading leg reaches DOWN and forward with an exaggerated stretch, about to plant on the next step down.
 Frame 2 — Push: the leading leg plants on the lower step and takes the weight, the trailing leg begins lifting off the higher step.
@@ -381,7 +391,7 @@ Same baseline-row rule as the ascending sheet — the art shows the pose, not a 
   <h3 id="c05">05 · Carry, empty basket — walking left/right</h3>
   <div class="sheet">
     <div class="sheet-hd"><span class="sheet-id">CH05</span><span class="sheet-nm">Carry empty — Right</span><span class="sheet-sz">6 frames · loop</span></div>
-    <pre class="term" id="c05"><button class="copy" data-t="c05">Copy</button>Following the character style clamp above, generate a 6-frame walk cycle, character in full side profile, body oriented and walking toward the RIGHT edge of the frame, holding an EMPTY woven wicker gathering basket in both arms cradled against the chest/waist (visible empty interior, no ingredients). The basket does NOT swing — arms stay bent holding it steady and level in every frame, only a very slight vertical bob passes through as the body bobs. Only the LEGS drive the visible motion. Render each frame as a DISTINCTLY different leg pose, matching the standard walk-right leg cycle:
+    <pre class="term" id="c05"><button class="copy" data-t="c05">Copy</button>Following the character style clamp above, generate a 6-frame walk cycle, character in full side profile (a strict 90° profile, not a 3/4-turned angle), walking STRAIGHT toward the RIGHT edge of the frame — not diagonally toward a corner — holding an EMPTY woven wicker gathering basket in both arms cradled against the chest/waist (visible empty interior, no ingredients). The basket does NOT swing — arms stay bent holding it steady and level in every frame, only a very slight vertical bob passes through as the body bobs. Only the LEGS drive the visible motion. Render each frame as a DISTINCTLY different leg pose, matching the standard walk-right leg cycle:
 
 Frame 1 — Contact: the leg closer to the direction of travel is stretched forward with its heel touching the ground, the other leg extends back on its toe.
 Frame 2 — Down/recoil: the forward leg bends and takes the weight, body dips to the LOWEST point of the bob, the back leg swings forward beneath the body.
@@ -396,7 +406,7 @@ Frame 6 — Passing opposite: mirrors frame 3, returning toward frame 1's setup 
   <h3 id="c06">06 · Carry, full basket — walking left/right</h3>
   <div class="sheet">
     <div class="sheet-hd"><span class="sheet-id">CH06</span><span class="sheet-nm">Carry full — Right</span><span class="sheet-sz">6 frames · loop</span></div>
-    <pre class="term" id="c06"><button class="copy" data-t="c06">Copy</button>Following the character style clamp above, generate a 6-frame walk cycle, character in full side profile, body oriented and walking toward the RIGHT edge of the frame, holding the SAME woven wicker gathering basket now FULL of colourful mixed vegetables (tomato, carrot, a leafy green) piled visibly above the rim. Same cradle-hold as the empty-basket sheet — arms bent, basket held steady and level, no swinging. Use the IDENTICAL leg-cycle frame breakdown as CH05 (contact → down/recoil → passing → contact opposite → down/recoil opposite → passing opposite), just with the full basket instead of empty:
+    <pre class="term" id="c06"><button class="copy" data-t="c06">Copy</button>Following the character style clamp above, generate a 6-frame walk cycle, character in full side profile (a strict 90° profile, not a 3/4-turned angle), walking STRAIGHT toward the RIGHT edge of the frame — not diagonally toward a corner — holding the SAME woven wicker gathering basket now FULL of colourful mixed vegetables (tomato, carrot, a leafy green) piled visibly above the rim. Same cradle-hold as the empty-basket sheet — arms bent, basket held steady and level, no swinging. Use the IDENTICAL leg-cycle frame breakdown as CH05 (contact → down/recoil → passing → contact opposite → down/recoil opposite → passing opposite), just with the full basket instead of empty:
 
 Frame 1 — Contact: leading leg stretched forward, heel down, trailing leg back on its toe.
 Frame 2 — Down/recoil: forward leg bends and takes the weight, body at its lowest point.
@@ -411,26 +421,26 @@ Frame 6 — Passing opposite: mirrors frame 3, loop connects back to frame 1.
   <h3 id="c07">07 · Stairs up, empty basket</h3>
   <div class="sheet">
     <div class="sheet-hd"><span class="sheet-id">CH07</span><span class="sheet-nm">Stairs ascending — empty basket</span><span class="sheet-sz">6 frames · loop</span></div>
-    <pre class="term" id="c07"><button class="copy" data-t="c07">Copy</button>Following the character style clamp above, generate a 6-frame walk cycle: the chef climbing a staircase (facing away from the viewer, exaggerated knee lift, same pose logic as CH04a) while holding an EMPTY woven wicker basket cradled steady against the chest with both arms — arms do not swing, only the legs drive the motion. Use the IDENTICAL leg-cycle breakdown as CH04a (contact/high-knee → push → passing → contact opposite → push opposite → passing opposite), basket staying level throughout.</pre>
+    <pre class="term" id="c07"><button class="copy" data-t="c07">Copy</button>Following the character style clamp above, generate a 6-frame walk cycle: the chef climbing a staircase (facing STRICTLY away from the viewer, straight up not diagonally, exaggerated knee lift, same pose logic as CH04a) while holding an EMPTY woven wicker basket cradled steady against the chest with both arms — arms do not swing, only the legs drive the motion. Use the IDENTICAL leg-cycle breakdown as CH04a (contact/high-knee → push → passing → contact opposite → push opposite → passing opposite), basket staying level throughout.</pre>
   </div>
 
   <h3 id="c08">08 · Stairs down, full basket</h3>
   <div class="sheet">
     <div class="sheet-hd"><span class="sheet-id">CH08</span><span class="sheet-nm">Stairs descending — full basket</span><span class="sheet-sz">6 frames · loop</span></div>
-    <pre class="term" id="c08"><button class="copy" data-t="c08">Copy</button>Following the character style clamp above, generate a 6-frame walk cycle: the chef descending a staircase (facing the viewer, exaggerated knee lift and slight forward-leaning caution, same pose logic as CH04b) while holding the SAME basket now FULL of colourful mixed vegetables piled above the rim. Use the IDENTICAL leg-cycle breakdown as CH04b (contact/reach-down → push → passing → contact opposite → push opposite → passing opposite). Basket stays level and steady, held with slightly more visible arm tension than the empty version since it's heavier — that's the only difference from CH07's hold.</pre>
+    <pre class="term" id="c08"><button class="copy" data-t="c08">Copy</button>Following the character style clamp above, generate a 6-frame walk cycle: the chef descending a staircase (facing STRICTLY the viewer, straight down not diagonally, exaggerated knee lift and slight forward-leaning caution, same pose logic as CH04b) while holding the SAME basket now FULL of colourful mixed vegetables piled above the rim. Use the IDENTICAL leg-cycle breakdown as CH04b (contact/reach-down → push → passing → contact opposite → push opposite → passing opposite). Basket stays level and steady, held with slightly more visible arm tension than the empty version since it's heavier — that's the only difference from CH07's hold.</pre>
   </div>
 
   <h3 id="c09">09 · Sit &amp; chill on the couch</h3>
   <p>Matches the armchair-facing-right piece from environment Sheet 07. Two parts: a one-shot settling-in transition, then a looping chill idle.</p>
   <div class="sheet">
     <div class="sheet-hd"><span class="sheet-id">CH09a</span><span class="sheet-nm">Sit down (settle into chair)</span><span class="sheet-sz">4 frames · one-shot</span></div>
-    <pre class="term" id="c09a"><button class="copy" data-t="c09a">Copy</button>Following the character style clamp above, generate a 4-frame one-shot animation: the chef sitting down into an armchair, seen in 3/4 side view facing RIGHT (matching an armchair that opens/faces right).
+    <pre class="term" id="c09a"><button class="copy" data-t="c09a">Copy</button>Following the character style clamp above, generate a 4-frame one-shot animation: the chef sitting down into an armchair, seen in full side profile facing STRICTLY toward the RIGHT edge of the frame (a strict 90° profile, not a diagonal 3/4-turned pose — matching an armchair that opens/faces right).
 
 Frame 1: standing beside the chair, starting to bend. Frame 2-3: lowering into the seat, knees bending, one hand on the armrest. Frame 4: fully seated, relaxed, legs bent at the knee as if resting on a low chair, back against the chair back. Draw ONLY the character — no chair furniture in the image, that's composited separately as the environment prop. Leave enough open space below/behind the pose that a chair back and armrest can be layered behind the character without overlapping the body.</pre>
   </div>
   <div class="sheet">
     <div class="sheet-hd"><span class="sheet-id">CH09b</span><span class="sheet-nm">Sitting idle (chilling loop)</span><span class="sheet-sz">6 frames · loop</span></div>
-    <pre class="term" id="c09b"><button class="copy" data-t="c09b">Copy</button>Following the character style clamp above, generate a 6-frame looping animation: the chef relaxed and sitting in a chair, seen in 3/4 side view facing RIGHT, matching the final pose of the sit-down sheet exactly (same seated position, knees bent, back against a chair).
+    <pre class="term" id="c09b"><button class="copy" data-t="c09b">Copy</button>Following the character style clamp above, generate a 6-frame looping animation: the chef relaxed and sitting in a chair, seen in full side profile facing STRICTLY toward the RIGHT edge of the frame (a strict 90° profile, not a diagonal 3/4-turned pose), matching the final pose of the sit-down sheet exactly (same seated position, knees bent, back against a chair).
 
 Subtle chill loop: slow breathing rise/fall, a slow blink, maybe one hand tapping an armrest lightly or resting on the stomach. Nothing that looks like standing up or reaching. Draw ONLY the character, no chair furniture — same empty space behind/below for compositing as the sit-down sheet. Frame 1 and frame 6 must loop seamlessly.</pre>
   </div>
@@ -438,7 +448,7 @@ Subtle chill loop: slow breathing rise/fall, a slow blink, maybe one hand tappin
   <h3 id="c10">10 · Celebration</h3>
   <div class="sheet">
     <div class="sheet-hd"><span class="sheet-id">CH10</span><span class="sheet-nm">Celebration — completed dish / streak</span><span class="sheet-sz">8 frames · one-shot</span></div>
-    <pre class="term" id="c10"><button class="copy" data-t="c10">Copy</button>Following the character style clamp above, generate an 8-frame one-shot celebration animation, character facing DOWN toward the viewer, standing in place (not walking).
+    <pre class="term" id="c10"><button class="copy" data-t="c10">Copy</button>Following the character style clamp above, generate an 8-frame one-shot celebration animation, character facing STRICTLY DOWN toward the viewer (shoulders and hips square to the camera, not a diagonal 3/4-turned pose), standing in place (not walking).
 
 A joyful, energetic beat: both arms thrown up in a small victory pump, a little hop off the ground at the peak (feet briefly lifted), big happy grin, chef hat bouncing slightly. Frames 1-3 wind up and rise, frames 4-5 are the peak (arms fully up, small hop), frames 6-8 settle back down to a happy standing pose (does not need to loop — this plays once then the game returns to idle_down).</pre>
   </div>
@@ -450,7 +460,7 @@ A joyful, energetic beat: both arms thrown up in a small victory pump, a little 
   </div>
   <div class="sheet">
     <div class="sheet-hd"><span class="sheet-id">CH11</span><span class="sheet-nm">Chopping (optional regen)</span><span class="sheet-sz">6 frames · loop</span></div>
-    <pre class="term" id="c11"><button class="copy" data-t="c11">Copy</button>Following the character style clamp above, generate a 6-frame looping animation: the chef standing at a counter facing DOWN/slightly toward the viewer, chopping with a knife on a cutting board in front of them.
+    <pre class="term" id="c11"><button class="copy" data-t="c11">Copy</button>Following the character style clamp above, generate a 6-frame looping animation: the chef standing at a counter facing STRICTLY DOWN toward the viewer (shoulders and hips square to the camera — the head may tilt down to look at the board, but the body does not turn diagonally), chopping with a knife on a cutting board in front of them.
 
 One knife hand raised and brought down in a repeating chop motion, the other hand steadying near the board (not on the blade path). Show the character from roughly the waist up, as if standing behind a counter — leave the lower third of the frame as plain background so a counter prop can be composited in front of the legs. Do NOT draw any food, cutting board or knife-board contents — only the chef and the knife itself; the board and ingredient are separate props layered underneath. Frame 1 and frame 6 connect seamlessly to loop.</pre>
   </div>
@@ -462,7 +472,7 @@ One knife hand raised and brought down in a repeating chop motion, the other han
   </div>
   <div class="sheet">
     <div class="sheet-hd"><span class="sheet-id">CH12</span><span class="sheet-nm">Reading recipe book (optional regen)</span><span class="sheet-sz">8 frames · one-shot</span></div>
-    <pre class="term" id="c12"><button class="copy" data-t="c12">Copy</button>Following the character style clamp above, generate an 8-frame one-shot animation: the chef facing DOWN/slightly toward the viewer, holding an open book in both hands at chest height and reading it.
+    <pre class="term" id="c12"><button class="copy" data-t="c12">Copy</button>Following the character style clamp above, generate an 8-frame one-shot animation: the chef facing STRICTLY DOWN toward the viewer (shoulders and hips square to the camera, not a diagonal 3/4-turned pose), holding an open book in both hands at chest height and reading it.
 
 Frames 1-2: lifting the book into reading position. Frames 3-6: reading — eyes moving, one small page-turn gesture, a thoughtful head tilt. Frames 7-8: lowering the book slightly as if satisfied, ready to act on the recipe. The book itself should be a plain closed-pattern cover with no readable text, just a simple ribbon bookmark. One-shot, does not need to loop.</pre>
   </div>
@@ -474,7 +484,7 @@ Frames 1-2: lifting the book into reading position. Frames 3-6: reading — eyes
   </div>
   <div class="sheet">
     <div class="sheet-hd"><span class="sheet-id">CH13</span><span class="sheet-nm">Presenting the dish (optional regen)</span><span class="sheet-sz">6 frames · one-shot</span></div>
-    <pre class="term" id="c13"><button class="copy" data-t="c13">Copy</button>Following the character style clamp above, generate a 6-frame one-shot animation: the chef facing DOWN toward the viewer, raising both open hands upward together as if presenting/showing off a finished dish held between them, big proud smile.
+    <pre class="term" id="c13"><button class="copy" data-t="c13">Copy</button>Following the character style clamp above, generate a 6-frame one-shot animation: the chef facing STRICTLY DOWN toward the viewer (shoulders and hips square to the camera, not a diagonal 3/4-turned pose), raising both open hands upward together as if presenting/showing off a finished dish held between them, big proud smile.
 
 Frames 1-2: hands starting to rise from waist height. Frames 3-4: hands reaching chest/shoulder height, palms up and slightly cupped as if holding a plate between them (draw the hands and arms in a pose that leaves an open gap between the palms — the dish itself is composited into that gap as a separate prop, do NOT draw any food or plate). Frames 5-6: hold the raised presenting pose, proud expression. One-shot, does not need to loop.</pre>
   </div>
@@ -486,7 +496,7 @@ Frames 1-2: hands starting to rise from waist height. Frames 3-4: hands reaching
   </div>
   <div class="sheet">
     <div class="sheet-hd"><span class="sheet-id">CH14</span><span class="sheet-nm">Stirring the pot (optional regen)</span><span class="sheet-sz">6 frames · loop</span></div>
-    <pre class="term" id="c14"><button class="copy" data-t="c14">Copy</button>Following the character style clamp above, generate a 6-frame looping animation: the chef standing at a stove facing DOWN/slightly toward the viewer, one hand holding a wooden spoon and stirring in a circular motion, the other hand resting on their hip or steadying near the pot rim.
+    <pre class="term" id="c14"><button class="copy" data-t="c14">Copy</button>Following the character style clamp above, generate a 6-frame looping animation: the chef standing at a stove facing STRICTLY DOWN toward the viewer (shoulders and hips square to the camera, not a diagonal 3/4-turned pose), one hand holding a wooden spoon and stirring in a circular motion, the other hand resting on their hip or steadying near the pot rim.
 
 Show the character from roughly the waist up, as if standing behind a stove — leave the lower third of the frame as plain background so a stove/pot prop can be composited in front. Do NOT draw the pot or its contents — only the chef and the spoon; the pot is a separate environment/prop layer. The spoon should trace a clear circular path across the 6 frames. Frame 1 and frame 6 connect seamlessly to loop.</pre>
   </div>
@@ -495,13 +505,13 @@ Show the character from roughly the waist up, as if standing behind a stove — 
   <p>New two-part interaction at the kitchen island: opening a sealed ingredient sack, then pouring its contents. Split into two short one-shot sheets so either can be reused independently.</p>
   <div class="sheet">
     <div class="sheet-hd"><span class="sheet-id">CH15a</span><span class="sheet-nm">Packet — cutting open</span><span class="sheet-sz">6 frames · one-shot</span></div>
-    <pre class="term" id="c15a"><button class="copy" data-t="c15a">Copy</button>Following the character style clamp above, generate a 6-frame one-shot animation: the chef standing at a kitchen island facing DOWN/slightly toward the viewer, holding a small paper/cloth ingredient sack in one hand and cutting it open along the top with a small knife held in the other hand.
+    <pre class="term" id="c15a"><button class="copy" data-t="c15a">Copy</button>Following the character style clamp above, generate a 6-frame one-shot animation: the chef standing at a kitchen island facing STRICTLY DOWN toward the viewer (shoulders and hips square to the camera, not a diagonal 3/4-turned pose), holding a small paper/cloth ingredient sack in one hand and cutting it open along the top with a small knife held in the other hand.
 
 Frames 1-2: bringing the knife to the top of the sack, positioning the blade. Frames 3-4: drawing the blade across in a cutting motion, the top of the sack starting to open. Frames 5-6: sack fully open at the top, knife pulling away, ready to pour. Keep the sack a plain, unlabelled paper-brown colour — no text or branding. One-shot, does not need to loop; feeds directly into the pouring sheet.</pre>
   </div>
   <div class="sheet">
     <div class="sheet-hd"><span class="sheet-id">CH15b</span><span class="sheet-nm">Packet — pouring</span><span class="sheet-sz">6 frames · one-shot</span></div>
-    <pre class="term" id="c15b"><button class="copy" data-t="c15b">Copy</button>Following the character style clamp above, generate a 6-frame one-shot animation: the chef standing at a kitchen island facing DOWN/slightly toward the viewer, holding the SAME opened sack from the cutting sheet in both hands and tipping it forward and down to pour its contents out in front of them.
+    <pre class="term" id="c15b"><button class="copy" data-t="c15b">Copy</button>Following the character style clamp above, generate a 6-frame one-shot animation: the chef standing at a kitchen island facing STRICTLY DOWN toward the viewer (shoulders and hips square to the camera, not a diagonal 3/4-turned pose), holding the SAME opened sack from the cutting sheet in both hands and tipping it forward and down to pour its contents out in front of them.
 
 Frames 1-2: lifting the open sack, starting to tilt it forward. Frames 3-4: sack angled downward, a small stream of pale contents (flour or grain — keep it a simple pale colour, not a specific labelled ingredient) visibly pouring out of the opening. Frames 5-6: sack tilting back upright, pour finishing, sack now visibly emptier/flatter. Leave open space below the pour stream so a bowl or counter prop can be composited underneath to catch it. One-shot, does not need to loop.</pre>
   </div>
