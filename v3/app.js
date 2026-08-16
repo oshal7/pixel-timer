@@ -32,22 +32,77 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 // ---------------------------------------------------------------------------
 
 async function loadData() {
-  const [food, tiles, chef, dishes, recipes] = await Promise.all([
+  const [food, tiles, chef, dishes, recipes, env, fx] = await Promise.all([
     fetch(BASE + 'data/food.json').then(r => r.ok ? r.json() : null).catch(() => null),
     fetch(BASE + 'data/tiles_v2.json').then(r => r.json()),
     fetch(BASE + 'data/chef_v3.json').then(r => r.json()),
     fetch(BASE + 'data/dishes_v3.json').then(r => r.json()),
     fetch(BASE + 'data/recipes.json').then(r => r.json()),
+    fetch(BASE + 'data/env_v3.json').then(r => r.ok ? r.json() : null).catch(() => null),
+    fetch(BASE + 'data/fx_v3.json').then(r => r.ok ? r.json() : null).catch(() => null),
   ]);
   let items = food && food.items ? food.items
     : (await fetch(BASE + 'data/ingredients.json').then(r => r.json())).sprites.map(s => ({ id: s.id, label: s.label, file: s.file }));
   const foodById = {};
   for (const it of items) foodById[it.id] = it;
-  state.data = { food: items, foodById, tiles, chef, dishes: dishes.dishes, recipes };
+  state.data = { food: items, foodById, tiles, chef, dishes: dishes.dishes, recipes, env, fx };
 }
 
-function tileFile(id) { const s = state.data.tiles.sprites.find(t => t.id === id); return s ? asset(s.file) : ''; }
+// v3 environment art (assets/env_v3/, keyed+sliced from raw sheets) is a newer,
+// better-matched-style replacement for specific tiles_v2 sprites -- not a full
+// scene rebuild yet (that needs a real tile-grid renderer per the asset bible's
+// P1 roadmap item). Anything not listed here keeps its tiles_v2 art unchanged.
+const ENV_OVERRIDE = {
+  floor_terracotta:    'floor_terracotta_tile',
+  floor_checker:       'floor_checkerboard',
+  floor_stone:         'floor_stone_flagstone',
+  floor_wood:          'floor_oak_plank',
+  cabinet_upper_run:   'appliance_cabinet_book',
+  cabinet_lower_run:   'counter_cabinet_dishes',
+  counter_double_sink: 'appliance_farmhouse_sink',
+  fridge:              'appliance_tall_fridge',
+  stove_range:         'appliance_gas_stove_oven',
+  spice_rack:          'appliance_spice_cart',
+  desk_clock:          'fixture_wall_clock',
+};
+
+function tileFile(id) {
+  const envKey = ENV_OVERRIDE[id];
+  const envAsset = envKey && state.data.env && state.data.env.assets[envKey];
+  if (envAsset) return asset(envAsset.file);
+  const s = state.data.tiles.sprites.find(t => t.id === id); return s ? asset(s.file) : '';
+}
 function recipeById(id) { return state.data.recipes.sprites.find(r => r.id === id); }
+
+// ---------------------------------------------------------------------------
+// FX overlays (assets/fx_v3/) -- small looping/one-shot sprite strips
+// ---------------------------------------------------------------------------
+
+function fxFrames(name) {
+  const eff = state.data.fx && state.data.fx.effects[name];
+  if (!eff) return null;
+  return { frames: Array.from({ length: eff.count }, (_, i) => asset(`${eff.dir}/${String(i).padStart(2, '0')}.png`)), frame_ms: eff.frame_ms, loop: eff.loop };
+}
+
+function spawnFx(container, name, style) {
+  const data = fxFrames(name);
+  if (!data) return { stop() {} };
+  const img = document.createElement('img');
+  img.className = 'fx-sprite scene-layer';
+  Object.assign(img.style, { position: 'absolute', imageRendering: 'pixelated', pointerEvents: 'none', ...style });
+  img.src = data.frames[0];
+  container.appendChild(img);
+  let i = 0;
+  const handle = setInterval(() => {
+    i++;
+    if (i >= data.frames.length) {
+      if (!data.loop) { clearInterval(handle); img.remove(); return; }
+      i = 0;
+    }
+    img.src = data.frames[i];
+  }, data.frame_ms);
+  return { stop() { clearInterval(handle); img.remove(); } };
+}
 
 // ---------------------------------------------------------------------------
 // Audio (synthesized)
@@ -153,7 +208,11 @@ function composeKitchenScene(container) {
     { id: 'desk_clock', style: { right: '6%', top: '5%', width: '9%', zIndex: 3 } },
     { id: 'fridge', style: { right: '4%', top: '20%', width: '15%', zIndex: 2 } },
     { id: 'cabinet_lower_run', style: { left: '4%', top: '40%', width: '40%', zIndex: 2 } },
-    { id: 'stove_range', style: { left: '7%', top: '38%', width: '32%', zIndex: 3 } },
+    // width kept modest for stove_range: the new env_v3 art is a tall front-view
+    // appliance (ar ~0.74) vs the old wide stovetop icon (ar 2.0) -- at the old
+    // 32% width its auto-height overflowed the scene and sat behind/around the
+    // cooking-scene chef sprite instead of beside it.
+    { id: 'stove_range', style: { left: '7%', top: '40%', width: '16%', zIndex: 3 } },
     { id: 'counter_double_sink', style: { left: '45%', top: '40%', width: '30%', zIndex: 2 } },
     { id: 'dishwasher', style: { right: '22%', top: '44%', width: '13%', zIndex: 2 } },
     { id: 'utensil_rack', style: { left: '52%', top: '20%', width: '15%', zIndex: 3 } },
@@ -355,7 +414,8 @@ async function runGatherSequence(dish, minutes) {
 // Cooking
 // ---------------------------------------------------------------------------
 
-let cookAnimator = null, timer = { totalMs: 0, endAt: 0, tickHandle: null, introTimers: [], paused: false, remainingAtPauseMs: 0, dish: null };
+let cookAnimator = null, cookFx = [], timer = { totalMs: 0, endAt: 0, tickHandle: null, introTimers: [], paused: false, remainingAtPauseMs: 0, dish: null };
+function stopCookFx() { cookFx.forEach(f => f.stop()); cookFx = []; }
 
 function formatMs(ms) { const s = Math.max(0, Math.ceil(ms / 1000)); return `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`; }
 const RING = 2 * Math.PI * 54;
@@ -372,14 +432,21 @@ function setupCookingScene() {
   composeKitchenScene(scene);
   const chef = document.createElement('img');
   chef.className = 'chef-sprite scene-layer';
-  Object.assign(chef.style, { position: 'absolute', left: '12%', top: '50%', width: '88px', height: 'auto', zIndex: 5 });
+  Object.assign(chef.style, { position: 'absolute', left: '26%', top: '52%', width: '88px', height: 'auto', zIndex: 5 });
   scene.appendChild(chef);
   cookAnimator = new Animator(chef, state.data.chef.states);
 }
 
+function startStoveFx() {
+  const scene = document.getElementById('cooking-scene');
+  stopCookFx();
+  cookFx.push(spawnFx(scene, 'flame', { left: '11%', top: '58%', width: '26px', zIndex: 4 }));
+  cookFx.push(spawnFx(scene, 'steam', { left: '9%', top: '32%', width: '32px', zIndex: 4 }));
+}
+
 function runCookIntro() {
   setPhase('prep'); setStage('Chopping ingredients…'); cookAnimator.play('chop');
-  timer.introTimers = [setTimeout(() => { setPhase('cook'); setStage('Cooking in progress…'); cookAnimator.play('stir'); }, 2600)];
+  timer.introTimers = [setTimeout(() => { setPhase('cook'); setStage('Cooking in progress…'); cookAnimator.play('stir'); startStoveFx(); }, 2600)];
 }
 function clearIntroTimers() { timer.introTimers.forEach(clearTimeout); timer.introTimers = []; }
 
@@ -404,17 +471,17 @@ function startCookingSession(minutes, dish) {
 function togglePauseCooking() {
   if (timer.paused) {
     timer.endAt = Date.now() + timer.remainingAtPauseMs; timer.paused = false;
-    document.getElementById('pause-cook-btn').textContent = 'Pause'; setStage('Cooking in progress…'); cookAnimator.play('stir'); audio.startMusic(); startTicking();
+    document.getElementById('pause-cook-btn').textContent = 'Pause'; setStage('Cooking in progress…'); cookAnimator.play('stir'); startStoveFx(); audio.startMusic(); startTicking();
   } else {
     timer.remainingAtPauseMs = Math.max(0, timer.endAt - Date.now()); timer.paused = true; clearIntroTimers();
-    if (timer.tickHandle) clearInterval(timer.tickHandle); cookAnimator.stop(); audio.stopMusic();
+    if (timer.tickHandle) clearInterval(timer.tickHandle); cookAnimator.stop(); stopCookFx(); audio.stopMusic();
     setStage('Paused'); document.getElementById('pause-cook-btn').textContent = 'Resume';
   }
 }
 
 function cancelCooking() {
   if (timer.tickHandle) clearInterval(timer.tickHandle); clearIntroTimers();
-  if (cookAnimator) cookAnimator.stop(); audio.stopMusic(); timer.totalMs = 0; showView('home');
+  if (cookAnimator) cookAnimator.stop(); stopCookFx(); audio.stopMusic(); timer.totalMs = 0; showView('home');
 }
 
 function finishCooking() {
@@ -422,12 +489,13 @@ function finishCooking() {
   const recipe = recipeById(dish.id) || dish;
   const isNew = !state.unlocked.has(dish.id);
   if (isNew) { state.unlocked.add(dish.id); saveSet(STORAGE_KEY, state.unlocked); }
-  updateDistillery(1); setPhase('present'); audio.stopMusic();
+  updateDistillery(1); setPhase('present'); audio.stopMusic(); stopCookFx();
   document.getElementById('dish-image').src = asset(recipe.file);
   document.getElementById('dish-name').textContent = dish.name;
   document.getElementById('unlock-banner').classList.toggle('hidden', !isNew);
   updateBookBadge();
   new Animator(document.getElementById('chef-presenting'), state.data.chef.states).play('present');
+  spawnFx(document.querySelector('.complete-scene'), 'sparkle', { left: '50%', top: '10%', width: '72px', marginLeft: '-36px', zIndex: 6 });
   audio.ding(); showView('complete');
 }
 

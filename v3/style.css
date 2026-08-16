@@ -212,7 +212,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 /* ---------- Dish complete ---------- */
 
 #view-complete h2 { color: var(--accent); letter-spacing: 2px; }
-.complete-scene { display: flex; align-items: center; justify-content: center; gap: 28px; flex-wrap: wrap; }
+.complete-scene { position: relative; display: flex; align-items: center; justify-content: center; gap: 28px; flex-wrap: wrap; }
 .dish-plate { background: radial-gradient(circle, #fff 55%, #ddd 60%, transparent 62%); padding: 20px; border-radius: 50%; text-align: center; }
 .dish-plate img { width: 110px; height: 110px; object-fit: contain; }
 .dish-name { color: var(--brown-dark); font-weight: bold; margin-top: 4px; }
