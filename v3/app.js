@@ -52,18 +52,14 @@ async function loadData() {
 // better-matched-style replacement for specific tiles_v2 sprites -- not a full
 // scene rebuild yet (that needs a real tile-grid renderer per the asset bible's
 // P1 roadmap item). Anything not listed here keeps its tiles_v2 art unchanged.
+// Floor materials are the only tiles_v2 ids composeKitchenScene still asks
+// tileFile() for -- every furniture piece is now placed directly by
+// SCENE_ART/layoutRow below, sized from its own real aspect ratio.
 const ENV_OVERRIDE = {
-  floor_terracotta:    'floor_terracotta_tile',
-  floor_checker:       'floor_checkerboard',
-  floor_stone:         'floor_stone_flagstone',
-  floor_wood:          'floor_oak_plank',
-  cabinet_upper_run:   'appliance_cabinet_book',
-  cabinet_lower_run:   'counter_cabinet_dishes',
-  counter_double_sink: 'appliance_farmhouse_sink',
-  fridge:              'appliance_tall_fridge',
-  stove_range:         'appliance_gas_stove_oven',
-  spice_rack:          'appliance_spice_cart',
-  desk_clock:          'fixture_wall_clock',
+  floor_terracotta: 'floor_terracotta_tile',
+  floor_checker:    'floor_checkerboard',
+  floor_stone:      'floor_stone_flagstone',
+  floor_wood:       'floor_oak_plank',
 };
 
 function tileFile(id) {
@@ -193,37 +189,111 @@ class Animator {
 // Scene + pantry
 // ---------------------------------------------------------------------------
 
+// Real tile-grid-style layout (P1 from the asset bible), replacing the old
+// percentage-guess placement. Every env_v3 piece has a known aspect ratio
+// (measured from the actual sliced PNGs), so instead of eyeballing left/top/
+// width percentages per item, each row is laid out in real pixels off the
+// container's own measured size: pick a target render HEIGHT per row, derive
+// each item's width from its aspect ratio, and flow left-to-right with a
+// fixed gap. That's what makes same-tier items actually share a baseline and
+// a scale, instead of each other's random guessed widths.
+const SCENE_ART = {
+  fridge:        { key: 'appliance_tall_fridge',     ar: 1.20 },
+  cabinet_jars:  { key: 'appliance_cabinet_book',    ar: 1.24 },
+  cabinet_dishes:{ key: 'appliance_cabinet_dishes',  ar: 1.04 },
+  window:        { key: 'fixture_window_herbs',      ar: 0.72 },
+  door:          { key: 'fixture_door_closed',       ar: 0.53 },
+  clock:         { key: 'fixture_wall_clock',        ar: 0.64 },
+  spice_cart:    { key: 'appliance_spice_cart',      ar: 0.68 },
+  drawer_unit:   { key: 'counter_drawer_unit',       ar: 0.76 },
+  sink:          { key: 'counter_sink_unit',         ar: 1.29 },
+  stove:         { key: 'counter_stove',             ar: 0.78 },
+  fridge_under:  { key: 'counter_undercounter_fridge', ar: 1.15 },
+  armchair:      { key: 'nook_item_00',              ar: 0.96 },
+  side_table:    { key: 'nook_item_03',              ar: 0.87 },
+};
+
+function envArt(name) {
+  const spec = SCENE_ART[name];
+  const a = spec && state.data.env && state.data.env.assets[spec.key];
+  return a ? { name, src: asset(a.file), ar: spec.ar } : null;
+}
+
+// Places one row of items, bottom-aligned to `bottomPx`, each `heightPx` tall,
+// flowing left from `startXPx` with `gapPx` between. Returns each item's
+// placed {x,y,w,h} in container px (useful for pointing FX/chef at a piece).
+// If the row would run past `maxRightPx`, heightPx (and gapPx with it) is
+// scaled down uniformly so the whole row actually fits -- real furniture
+// doesn't clip off the edge of a real room.
+function layoutRow(container, names, { bottomPx, heightPx, startXPx, gapPx, z, maxRightPx }) {
+  const arts = names.map(envArt).filter(Boolean);
+  if (maxRightPx != null) {
+    const naturalW = arts.reduce((s, a) => s + heightPx * a.ar, 0) + gapPx * Math.max(0, arts.length - 1);
+    const budget = maxRightPx - startXPx;
+    if (naturalW > budget && naturalW > 0) {
+      const scale = budget / naturalW;
+      heightPx *= scale; gapPx *= scale;
+    }
+  }
+  let x = startXPx;
+  const placed = [];
+  for (const art of arts) {
+    const w = heightPx * art.ar;
+    const img = document.createElement('img');
+    img.className = 'scene-layer'; img.src = art.src;
+    Object.assign(img.style, {
+      position: 'absolute', left: `${x}px`, top: `${bottomPx - heightPx}px`,
+      width: `${w}px`, height: `${heightPx}px`, zIndex: String(z),
+    });
+    container.appendChild(img);
+    placed.push({ name: art.name, x, y: bottomPx - heightPx, w, h: heightPx });
+    x += w + gapPx;
+  }
+  return placed;
+}
+
 function composeKitchenScene(container) {
   container.innerHTML = '';
   container.style.backgroundImage = `url(${tileFile('floor_terracotta')})`;
   container.style.backgroundSize = '64px 64px'; container.style.backgroundRepeat = 'repeat';
+
+  // Fallback matches the CSS (.kitchen-scene.cooking is 320px, others 440px)
+  // in case this ever runs against a still-hidden (display:none) container,
+  // where clientWidth/Height read 0 -- callers should showView() first.
+  const W = container.clientWidth || 800, H = container.clientHeight || (container.classList.contains('cooking') ? 320 : 440);
+  const wallH = H * 0.42;
+
   const wall = document.createElement('div');
   wall.className = 'scene-layer';
-  Object.assign(wall.style, { left: 0, right: 0, top: 0, height: '30%', zIndex: '0',
+  Object.assign(wall.style, { left: 0, right: 0, top: 0, height: `${wallH}px`, zIndex: '0',
     backgroundImage: `url(${tileFile('wall_wood_panel')})`, backgroundSize: '80px 60px', backgroundRepeat: 'repeat' });
   container.appendChild(wall);
-  const layers = [
-    { id: 'cabinet_upper_run', style: { left: '5%', top: '4%', width: '46%', zIndex: 2 } },
-    { id: 'extractor_hood', style: { left: '14%', top: '14%', width: '18%', zIndex: 3 } },
-    { id: 'desk_clock', style: { right: '6%', top: '5%', width: '9%', zIndex: 3 } },
-    { id: 'fridge', style: { right: '4%', top: '20%', width: '15%', zIndex: 2 } },
-    { id: 'cabinet_lower_run', style: { left: '4%', top: '40%', width: '40%', zIndex: 2 } },
-    // width kept modest for stove_range: the new env_v3 art is a tall front-view
-    // appliance (ar ~0.74) vs the old wide stovetop icon (ar 2.0) -- at the old
-    // 32% width its auto-height overflowed the scene and sat behind/around the
-    // cooking-scene chef sprite instead of beside it.
-    { id: 'stove_range', style: { left: '7%', top: '40%', width: '16%', zIndex: 3 } },
-    { id: 'counter_double_sink', style: { left: '45%', top: '40%', width: '30%', zIndex: 2 } },
-    { id: 'dishwasher', style: { right: '22%', top: '44%', width: '13%', zIndex: 2 } },
-    { id: 'utensil_rack', style: { left: '52%', top: '20%', width: '15%', zIndex: 3 } },
-    { id: 'spice_rack', style: { left: '70%', top: '18%', width: '11%', zIndex: 3 } },
-  ];
-  for (const layer of layers) {
+
+  // Zone A -- back wall storage run, bottom-anchored to the wall/floor seam.
+  layoutRow(container, ['fridge', 'cabinet_jars', 'cabinet_dishes', 'window', 'door'], {
+    bottomPx: wallH, heightPx: wallH * 0.86, startXPx: W * 0.03, gapPx: W * 0.015, z: 2, maxRightPx: W * 0.97,
+  });
+  const clockArt = envArt('clock');
+  if (clockArt) {
+    const clockH = wallH * 0.34;
     const img = document.createElement('img');
-    img.className = 'scene-layer'; img.src = tileFile(layer.id);
-    Object.assign(img.style, { position: 'absolute', height: 'auto', ...layer.style, zIndex: String(layer.style.zIndex) });
+    img.className = 'scene-layer'; img.src = clockArt.src;
+    Object.assign(img.style, { position: 'absolute', right: `${W * 0.03}px`, top: `${wallH * 0.06}px`,
+      width: `${clockH * clockArt.ar}px`, height: `${clockH}px`, zIndex: '3' });
     container.appendChild(img);
   }
+
+  // Nook -- floor cluster, bottom-left, ahead of the island.
+  layoutRow(container, ['armchair', 'side_table'], {
+    bottomPx: H * 0.98, heightPx: H * 0.30, startXPx: W * 0.03, gapPx: W * 0.02, z: 3,
+  });
+
+  // Zone B -- floor island run: prep cart -> counter -> sink -> stove -> end unit.
+  const island = layoutRow(container, ['spice_cart', 'drawer_unit', 'sink', 'stove', 'fridge_under'], {
+    bottomPx: H * 0.94, heightPx: H * 0.28, startXPx: W * 0.34, gapPx: W * 0.012, z: 3, maxRightPx: W * 0.97,
+  });
+
+  container._stove = island.find(p => p.name === 'stove') || null;
 }
 
 function edgeSplit(items) {
@@ -269,7 +339,7 @@ function initHomeScene() {
   const scene = document.getElementById('home-scene');
   const chef = document.createElement('img');
   chef.className = 'chef-sprite scene-layer';
-  Object.assign(chef.style, { position: 'absolute', left: '44%', top: '66%', width: '84px', height: 'auto', zIndex: 5 });
+  Object.assign(chef.style, { position: 'absolute', left: '38%', top: '58%', width: '84px', height: 'auto', zIndex: 5 });
   scene.appendChild(chef);
   homeAnimator = new Animator(chef, state.data.chef.states);
   homeAnimator.play('idle');
@@ -432,7 +502,12 @@ function setupCookingScene() {
   composeKitchenScene(scene);
   const chef = document.createElement('img');
   chef.className = 'chef-sprite scene-layer';
-  Object.assign(chef.style, { position: 'absolute', left: '26%', top: '52%', width: '88px', height: 'auto', zIndex: 5 });
+  // Stand just left of the stove the layout actually placed, rather than a
+  // hardcoded guess -- so this stays correct if the row layout changes.
+  const stove = scene._stove;
+  const left = stove ? Math.max(4, stove.x - 70) : 26 / 100 * scene.clientWidth;
+  const top = stove ? stove.y + stove.h * 0.25 : 0.52 * scene.clientHeight;
+  Object.assign(chef.style, { position: 'absolute', left: `${left}px`, top: `${top}px`, width: '88px', height: 'auto', zIndex: 5 });
   scene.appendChild(chef);
   cookAnimator = new Animator(chef, state.data.chef.states);
 }
@@ -440,8 +515,11 @@ function setupCookingScene() {
 function startStoveFx() {
   const scene = document.getElementById('cooking-scene');
   stopCookFx();
-  cookFx.push(spawnFx(scene, 'flame', { left: '11%', top: '58%', width: '26px', zIndex: 4 }));
-  cookFx.push(spawnFx(scene, 'steam', { left: '9%', top: '32%', width: '32px', zIndex: 4 }));
+  const stove = scene._stove;
+  const cx = stove ? stove.x + stove.w * 0.35 : 0.11 * scene.clientWidth;
+  const top = stove ? stove.y : 0.58 * scene.clientHeight;
+  cookFx.push(spawnFx(scene, 'flame', { left: `${cx}px`, top: `${top + (stove ? stove.h * 0.18 : 0)}px`, width: '26px', zIndex: 4 }));
+  cookFx.push(spawnFx(scene, 'steam', { left: `${cx}px`, top: `${top - 40}px`, width: '32px', zIndex: 4 }));
 }
 
 function runCookIntro() {
@@ -463,9 +541,12 @@ function startTicking() {
 
 function startCookingSession(minutes, dish) {
   timer.totalMs = minutes * 60 * 1000; timer.endAt = Date.now() + timer.totalMs; timer.paused = false; timer.dish = dish;
+  // showView FIRST: composeKitchenScene measures container.clientWidth/Height
+  // for the real-pixel row layout, which reads 0 on a display:none ancestor
+  // and silently falls back to the wrong scene size otherwise.
+  showView('cooking');
   setupCookingScene(); runCookIntro(); startTicking();
   document.getElementById('pause-cook-btn').textContent = 'Pause';
-  showView('cooking');
 }
 
 function togglePauseCooking() {
